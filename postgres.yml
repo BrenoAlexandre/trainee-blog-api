@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+  quickstart-node:
+    container_name: $POSTGRES_DB
+    image: postgres:latest
+    restart: always
+    ports:
+      - $POSTGRES_PORT:$POSTGRES_PORT
+    environment:
+      POSTGRES_HOST: $POSTGRES_HOST
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      # DB_DATABASE: $POSTGRES_DB
