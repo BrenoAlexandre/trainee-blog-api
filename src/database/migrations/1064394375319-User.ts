@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class Post1664394362200 implements MigrationInterface {
+export class User1064394375319 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'posts',
+        name: 'users',
         columns: [
           {
             name: 'id',
@@ -14,27 +14,19 @@ export class Post1664394362200 implements MigrationInterface {
             default: `uuid_generate_v4()`,
           },
           {
-            name: 'title',
-            type: 'varchar(100)',
+            name: 'name',
+            type: 'varchar(120)',
             isNullable: false,
           },
           {
-            name: 'description',
+            name: 'email',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'likes',
-            type: 'integer',
+            name: 'password',
+            type: 'varchar',
             default: 0,
-          },
-          {
-            name: 'category_id',
-            type: 'uuid',
-          },
-          {
-            name: 'owner_id',
-            type: 'uuid',
           },
           {
             name: 'created_at',
@@ -49,26 +41,12 @@ export class Post1664394362200 implements MigrationInterface {
             isNullable: false,
           },
         ],
-        foreignKeys: [
-          {
-            name: 'fk_post_category',
-            columnNames: ['category_id'],
-            referencedTableName: 'categories',
-            referencedColumnNames: ['id'],
-          },
-          {
-            name: 'fk_post_owner',
-            columnNames: ['owner_id'],
-            referencedTableName: 'users',
-            referencedColumnNames: ['id'],
-          },
-        ],
       }),
       true
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('posts');
+    await queryRunner.dropTable('users');
   }
 }

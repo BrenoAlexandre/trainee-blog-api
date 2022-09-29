@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class User1664394375319 implements MigrationInterface {
+export class Post3064394362200 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'users',
+        name: 'posts',
         columns: [
           {
             name: 'id',
@@ -14,19 +14,26 @@ export class User1664394375319 implements MigrationInterface {
             default: `uuid_generate_v4()`,
           },
           {
-            name: 'name',
-            type: 'varchar(120)',
+            name: 'title',
+            type: 'varchar(100)',
             isNullable: false,
           },
           {
-            name: 'email',
+            name: 'description',
             type: 'varchar',
             isNullable: false,
           },
           {
-            name: 'password',
+            name: 'likes',
+            type: 'integer',
+          },
+          {
+            name: 'category',
             type: 'varchar',
-            default: 0,
+          },
+          {
+            name: 'owner',
+            type: 'varchar',
           },
           {
             name: 'created_at',
@@ -41,12 +48,26 @@ export class User1664394375319 implements MigrationInterface {
             isNullable: false,
           },
         ],
+        foreignKeys: [
+          {
+            name: 'fk_post_category',
+            columnNames: ['category'],
+            referencedTableName: 'categories',
+            referencedColumnNames: ['id'],
+          },
+          {
+            name: 'fk_post_owner',
+            columnNames: ['owner'],
+            referencedTableName: 'users',
+            referencedColumnNames: ['id'],
+          },
+        ],
       }),
       true
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('users');
+    await queryRunner.dropTable('posts');
   }
 }

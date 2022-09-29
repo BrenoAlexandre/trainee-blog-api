@@ -1,10 +1,22 @@
 import { getRepository } from 'typeorm';
 import categoryEntity from '../database/entities/Category.Entity';
-import { CategoryInput } from '../models/category.model';
+import userEntity from '../database/entities/User.Entity';
 
-export async function createCategory(input: CategoryInput) {
-  const repository = getRepository(categoryEntity);
-  const newCategory = repository.create(input);
-  await repository.save(newCategory);
+interface ICreateCategory {
+  title: string;
+  owner: string;
+}
+
+export async function createCategory(input: ICreateCategory) {
+  const categoryRepository = getRepository(categoryEntity);
+  const userRepository = getRepository(userEntity);
+
+  const owner = await userRepository.findOne(input.owner);
+
+  const category = { ...input, owner };
+
+  const newCategory = categoryRepository.create(category);
+
+  await categoryRepository.save(newCategory);
   return newCategory;
 }

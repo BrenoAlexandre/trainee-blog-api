@@ -29,6 +29,7 @@ const payload = {
     name: string().defined('User name is required').max(120),
     email: string().defined('User email is required').email('Invalid email'),
     password: string().defined('User password is required'),
+    passwordConfirmation: string(),
     role: mixed().oneOf(['user', 'admin']).default('user'),
   }).defined(),
 };

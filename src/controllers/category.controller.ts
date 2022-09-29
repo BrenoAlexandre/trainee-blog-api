@@ -10,7 +10,9 @@ export async function createCategoryHandler(
 ) {
   const { user } = response.locals;
   const { body } = request;
-  const product = await createCategory({ ...body, owner: user });
+  const { title } = body;
+  const data = { title, owner: user.id };
+  const product = await createCategory(data);
 
   response.status(StatusCodes.CREATED).json(product);
 }

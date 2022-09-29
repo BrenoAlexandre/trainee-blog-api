@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class Category1664394383905 implements MigrationInterface {
+export class Category2064394383905 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -19,8 +19,8 @@ export class Category1664394383905 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'owner_id',
-            type: 'uuid',
+            name: 'owner',
+            type: 'varchar',
           },
           {
             name: 'created_at',
@@ -38,7 +38,7 @@ export class Category1664394383905 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'fk_category_owner',
-            columnNames: ['owner_id'],
+            columnNames: ['owner'],
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
           },

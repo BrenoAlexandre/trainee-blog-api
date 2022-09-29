@@ -9,7 +9,15 @@ export async function createUserHandler(
   response: Response
 ) {
   const { body } = request;
-  const product = await createUser({ ...body });
+  const {
+    name,
+    email,
+    password,
+    passwordConfirmation = '',
+    role = 'user',
+  } = body;
+  const data = { name, email, password, passwordConfirmation, role };
+  const product = await createUser(data);
 
   response.status(StatusCodes.CREATED).json(product);
 }

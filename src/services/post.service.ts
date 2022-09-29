@@ -1,10 +1,28 @@
 import { getRepository } from 'typeorm';
 import PostEntity from '../database/entities/Post.Entity';
-import { PostInput } from '../models/post.model';
+import CategoryEntity from '../database/entities/Category.Entity';
+import UserEntity from '../database/entities/User.Entity';
 
-export async function createPost(input: PostInput) {
-  const repository = getRepository(PostEntity);
-  const newPost = repository.create(input);
-  await repository.save(newPost);
+interface ICreatePost {
+  title: string;
+  description: string;
+  likes: number;
+  category: string;
+  owner: string;
+}
+
+export async function createPost(input: ICreatePost) {
+  const postsRepository = getRepository(PostEntity);
+  const categoryRepository = getRepository(CategoryEntity);
+  const userRepository = getRepository(UserEntity);
+
+  const category = await categoryRepository.findOne(input.category);
+  const owner = await userRepository.findOne(input.owner);
+
+  const post = { ...input, category, owner };
+
+  const newPost = postsRepository.create(post);
+
+  await postsRepository.save(newPost);
   return newPost;
 }
