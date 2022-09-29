@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { createUserHandler } from '../../controllers/users/createUser.controller';
+import { createCategoryHandler } from '../../controllers/categories/createCategory.controller';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
 
-import { createUserSchema } from '../../schemas/user.schema';
+import { createCategorySchema } from '../../schemas/category.schema';
 
 const routes = Router();
 
@@ -13,30 +13,30 @@ const routes = Router();
  * '/api/post/':
  *  post:
  *     tags:
- *     - Posts
- *     summary: Create a post
+ *     - Categories
+ *     summary: Create a category
  *     security:
  *      - bearerAuth: []
  *     requestBody:
  *      content:
  *       application/json:
  *        schema:
- *           $ref: '#/components/schemas/Post'
+ *           $ref: '#/components/schemas/Category'
  *     responses:
  *       200:
  *         description: Success
  *         content:
  *          application/json:
  *           schema:
- *              $ref: '#/components/schemas/Post'
+ *              $ref: '#/components/schemas/Category'
  *       404:
- *         description: Post not found
+ *         description: User not found
  */
 
 routes.route('/').post(
   // [requireUser, validateResource(createProductSchema)],
-  [validateResource(createUserSchema)],
-  createUserHandler
+  [validateResource(createCategorySchema)],
+  createCategoryHandler
 );
 
 export default routes;

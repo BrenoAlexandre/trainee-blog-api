@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { CreateUserInput } from '../schemas/user.schema';
+import { CreateUserInput } from '../../schemas/user.schema';
 
-import { createUser } from '../services/user.service';
+import { createUser } from '../../services/user.service';
 
 export async function createUserHandler(
   request: Request<{}, {}, CreateUserInput['body']>,

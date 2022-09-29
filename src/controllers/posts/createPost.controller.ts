@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { CreatePostInput } from '../schemas/post.scema';
+import { CreatePostInput } from '../../schemas/post.scema';
 
-import { createPost } from '../services/post.service';
+import { createPost } from '../../services/post.service';
 
 export async function createPosttHandler(
   request: Request<{}, {}, CreatePostInput['body']>,
