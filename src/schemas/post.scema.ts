@@ -32,8 +32,7 @@ const payload = {
       .max(100, 'Title should not be more than 100 characters long'),
     description: string().defined('Description is required'),
     likes: number().typeError('Likes must be a number').default(0),
-    category: string().defined('A post must have a category'),
-    owner: string().defined('A post must have a owner'),
+    categoryId: string().defined('A post related to a category'),
   }).defined(),
 };
 

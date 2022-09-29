@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import Base from './Base.Entity';
 import User from './User.Entity';
 import Post from './Post.Entity';
@@ -10,6 +10,7 @@ export default class Category extends Base {
   public title: string;
 
   @ManyToOne(() => User, (owner) => owner.categories)
+  @JoinColumn({ name: 'id' })
   public owner: User;
 
   @OneToMany(() => Post, (post) => post.category)

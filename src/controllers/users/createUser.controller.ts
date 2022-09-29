@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { CreateUserInput } from '../../schemas/user.schema';
 
-import { createUser } from '../../services/user.service';
+import { createUser } from '../../services/users/user.service';
 
 export async function createUserHandler(
   request: Request<{}, {}, CreateUserInput['body']>,
@@ -17,7 +17,6 @@ export async function createUserHandler(
     role = 'user',
   } = body;
   const data = { name, email, password, passwordConfirmation, role };
-  const product = await createUser(data);
-
-  response.status(StatusCodes.CREATED).json(product);
+  const user = await createUser(data);
+  response.status(StatusCodes.CREATED).json(user);
 }

@@ -1,8 +1,12 @@
 import User from '../database/entities/User.Entity';
 
-export interface CategoryInput {
+export interface ICategory {
+  id: string;
   title: string;
-  // abbreviation: string;
-  // color: string;
+  owner: User;
+}
+
+export interface ICreateCategory {
+  title: string;
   owner: User;
 }

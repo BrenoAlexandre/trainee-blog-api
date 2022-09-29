@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import Base from './Base.Entity';
 import User from './User.Entity';
 import Category from './Category.Entity';
@@ -16,8 +16,10 @@ export default class Post extends Base {
   public likes: number;
 
   @ManyToOne(() => Category, (category) => category.posts)
+  @JoinColumn({ name: 'id' })
   public category: Category;
 
   @ManyToOne(() => User, (owner) => owner.posts)
+  @JoinColumn({ name: 'id' })
   public owner: User;
 }

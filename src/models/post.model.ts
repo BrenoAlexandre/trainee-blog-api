@@ -1,9 +1,25 @@
 import Category from '../database/entities/Category.Entity';
 import User from '../database/entities/User.Entity';
 
-export interface PostInput {
+export interface IPost {
+  id: string;
   title: string;
   description: string;
+  likes: number;
   owner: User;
+  category: Category;
+}
+
+export interface ICreatePost {
+  title: string;
+  description: string;
+  likes: number;
+  owner: User;
+  category: Category;
+}
+
+export interface IUpdatePost {
+  title: string;
+  description: string;
   category: Category;
 }
