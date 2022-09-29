@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { createUserHandler } from '../../controllers/users/createUser.controller';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { createPostHandler } from '../../controllers/posts/createPost.controller';
+import { findPostsHandler } from '../../controllers/posts/findPosts.controller';
 import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
 
@@ -10,7 +10,7 @@ const routes = Router();
 
 /**
  * @openapi
- * '/api/post/':
+ * '/api/v1/post/':
  *  post:
  *     tags:
  *     - Posts
@@ -23,20 +23,34 @@ const routes = Router();
  *        schema:
  *           $ref: '#/components/schemas/Post'
  *     responses:
+ *       201:
+ *         description: Created
+ *         content:
+ *          application/json:
+ *           schema:
+ *              $ref: '#/components/schemas/Post'
+ *       400:
+ *         description: Bad Request
+ *  get:
+ *     tags:
+ *     - Posts
+ *     summary: Return public posts
+ *     security:
+ *      - bearerAuth: []
+ *     responses:
  *       200:
- *         description: Success
+ *         description: OK
  *         content:
  *          application/json:
  *           schema:
  *              $ref: '#/components/schemas/Post'
  *       404:
- *         description: Post not found
+ *         description: Posts not found
  */
 
-routes.route('/').post(
-  // [requireUser, validateResource(createProductSchema)],
-  [validateResource(createUserSchema)],
-  createUserHandler
-);
+routes
+  .route('/')
+  .get(requireUser, findPostsHandler)
+  .post([requireUser, validateResource(createUserSchema)], createPostHandler);
 
 export default routes;

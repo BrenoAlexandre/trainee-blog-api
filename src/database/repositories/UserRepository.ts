@@ -4,13 +4,15 @@ import User from '../entities/User.Entity';
 
 @EntityRepository(User)
 class UserRepository extends Repository<User> {
-  public async createUser(data: ICreateUser): Promise<User> {
+  public async createUser(data: ICreateUser): Promise<Omit<User, 'password'>> {
     const user = this.create(data);
     const newUser = await this.save(user);
     return newUser;
   }
 
-  public async findUserById(id: string): Promise<User | null> {
+  public async findUserById(
+    id: string
+  ): Promise<Omit<User, 'password'> | null> {
     const user = await this.findOne(id);
     if (!user) return null;
     return user;
@@ -25,7 +27,7 @@ class UserRepository extends Repository<User> {
   public async updateUserName(
     id: string,
     newName: string
-  ): Promise<User | null> {
+  ): Promise<Omit<User, 'password'> | null> {
     const user = await this.findOne(id);
     if (!user) return null;
     user.name = newName;

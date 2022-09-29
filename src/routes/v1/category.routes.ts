@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { createCategoryHandler } from '../../controllers/categories/createCategory.controller';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { findCategoriesHandler } from '../../controllers/categories/findCategories.controller';
 import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
 
@@ -10,7 +10,7 @@ const routes = Router();
 
 /**
  * @openapi
- * '/api/post/':
+ * '/api/v1/category/':
  *  post:
  *     tags:
  *     - Categories
@@ -23,20 +23,37 @@ const routes = Router();
  *        schema:
  *           $ref: '#/components/schemas/Category'
  *     responses:
+ *       201:
+ *         description: Created
+ *         content:
+ *          application/json:
+ *           schema:
+ *              $ref: '#/components/schemas/Category'
+ *       400:
+ *         description: Bad Request
+ *  get:
+ *     tags:
+ *     - Categories
+ *     summary: Return all categories
+ *     security:
+ *      - bearerAuth: []
+ *     responses:
  *       200:
- *         description: Success
+ *         description: OK
  *         content:
  *          application/json:
  *           schema:
  *              $ref: '#/components/schemas/Category'
  *       404:
- *         description: User not found
+ *         description: Not Found
  */
 
-routes.route('/').post(
-  // [requireUser, validateResource(createProductSchema)],
-  [validateResource(createCategorySchema)],
-  createCategoryHandler
-);
+routes
+  .route('/')
+  .get(requireUser, findCategoriesHandler)
+  .post(
+    [requireUser, validateResource(createCategorySchema)],
+    createCategoryHandler
+  );
 
 export default routes;

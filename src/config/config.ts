@@ -25,7 +25,7 @@ const envVarsSchema = yup
     SALT_WORK_FACTOR: yup.number().default(10),
     ACCESS_TOKEN_TTL: yup.string().default('15m'),
     REFRESH_TOKEN_TTL: yup.string().default('1y'),
-    JWT_SECRET: yup.string().required('Secret is required'),
+    JWT_SECRET: yup.string().required('Secret is required').default('1q2w3e4r'),
     POSTGRES_HOST: yup.string(), // .required('POSTGRES_HOST is required'),
     POSTGRES_PORT: yup.number().default(5432),
     POSTGRES_USER: yup.string(), // .required('POSTGRES_USER is required'),

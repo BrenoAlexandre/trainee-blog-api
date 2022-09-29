@@ -21,5 +21,5 @@ export default class Post extends Base {
 
   @ManyToOne(() => User, (owner) => owner.posts)
   @JoinColumn({ name: 'id' })
-  public owner: User;
+  public owner: Omit<User, 'password'>;
 }

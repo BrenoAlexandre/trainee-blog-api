@@ -16,30 +16,34 @@ class PostRepository extends Repository<Post> {
     return post;
   }
 
-  public async findPosts(): Promise<Post[] | null> {
+  public async findPosts(): Promise<Post[]> {
     //! Implementar paginação
     const posts = await this.find();
-    if (!posts) return null;
+    if (!posts) return [];
     return posts;
   }
 
-  public async findPostsByCategory(categoryId: string): Promise<Post[] | null> {
+  public async findPostsByCategory(categoryId: string): Promise<Post[]> {
     const posts = await this.createQueryBuilder()
-      .select()
-      .from('posts', 'posts')
-      .where('category = categoryId', { categoryId })
+      .select('post')
+      .from(Post, 'post')
+      .where('post.category = :categoryId', { categoryId })
+      .leftJoinAndSelect('post.owner', 'owner')
+      .leftJoinAndSelect('post.category', 'category')
       .execute();
-    if (!posts) return null;
+    if (!posts) return [];
     return posts;
   }
 
-  public async findPostsByOwner(ownerId: string): Promise<Post[] | null> {
+  public async findPostsByOwner(ownerId: string): Promise<Post[]> {
     const posts = await this.createQueryBuilder()
-      .select()
-      .from('posts', 'posts')
-      .where('owner = ownerId', { ownerId })
+      .select('post')
+      .from(Post, 'post')
+      .where('post.owner = :ownerId', { ownerId })
+      .leftJoinAndSelect('post.owner', 'owner')
+      .leftJoinAndSelect('post.category', 'category')
       .execute();
-    if (!posts) return null;
+    if (!posts) return [];
     return posts;
   }
 

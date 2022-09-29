@@ -11,7 +11,7 @@ export default class Category extends Base {
 
   @ManyToOne(() => User, (owner) => owner.categories)
   @JoinColumn({ name: 'id' })
-  public owner: User;
+  public owner: Omit<User, 'password'>;
 
   @OneToMany(() => Post, (post) => post.category)
   public posts: Post[];

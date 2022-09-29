@@ -34,6 +34,13 @@ const payload = {
   }).defined(),
 };
 
+const loginPayload = {
+  body: object({
+    email: string().defined('User email is required').email('Invalid email'),
+    password: string().defined('User password is required'),
+  }).defined(),
+};
+
 const params = {
   params: object({ userId: string().defined('userId is required') }),
 };
@@ -55,7 +62,12 @@ export const getUserSchema = object({
   ...params,
 });
 
+export const validateLoginSchema = object({
+  ...loginPayload,
+});
+
 export type CreateUserInput = InferType<typeof createUserSchema>;
 export type UpdateUserInput = InferType<typeof updateUserSchema>;
 export type ReadUserInput = InferType<typeof getUserSchema>;
 export type DeleteUserInput = InferType<typeof deleteUserSchema>;
+export type ValidateLoginInput = InferType<typeof validateLoginSchema>;

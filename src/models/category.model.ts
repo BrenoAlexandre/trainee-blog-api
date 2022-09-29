@@ -8,5 +8,5 @@ export interface ICategory {
 
 export interface ICreateCategory {
   title: string;
-  owner: User;
+  owner: Omit<User, 'password'>;
 }

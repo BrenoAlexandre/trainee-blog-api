@@ -18,3 +18,9 @@ export async function createCategory(input: ICreateCategoryInput) {
   const newCategory = await categoryRepository.createCategory(category);
   return newCategory;
 }
+
+export async function findCategories() {
+  const repository = new CategoryRepository();
+  const categories = await repository.findCategories();
+  return categories;
+}

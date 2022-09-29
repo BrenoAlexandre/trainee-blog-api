@@ -6,7 +6,7 @@ export interface IPost {
   title: string;
   description: string;
   likes: number;
-  owner: User;
+  owner: Omit<User, 'password'>;
   category: Category;
 }
 
@@ -14,7 +14,7 @@ export interface ICreatePost {
   title: string;
   description: string;
   likes: number;
-  owner: User;
+  owner: Omit<User, 'password'>;
   category: Category;
 }
 

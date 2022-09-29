@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { createUserHandler } from '../../controllers/users/createUser.controller';
+import { validateLoginHandler } from '../../controllers/users/validateLogin.controller';
 import validateResource from '../../middlewares/validateResource';
 
 import { createUserSchema } from '../../schemas/user.schema';
@@ -8,7 +9,7 @@ const routes = Router();
 
 /**
  * @openapi
- * '/api/post/':
+ * '/api/v1/user/':
  *  post:
  *     tags:
  *     - Users
@@ -21,8 +22,8 @@ const routes = Router();
  *        schema:
  *           $ref: '#/components/schemas/User'
  *     responses:
- *       200:
- *         description: Success
+ *       201:
+ *         description: Created
  *         content:
  *          application/json:
  *           schema:
@@ -32,5 +33,6 @@ const routes = Router();
  */
 
 routes.route('/').post([validateResource(createUserSchema)], createUserHandler);
+routes.route('/login').post(validateLoginHandler);
 
 export default routes;

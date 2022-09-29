@@ -26,3 +26,9 @@ export async function createPost(input: ICreatePostInput) {
   const newPost = await postsRepository.createPost(post);
   return newPost;
 }
+
+export async function findPosts() {
+  const repository = new PostRepository();
+  const posts = await repository.findPosts();
+  return posts;
+}
