@@ -21,5 +21,7 @@ export interface ICreatePost {
 export interface IUpdatePost {
   title: string;
   description: string;
-  category: Category;
+  postId: string;
+  ownerId: string;
+  categoryId: string;
 }

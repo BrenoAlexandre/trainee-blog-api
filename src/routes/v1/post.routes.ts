@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import { createPostHandler } from '../../controllers/posts/createPost.controller';
 import { findPostsHandler } from '../../controllers/posts/findPosts.controller';
+import { findPostHandler } from '../../controllers/posts/findPost.controller';
 import { deletePostHandler } from '../../controllers/posts/deletePost.controller';
+import { patchPostHandler } from '../../controllers/posts/patchPost.controller';
 import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
 
@@ -35,23 +37,71 @@ const routes = Router();
  *          application/json:
  *           schema:
  *              $ref: '#/components/schemas/Post'
- *       400:
- *         description: Bad Request
+ *       404:
+ *         description: Unable to create post
  *  get:
  *     tags:
  *     - Posts
  *     summary: Return public posts
- *     security:
- *      - bearerAuth: []
  *     responses:
  *       200:
  *         description: OK
  *         content:
  *          application/json:
  *           schema:
- *              $ref: '#/components/schemas/Post'
+ *            $ref: '#/components/schemas/Post'
  *       404:
  *         description: Posts not found
+ * '/api/v1/post/:postId':
+ *  get:
+ *     tags:
+ *     - Posts
+ *     summary: Return a single post
+ *     parameters:
+ *     - in: path
+ *       name: postId
+ *     responses:
+ *       201:
+ *         description: Created
+ *         content:
+ *          application/json:
+ *           schema:
+ *              $ref: '#/components/schemas/Post'
+ *       404:
+ *         description: Post not found
+ *  patch:
+ *     tags:
+ *     - Posts
+ *     summary: Update post data
+ *     security:
+ *      - bearerAuth: []
+ *     parameters:
+ *     - in: path
+ *       name: postId
+ *     requestBody:
+ *      content:
+ *       application/json:
+ *        schema:
+ *           $ref: '#/components/schemas/PostPatch'
+ *     responses:
+ *       100:
+ *         description: Continue
+ *       404:
+ *         description: Unable to update post
+ *  delete:
+ *     tags:
+ *     - Posts
+ *     summary: Delete a post
+ *     security:
+ *      - bearerAuth: []
+ *     parameters:
+ *     - in: path
+ *       name: postId
+ *     responses:
+ *       100:
+ *         description: Continue
+ *       404:
+ *         description: Unable to delete post
  */
 
 routes
@@ -61,8 +111,8 @@ routes
 
 routes
   .route('/:postId')
-  .get([validateResource(getPostSchema)])
-  .put([requireUser, validateResource(updatePostSchema)])
+  .get([validateResource(getPostSchema)], findPostHandler)
+  .patch([requireUser, validateResource(updatePostSchema)], patchPostHandler)
   .delete([requireUser, validateResource(deletePostSchema)], deletePostHandler);
 
 export default routes;

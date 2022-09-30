@@ -1,5 +1,5 @@
 import AppDataSource from '../dataSource';
-import { ICreatePost } from '../../models/post.model';
+import { ICreatePost, IUpdatePost } from '../../models/post.model';
 import Post from '../entities/Post.Entity';
 
 const postRepository = AppDataSource.getRepository(Post).extend({
@@ -8,10 +8,23 @@ const postRepository = AppDataSource.getRepository(Post).extend({
     const newPost = await this.save(post);
     return newPost;
   },
-  async findPostById(id: string): Promise<Post | null> {
+  async findPostById(postId: string): Promise<Post | null> {
     const post = await this.createQueryBuilder('post')
-      .where('post.id = :id', { id })
+      .where('post.id = :postId', { postId })
+      .innerJoinAndSelect('post.owner', 'owner')
+      .innerJoinAndSelect('post.category', 'category')
+      .select([
+        'post.id',
+        'post.title',
+        'post.description',
+        'post.likes',
+        'post.created_at',
+        'owner.id',
+        'owner.name',
+        'category.title',
+      ])
       .getOne();
+
     if (!post) return null;
     return post;
   },
@@ -74,6 +87,20 @@ const postRepository = AppDataSource.getRepository(Post).extend({
       .getMany();
     if (!posts) return [];
     return posts;
+  },
+  async patchPost(data: IUpdatePost): Promise<number> {
+    const { title, description, categoryId, postId, ownerId } = data;
+    const patchBlock = { title, description, category: categoryId };
+    const updatedPost = await this.createQueryBuilder('post')
+      .update(Post)
+      .set(patchBlock)
+      .where('id = :postId', {
+        postId,
+      })
+      .andWhere('owner_id = :ownerId', { ownerId })
+      .execute();
+
+    return updatedPost.affected ?? 0;
   },
   async deletePost(postId: string, userId: string): Promise<boolean> {
     const deleteResult = await this.createQueryBuilder()

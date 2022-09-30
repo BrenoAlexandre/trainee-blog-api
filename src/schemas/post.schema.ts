@@ -11,7 +11,6 @@ import { object, string, number, InferType } from 'yup';
  *        - description
  *        - likes
  *        - category
- *        - owner
  *       properties:
  *         title:
  *           type: string
@@ -22,6 +21,19 @@ import { object, string, number, InferType } from 'yup';
  *         category:
  *           type: string
  *         owner:
+ *           type: string
+ *     PostPatch:
+ *       type: object
+ *       required:
+ *        - title
+ *        - description
+ *        - category
+ *       properties:
+ *         title:
+ *           type: string
+ *         description:
+ *           type: string
+ *         category:
  *           type: string
  */
 
