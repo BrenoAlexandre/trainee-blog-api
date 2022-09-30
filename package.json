@@ -94,7 +94,7 @@
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "nanoid": "^3.1.30",
-    "pg": "^8.4.0",
+    "pg": "^8.8.0",
     "reflect-metadata": "^0.1.10",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.1.6",

@@ -1,6 +1,6 @@
-import PostRepository from '../../database/repositories/PostRepository';
-import CategoryRepository from '../../database/repositories/CategoryRepository';
-import UserRepository from '../../database/repositories/UserRepository';
+import postRepository from '../../database/repositories/post.repository';
+import categoryRepository from '../../database/repositories/category.repository';
+import userRepository from '../../database/repositories/user.repository';
 
 interface ICreatePostInput {
   title: string;
@@ -11,24 +11,18 @@ interface ICreatePostInput {
 }
 
 export async function createPost(input: ICreatePostInput) {
-  const postsRepository = new PostRepository();
-  const categoryRepository = new CategoryRepository();
-  const userRepository = new UserRepository();
-
   const category = await categoryRepository.findCategoryById(input.categoryId);
   const owner = await userRepository.findUserById(input.ownerId);
-
   if (!category) throw new Error('A post should be related to a category.');
   if (!owner) throw new Error('A post should be related to a user.');
 
   const post = { ...input, category, owner };
 
-  const newPost = await postsRepository.createPost(post);
+  const newPost = await postRepository.createPost(post);
   return newPost;
 }
 
 export async function findPosts() {
-  const repository = new PostRepository();
-  const posts = await repository.findPosts();
+  const posts = await postRepository.findPosts();
   return posts;
 }

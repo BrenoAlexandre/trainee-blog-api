@@ -1,26 +1,19 @@
-import { ConnectionOptions } from 'typeorm';
+import { DataSource } from 'typeorm';
 import config from '../config/config';
 
-type Options = ConnectionOptions & { seeds: string[]; factories: string[] };
-
-const options: Options = {
+export const AppDataSource = new DataSource({
   type: 'postgres',
   host: config.postgresDb.host,
   port: config.postgresDb.port,
   username: config.postgresDb.username,
   password: config.postgresDb.password,
   database: config.postgresDb.database,
+  driver: 'postgres',
   logger: 'advanced-console',
-  cli: {
-    entitiesDir: './src/database/entities',
-    migrationsDir: './src/database/migrations',
-  },
   entities: [`${__dirname}/entities/*{.js,.ts}`],
   migrations: [`${__dirname}/migrations/*{.js,.ts}`],
-  synchronize: false,
+  synchronize: true,
   logging: false,
-  seeds: ['./src/database/seeds/**/*{.ts,.js}'],
-  factories: ['./src/database/factories/**/*{.ts,.js}'],
-};
+});
 
-export = options;
+export default AppDataSource;

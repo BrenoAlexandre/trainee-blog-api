@@ -1,4 +1,3 @@
-import { createConnection } from 'typeorm';
 import * as ormConfig from '../database/ormconfig';
 import config from './config';
 import logger from './logger';
@@ -6,8 +5,13 @@ import logger from './logger';
 async function database() {
   try {
     if (config.postgresDb.host) {
-      await createConnection(ormConfig);
-      logger.info('Postgres connected');
+      ormConfig.AppDataSource.initialize()
+        .then(() => {
+          logger.info('Postgres connected :>> AppDataSource initialized.');
+        })
+        .catch((err) => {
+          logger.error('Error during AppDataSource initialization:', err);
+        });
     }
   } catch (error) {
     logger.error('Could not connect to db');

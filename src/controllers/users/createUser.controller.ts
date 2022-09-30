@@ -20,6 +20,7 @@ export async function createUserHandler(
       role = 'user',
     } = body;
     const data = { name, email, password, passwordConfirmation, role };
+
     const user = await createUser(data);
     response.status(StatusCodes.CREATED).json(user);
   } catch (error) {

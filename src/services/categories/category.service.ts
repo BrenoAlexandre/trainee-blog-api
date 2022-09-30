@@ -1,5 +1,5 @@
-import CategoryRepository from '../../database/repositories/CategoryRepository';
-import UserRepository from '../../database/repositories/UserRepository';
+import categoryRepository from '../../database/repositories/category.repository';
+import userRepository from '../../database/repositories/user.repository';
 
 interface ICreateCategoryInput {
   title: string;
@@ -7,9 +7,6 @@ interface ICreateCategoryInput {
 }
 
 export async function createCategory(input: ICreateCategoryInput) {
-  const categoryRepository = new CategoryRepository();
-  const userRepository = new UserRepository();
-
   const owner = await userRepository.findUserById(input.ownerId);
 
   if (!owner) throw new Error('A category should be related to a user');
@@ -20,7 +17,6 @@ export async function createCategory(input: ICreateCategoryInput) {
 }
 
 export async function findCategories() {
-  const repository = new CategoryRepository();
-  const categories = await repository.findCategories();
+  const categories = await categoryRepository.findCategories();
   return categories;
 }

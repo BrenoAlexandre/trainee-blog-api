@@ -3,7 +3,10 @@ import { createUserHandler } from '../../controllers/users/createUser.controller
 import { validateLoginHandler } from '../../controllers/users/validateLogin.controller';
 import validateResource from '../../middlewares/validateResource';
 
-import { createUserSchema } from '../../schemas/user.schema';
+import {
+  createUserSchema,
+  validateLoginSchema,
+} from '../../schemas/user.schema';
 
 const routes = Router();
 
@@ -33,6 +36,8 @@ const routes = Router();
  */
 
 routes.route('/').post([validateResource(createUserSchema)], createUserHandler);
-routes.route('/login').post(validateLoginHandler);
+routes
+  .route('/login')
+  .post([validateResource(validateLoginSchema)], validateLoginHandler);
 
 export default routes;
