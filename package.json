@@ -23,18 +23,18 @@
     "prettier": "prettier --check **/*.ts",
     "prettier:fix": "prettier --write **/*.ts",
     "prepare": "husky install",
-    "typeorm": "ts-node ./node_modules/typeorm/cli.js --config ./src/database/ormconfig.ts",
-    "typeorm:deploy": "node ./node_modules/typeorm/cli.js --config ./dist/src/database/ormconfig.js",
+    "typeorm": "ts-node-dev  node_modules/typeorm/cli.js",
+    "typeorm:deploy": "node ./node_modules/typeorm/cli.js -d ./dist/src/database/dataSource.js",
     "typeorm:migrate": "npm run typeorm migration:generate -- -n",
     "typeorm:migrate:create": "npm run typeorm migration:create -- -n",
-    "typeorm:run": "npm run typeorm migration:run",
+    "typeorm:run": "npm run typeorm migration:run -- -d ./src/database/dataSource.ts",
     "typeorm:deploy:run": "npm run typeorm:deploy migration:run",
-    "typeorm:undo": "npm run typeorm migration:revert",
+    "typeorm:undo": "npm run typeorm migration:revert -- -d ./src/database/dataSource.ts",
     "typeorm:drop": "npm run typeorm schema:drop",
     "typeorm:sync": "npm run typeorm schema:sync",
-    "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js -n ./src/database/ormconfig.ts config",
-    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js -n ./src/database/ormconfig.ts seed",
-    "typeorm:test:sync": "cross-env NODE_ENV=test DOTENV_CONFIG_PATH=.env.test ts-node -r dotenv/config ./node_modules/typeorm/cli.js --config ./src/database/ormconfig.ts schema:sync"
+    "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js -n ./src/database/dataSource.ts config",
+    "seed:run": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed --dataSource ./src/database/dataSource.ts",
+    "typeorm:test:sync": "cross-env NODE_ENV=test DOTENV_CONFIG_PATH=.env.test ts-node -r dotenv/config ./node_modules/typeorm/cli.js -- -d ./src/database/dataSource.ts schema:sync"
   },
   "repository": {
     "type": "git",
@@ -99,6 +99,7 @@
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.1.6",
     "typeorm": "0.3.10",
+    "typeorm-extension": "^2.1.10",
     "typeorm-seeding": "^1.6.1",
     "winston": "^3.3.3",
     "yup": "^0.32.11"

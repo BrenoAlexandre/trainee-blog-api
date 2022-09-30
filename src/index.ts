@@ -6,10 +6,10 @@ import compression from 'compression';
 import cors from 'cors';
 import config, { environments } from './config/config';
 import logger from './config/logger';
-import database from './config/database';
 import routes from './routes';
 import swaggerDocs from './config/swagger';
 import deserializeUser from './middlewares/deserializeUser';
+import './database/dataSource';
 
 const app = express();
 
@@ -26,8 +26,6 @@ if (config.env !== environments.PRODUCTION) {
 
 app.listen(config.port, async () => {
   logger.info(`API rodando em http://${config.publicUrl}:${config.port}`);
-
-  await database();
 
   routes(app);
 

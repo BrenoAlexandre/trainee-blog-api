@@ -1,6 +1,6 @@
+import AppDataSource from '../dataSource';
 import { ICreateCategory } from '../../models/category.model';
 import Category from '../entities/Category.Entity';
-import { AppDataSource } from '../ormconfig';
 
 const categoryRepository = AppDataSource.getRepository(Category).extend({
   async createCategory(data: ICreateCategory): Promise<Category> {

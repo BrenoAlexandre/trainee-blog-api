@@ -1,4 +1,4 @@
-import { AppDataSource } from '../ormconfig';
+import AppDataSource from '../dataSource';
 import { ICreateUser } from '../../models/user.model';
 import User from '../entities/User.Entity';
 

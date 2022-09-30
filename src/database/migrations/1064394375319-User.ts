@@ -29,6 +29,12 @@ export class User1064394375319 implements MigrationInterface {
             default: 0,
           },
           {
+            name: 'role',
+            type: 'varchar',
+            enum: ['user', 'admin'],
+            default: 'user',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

@@ -1,6 +1,6 @@
+import AppDataSource from '../dataSource';
 import { ICreatePost } from '../../models/post.model';
 import Post from '../entities/Post.Entity';
-import { AppDataSource } from '../ormconfig';
 
 const postRepository = AppDataSource.getRepository(Post).extend({
   async createPost(data: ICreatePost): Promise<Post> {
