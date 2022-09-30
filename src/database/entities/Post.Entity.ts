@@ -16,10 +16,10 @@ export default class Post extends Base {
   public likes: number;
 
   @ManyToOne(() => Category, (category) => category.posts)
-  @JoinColumn({ name: 'id' })
-  public category: Category;
+  @JoinColumn({ name: 'category_id' })
+  public category: string;
 
   @ManyToOne(() => User, (owner) => owner.posts)
-  @JoinColumn({ name: 'id' })
-  public owner: Omit<User, 'password'>;
+  @JoinColumn({ name: 'owner_id' })
+  public owner: string;
 }

@@ -4,7 +4,7 @@ import { findPostsHandler } from '../../controllers/posts/findPosts.controller';
 import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
 
-import { createUserSchema } from '../../schemas/user.schema';
+import { createPostSchema } from '../../schemas/post.schema';
 
 const routes = Router();
 
@@ -50,7 +50,7 @@ const routes = Router();
 
 routes
   .route('/')
-  .get(requireUser, findPostsHandler)
-  .post([requireUser, validateResource(createUserSchema)], createPostHandler);
+  .get(findPostsHandler)
+  .post([requireUser, validateResource(createPostSchema)], createPostHandler);
 
 export default routes;

@@ -6,12 +6,12 @@ import Post from './Post.Entity';
 
 @Entity('categories')
 export default class Category extends Base {
-  @Column()
+  @Column({ unique: true })
   public title: string;
 
   @ManyToOne(() => User, (owner) => owner.categories)
-  @JoinColumn({ name: 'id' })
-  public owner: Omit<User, 'password'>;
+  @JoinColumn({ name: 'owner_id' })
+  public owner: string;
 
   @OneToMany(() => Post, (post) => post.category)
   public posts: Post[];

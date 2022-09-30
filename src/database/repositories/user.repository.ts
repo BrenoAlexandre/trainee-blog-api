@@ -1,3 +1,4 @@
+import { omit } from 'lodash';
 import AppDataSource from '../dataSource';
 import { ICreateUser } from '../../models/user.model';
 import User from '../entities/User.Entity';
@@ -11,13 +12,14 @@ const userRepository = AppDataSource.getRepository(User).extend({
 
   async findUserById(id: string): Promise<Omit<User, 'password'> | null> {
     const user = await this.createQueryBuilder('user')
-      .where('id = :id', { id })
+      .where('user.id = :id', { id })
+      .select(['user.id', 'user.name'])
       .getOne();
-    return user;
+    return omit(user, ['password']);
   },
   async findUserByEmail(email: string): Promise<User | null> {
     const user = await this.createQueryBuilder('user')
-      .where('email = :email', { email })
+      .where('user.email = :email', { email })
       .getOne();
     return user;
   },
@@ -25,7 +27,7 @@ const userRepository = AppDataSource.getRepository(User).extend({
     const updateResult = await this.createQueryBuilder('user')
       .update(User)
       .set({ name: newName })
-      .where('id = :id', { id })
+      .where('user.id = :id', { id })
       .execute();
 
     return !!updateResult;

@@ -8,7 +8,7 @@ export class User1064394375319 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
             default: `uuid_generate_v4()`,
@@ -22,6 +22,7 @@ export class User1064394375319 implements MigrationInterface {
             name: 'email',
             type: 'varchar',
             isNullable: false,
+            isUnique: true,
           },
           {
             name: 'password',

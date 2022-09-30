@@ -11,22 +11,27 @@ const categoryRepository = AppDataSource.getRepository(Category).extend({
   },
   async findCategoryById(id: string): Promise<Category | null> {
     const category = await this.createQueryBuilder('category')
-      .where('id = :id', { id })
+      .where('category.id = :id', { id })
       .leftJoinAndSelect('category.owner', 'owner')
-      .execute();
+      .select(['category.id', 'category.title'])
+      .getOne();
     if (!category) return null;
     return category;
   },
   async findCategoryPosts(id: string): Promise<Category | null> {
     const category = await this.createQueryBuilder('category')
-      .where('id = :id', { id })
+      .where('category.id = :id', { id })
       .leftJoinAndSelect('category.posts', 'post')
       .execute();
     if (!category) return null;
     return category;
   },
   async findCategories(): Promise<Category[]> {
-    const categories = await this.find();
+    const categories = await this.createQueryBuilder('category')
+      .innerJoinAndSelect('category.owner', 'owner')
+      .select(['category.id', 'category.title', 'owner.name'])
+      .getMany();
+
     if (!categories) return [];
     return categories;
   },

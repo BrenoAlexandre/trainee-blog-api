@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import logger from '../../config/logger';
-import { CreatePostInput } from '../../schemas/post.scema';
+import { CreatePostInput } from '../../schemas/post.schema';
 
 import { createPost } from '../../services/posts/post.service';
 
@@ -13,9 +13,9 @@ export async function createPostHandler(
   try {
     const { user } = response.locals;
     const { body } = request;
-    const { title, description, categoryId, likes = 0 } = body;
+    const { title, description, category, likes = 0 } = body;
 
-    const data = { title, description, likes, categoryId, ownerId: user.id };
+    const data = { title, description, likes, category, owner: user.id };
 
     const post = await createPost(data);
     response.status(StatusCodes.CREATED).json(post);

@@ -8,7 +8,7 @@ export class Post3064394362200 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
             default: `uuid_generate_v4()`,
@@ -28,12 +28,12 @@ export class Post3064394362200 implements MigrationInterface {
             type: 'integer',
           },
           {
-            name: 'category',
-            type: 'varchar',
+            name: 'category_id',
+            type: 'uuid',
           },
           {
-            name: 'owner',
-            type: 'varchar',
+            name: 'owner_id',
+            type: 'uuid',
           },
           {
             name: 'created_at',
@@ -51,13 +51,13 @@ export class Post3064394362200 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'fk_post_category',
-            columnNames: ['category'],
+            columnNames: ['category_id'],
             referencedTableName: 'categories',
             referencedColumnNames: ['id'],
           },
           {
             name: 'fk_post_owner',
-            columnNames: ['owner'],
+            columnNames: ['owner_id'],
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
           },

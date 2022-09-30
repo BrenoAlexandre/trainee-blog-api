@@ -10,36 +10,65 @@ const postRepository = AppDataSource.getRepository(Post).extend({
   },
   async findPostById(id: string): Promise<Post | null> {
     const post = await this.createQueryBuilder('post')
-      .where('id = :id', { id })
+      .where('post.id = :id', { id })
       .getOne();
     if (!post) return null;
     return post;
   },
   async findPosts(): Promise<Post[]> {
     //! Implementar paginação
-    const posts = await this.find();
+    const posts = await this.createQueryBuilder('post')
+      .innerJoinAndSelect('post.owner', 'owner')
+      .innerJoinAndSelect('post.category', 'category')
+      .select([
+        'post.title',
+        'post.description',
+        'post.likes',
+        'post.created_at',
+        'owner.id',
+        'owner.name',
+        'category.title',
+      ])
+      .getMany();
+
     if (!posts) return [];
     return posts;
   },
   async findPostsByCategory(categoryId: string): Promise<Post[]> {
-    const posts = await this.createQueryBuilder()
-      .select('post')
-      .from(Post, 'post')
+    //! Implementar paginação
+    const posts = await this.createQueryBuilder('post')
       .where('post.category = :categoryId', { categoryId })
-      .leftJoinAndSelect('post.owner', 'owner')
-      .leftJoinAndSelect('post.category', 'category')
-      .execute();
+      .innerJoinAndSelect('post.owner', 'owner')
+      .innerJoinAndSelect('post.category', 'category')
+      .select([
+        'post.title',
+        'post.description',
+        'post.likes',
+        'post.created_at',
+        'owner.id',
+        'owner.name',
+        'category.title',
+      ])
+      .getMany();
+
     if (!posts) return [];
     return posts;
   },
   async findPostsByOwner(ownerId: string): Promise<Post[]> {
-    const posts = await this.createQueryBuilder()
-      .select('post')
-      .from(Post, 'post')
+    //! Implementar paginação
+    const posts = await this.createQueryBuilder('post')
       .where('post.owner = :ownerId', { ownerId })
-      .leftJoinAndSelect('post.owner', 'owner')
-      .leftJoinAndSelect('post.category', 'category')
-      .execute();
+      .innerJoinAndSelect('post.owner', 'owner')
+      .innerJoinAndSelect('post.category', 'category')
+      .select([
+        'post.title',
+        'post.description',
+        'post.likes',
+        'post.created_at',
+        'owner.name',
+        'category.title',
+      ])
+      .getMany();
     if (!posts) return [];
     return posts;
   },

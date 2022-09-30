@@ -50,7 +50,7 @@ const routes = Router();
 
 routes
   .route('/')
-  .get(requireUser, findCategoriesHandler)
+  .get(findCategoriesHandler)
   .post(
     [requireUser, validateResource(createCategorySchema)],
     createCategoryHandler

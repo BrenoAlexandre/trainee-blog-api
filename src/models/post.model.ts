@@ -14,8 +14,8 @@ export interface ICreatePost {
   title: string;
   description: string;
   likes: number;
-  owner: Omit<User, 'password'>;
-  category: Category;
+  owner: string;
+  category: string;
 }
 
 export interface IUpdatePost {

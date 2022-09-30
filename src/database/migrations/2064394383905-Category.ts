@@ -8,7 +8,7 @@ export class Category2064394383905 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
             default: `uuid_generate_v4()`,
@@ -17,10 +17,11 @@ export class Category2064394383905 implements MigrationInterface {
             name: 'title',
             type: 'varchar(100)',
             isNullable: false,
+            isUnique: true,
           },
           {
-            name: 'owner',
-            type: 'varchar',
+            name: 'owner_id',
+            type: 'uuid',
           },
           {
             name: 'created_at',
@@ -38,7 +39,7 @@ export class Category2064394383905 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'fk_category_owner',
-            columnNames: ['owner'],
+            columnNames: ['owner_id'],
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
           },
