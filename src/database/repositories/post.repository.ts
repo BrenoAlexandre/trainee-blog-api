@@ -28,7 +28,7 @@ const postRepository = AppDataSource.getRepository(Post).extend({
     if (!post) return null;
     return post;
   },
-  async findPosts(): Promise<Post[]> {
+  async findPosts(order: 'ASC' | 'DESC' = 'ASC'): Promise<Post[]> {
     //! Implementar paginação
     const posts = await this.createQueryBuilder('post')
       .innerJoinAndSelect('post.owner', 'owner')
@@ -43,12 +43,16 @@ const postRepository = AppDataSource.getRepository(Post).extend({
         'owner.name',
         'category.title',
       ])
+      .orderBy('post.created_at', order)
       .getMany();
 
     if (!posts) return [];
     return posts;
   },
-  async findPostsByCategory(categoryId: string): Promise<Post[]> {
+  async findPostsByCategory(
+    categoryId: string,
+    order: 'ASC' | 'DESC' = 'ASC'
+  ): Promise<Post[]> {
     //! Implementar paginação
     const posts = await this.createQueryBuilder('post')
       .where('post.category = :categoryId', { categoryId })
@@ -64,12 +68,16 @@ const postRepository = AppDataSource.getRepository(Post).extend({
         'owner.name',
         'category.title',
       ])
+      .orderBy('post.created_at', order)
       .getMany();
 
     if (!posts) return [];
     return posts;
   },
-  async findPostsByOwner(ownerId: string): Promise<Post[]> {
+  async findPostsByOwner(
+    ownerId: string,
+    order: 'ASC' | 'DESC' = 'ASC'
+  ): Promise<Post[]> {
     //! Implementar paginação
     const posts = await this.createQueryBuilder('post')
       .where('post.owner = :ownerId', { ownerId })
@@ -84,14 +92,16 @@ const postRepository = AppDataSource.getRepository(Post).extend({
         'owner.name',
         'category.title',
       ])
+      .orderBy('post.created_at', order)
       .getMany();
+
     if (!posts) return [];
     return posts;
   },
-  async patchPost(data: IUpdatePost): Promise<number> {
+  async patchPost(data: IUpdatePost): Promise<boolean> {
     const { title, description, categoryId, postId, ownerId } = data;
     const patchBlock = { title, description, category: categoryId };
-    const updatedPost = await this.createQueryBuilder('post')
+    const updateResult = await this.createQueryBuilder('post')
       .update(Post)
       .set(patchBlock)
       .where('id = :postId', {
@@ -100,7 +110,7 @@ const postRepository = AppDataSource.getRepository(Post).extend({
       .andWhere('owner_id = :ownerId', { ownerId })
       .execute();
 
-    return updatedPost.affected ?? 0;
+    return updateResult ? !!updateResult.affected : false;
   },
   async deletePost(postId: string, userId: string): Promise<boolean> {
     const deleteResult = await this.createQueryBuilder()

@@ -39,7 +39,7 @@ const routes = Router();
  *           schema:
  *              $ref: '#/components/schemas/Post'
  *       404:
- *         description: Unable to create post
+ *         description: Not Found
  *  get:
  *     tags:
  *     - Posts
@@ -52,7 +52,7 @@ const routes = Router();
  *           schema:
  *            $ref: '#/components/schemas/Post'
  *       404:
- *         description: Posts not found
+ *         description: Not Found
  * '/api/v1/post/:postId':
  *  get:
  *     tags:
@@ -69,7 +69,7 @@ const routes = Router();
  *           schema:
  *              $ref: '#/components/schemas/Post'
  *       404:
- *         description: Post not found
+ *         description: Not Found
  *  patch:
  *     tags:
  *     - Posts
@@ -88,7 +88,7 @@ const routes = Router();
  *       100:
  *         description: Continue
  *       404:
- *         description: Unable to update post
+ *         description: Not Found
  *  delete:
  *     tags:
  *     - Posts
@@ -102,7 +102,7 @@ const routes = Router();
  *       100:
  *         description: Continue
  *       404:
- *         description: Unable to delete post
+ *         description: Not Found
  * '/api/v1/post/myPosts':
  *  get:
  *     tags:

@@ -9,7 +9,6 @@ const userRepository = AppDataSource.getRepository(User).extend({
     const newUser = await this.save(user);
     return newUser;
   },
-
   async findUserById(id: string): Promise<Omit<User, 'password'> | null> {
     const user = await this.createQueryBuilder('user')
       .where('user.id = :id', { id })

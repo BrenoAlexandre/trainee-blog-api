@@ -9,7 +9,7 @@ export default class Category extends Base {
   @Column({ unique: true })
   public title: string;
 
-  @ManyToOne(() => User, (owner) => owner.categories)
+  @ManyToOne(() => User, (owner) => owner.categories, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'owner_id' })
   public owner: string;
 

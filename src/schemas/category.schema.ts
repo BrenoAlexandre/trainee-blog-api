@@ -11,6 +11,13 @@ import { object, string, InferType } from 'yup';
  *       properties:
  *         title:
  *           type: string
+ *     CategoryPut:
+ *       type: object
+ *       required:
+ *        - title
+ *       properties:
+ *         title:
+ *           type: string
  */
 
 const payload = {

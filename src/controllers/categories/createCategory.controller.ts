@@ -15,10 +15,7 @@ export async function createCategoryHandler(
     const { body } = request;
     const { title } = body;
 
-    if (user.role !== 'admin') {
-      throw new Error('Only admins can create a category');
-    }
-    const data = { title, ownerId: user.id };
+    const data = { title, user };
     const product = await createCategory(data);
 
     response.status(StatusCodes.CREATED).json(product);

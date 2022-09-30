@@ -1,6 +1,7 @@
 const httpCodes = {
   badRequest: 400,
-  forbidden: 401,
+  authorization: 401,
+  notFound: 404,
   unprocess: 422,
 };
 
@@ -21,9 +22,15 @@ export class CustomError extends Error {
     return newError;
   }
 
-  static forbidden(message: string | undefined, customObject?: any) {
+  static authorization(message: string | undefined, customObject?: any) {
     const newError = new CustomError(message, customObject);
-    newError.code = httpCodes.forbidden;
+    newError.code = httpCodes.authorization;
+    return newError;
+  }
+
+  static notFound(message: string | undefined, customObject?: any) {
+    const newError = new CustomError(message, customObject);
+    newError.code = httpCodes.notFound;
     return newError;
   }
 

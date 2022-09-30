@@ -25,37 +25,37 @@ interface IDeleteInput {
 export async function createPost(input: ICreatePostInput) {
   const newPost = await postRepository.createPost(input);
 
-  if (!newPost) throw CustomError.badRequest('Unable to create post');
+  if (!newPost) throw CustomError.unprocess('Unable to create post');
   return newPost;
 }
 
 export async function findPosts() {
   const posts = await postRepository.findPosts();
 
-  if (posts.length === 0) throw CustomError.badRequest('Posts not found');
+  if (posts.length === 0) throw CustomError.notFound('Posts not found');
   return posts;
 }
 
 export async function findPost(postId: string) {
   const post = await postRepository.findPostById(postId);
 
-  if (!post) throw CustomError.badRequest('Post not found');
+  if (!post) throw CustomError.notFound('Post not found');
   return post;
 }
 
 export async function patchPost(input: IPatchInput) {
-  const post = await postRepository.patchPost(input);
+  const edited = await postRepository.patchPost(input);
 
-  if (post === 0) {
+  if (!edited) {
     throw CustomError.unprocess('Unable to update post');
   }
-  return post;
+  return edited;
 }
 
 export async function findMyPosts(ownerId: string) {
   const post = await postRepository.findPostsByOwner(ownerId);
 
-  if (!post) throw CustomError.badRequest('Post not found');
+  if (!post) throw CustomError.notFound('Post not found');
   return post;
 }
 

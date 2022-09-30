@@ -25,7 +25,7 @@ export async function patchPostHandler(
     };
 
     const post = await patchPost(data);
-    response.status(StatusCodes.CONTINUE).json(post);
+    response.status(StatusCodes.CONTINUE).send(post);
   } catch (error) {
     logger.error(`patchPostHandler :>> ${error}`);
     next(error);

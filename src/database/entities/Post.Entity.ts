@@ -15,11 +15,13 @@ export default class Post extends Base {
   @Column({ default: 0 })
   public likes: number;
 
-  @ManyToOne(() => Category, (category) => category.posts)
+  @ManyToOne(() => Category, (category) => category.posts, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'category_id' })
   public category: string;
 
-  @ManyToOne(() => User, (owner) => owner.posts)
+  @ManyToOne(() => User, (owner) => owner.posts, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'owner_id' })
   public owner: string;
 }
