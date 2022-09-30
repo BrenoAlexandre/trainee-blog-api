@@ -13,7 +13,7 @@ export async function findPostsHandler(
     const posts = await findPosts();
     response.status(StatusCodes.OK).json(posts);
   } catch (error) {
-    logger.error('findPostsHandler', error);
-    next();
+    logger.error(`findPostsHandler :>> ${error}`);
+    next(error);
   }
 }

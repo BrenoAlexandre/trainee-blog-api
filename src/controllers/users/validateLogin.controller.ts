@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import logger from '../../config/logger';
 import { ValidateLoginInput } from '../../schemas/user.schema';
@@ -7,7 +7,8 @@ import { validateLogin } from '../../services/users/user.service';
 
 export async function validateLoginHandler(
   request: Request<{}, {}, ValidateLoginInput['body']>,
-  response: Response
+  response: Response,
+  next: NextFunction
 ) {
   try {
     const { body } = request;
@@ -19,9 +20,7 @@ export async function validateLoginHandler(
       .set({ authorization: tokens.token, refreshToken: tokens.refreshToken })
       .send();
   } catch (error) {
-    logger.error('validateLoginHandler', error);
-    response
-      .status(StatusCodes.BAD_REQUEST)
-      .send(`validateLoginHandler${error}`);
+    logger.error(`validateLoginHandler :>> ${error}`);
+    next(error);
   }
 }

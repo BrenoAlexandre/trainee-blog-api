@@ -1,12 +1,14 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import logger from '../../config/logger';
 import { CreateCategoryInput } from '../../schemas/category.schema';
 
 import { createCategory } from '../../services/categories/category.service';
 
 export async function createCategoryHandler(
   request: Request<{}, {}, CreateCategoryInput['body']>,
-  response: Response
+  response: Response,
+  next: NextFunction
 ) {
   try {
     const { user } = response.locals;
@@ -21,6 +23,7 @@ export async function createCategoryHandler(
 
     response.status(StatusCodes.CREATED).json(product);
   } catch (error) {
-    response.status(StatusCodes.FORBIDDEN).send();
+    logger.error(`createCategoryHandler :>> ${error}`);
+    next(error);
   }
 }

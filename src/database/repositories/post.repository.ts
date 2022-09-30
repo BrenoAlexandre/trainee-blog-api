@@ -21,6 +21,7 @@ const postRepository = AppDataSource.getRepository(Post).extend({
       .innerJoinAndSelect('post.owner', 'owner')
       .innerJoinAndSelect('post.category', 'category')
       .select([
+        'post.id',
         'post.title',
         'post.description',
         'post.likes',
@@ -41,6 +42,7 @@ const postRepository = AppDataSource.getRepository(Post).extend({
       .innerJoinAndSelect('post.owner', 'owner')
       .innerJoinAndSelect('post.category', 'category')
       .select([
+        'post.id',
         'post.title',
         'post.description',
         'post.likes',
@@ -61,6 +63,7 @@ const postRepository = AppDataSource.getRepository(Post).extend({
       .innerJoinAndSelect('post.owner', 'owner')
       .innerJoinAndSelect('post.category', 'category')
       .select([
+        'post.id',
         'post.title',
         'post.description',
         'post.likes',
@@ -72,8 +75,17 @@ const postRepository = AppDataSource.getRepository(Post).extend({
     if (!posts) return [];
     return posts;
   },
-  async deletePost(id: string): Promise<void> {
-    await this.delete(id);
+  async deletePost(postId: string, userId: string): Promise<boolean> {
+    const deleteResult = await this.createQueryBuilder()
+      .delete()
+      .from(Post)
+      .where('id = :postId', {
+        postId,
+      })
+      .andWhere('owner_id = :userId', { userId })
+      .execute();
+
+    return !!deleteResult.affected;
   },
 });
 

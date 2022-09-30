@@ -13,7 +13,7 @@ export async function findCategoriesHandler(
     const categories = await findCategories();
     response.status(StatusCodes.OK).json(categories);
   } catch (error) {
-    logger.error('findCategoriesHandler', error);
-    next();
+    logger.error(`findCategoriesHandler :>> ${error}`);
+    next(error);
   }
 }

@@ -20,7 +20,7 @@ export async function createPostHandler(
     const post = await createPost(data);
     response.status(StatusCodes.CREATED).json(post);
   } catch (error) {
-    logger.error('createPostHandler', error);
-    next();
+    logger.error(`createPostHandler :>> ${error}`);
+    next(error);
   }
 }

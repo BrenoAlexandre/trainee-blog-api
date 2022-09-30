@@ -24,7 +24,7 @@ export async function createUserHandler(
     const user = await createUser(data);
     response.status(StatusCodes.CREATED).json(user);
   } catch (error) {
-    logger.error('createUserHandler', error);
-    next();
+    logger.error(`createUserHandler :>> ${error}`);
+    next(error);
   }
 }

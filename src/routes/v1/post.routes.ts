@@ -1,10 +1,16 @@
 import { Router } from 'express';
 import { createPostHandler } from '../../controllers/posts/createPost.controller';
 import { findPostsHandler } from '../../controllers/posts/findPosts.controller';
+import { deletePostHandler } from '../../controllers/posts/deletePost.controller';
 import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
 
-import { createPostSchema } from '../../schemas/post.schema';
+import {
+  createPostSchema,
+  deletePostSchema,
+  getPostSchema,
+  updatePostSchema,
+} from '../../schemas/post.schema';
 
 const routes = Router();
 
@@ -52,5 +58,11 @@ routes
   .route('/')
   .get(findPostsHandler)
   .post([requireUser, validateResource(createPostSchema)], createPostHandler);
+
+routes
+  .route('/:postId')
+  .get([validateResource(getPostSchema)])
+  .put([requireUser, validateResource(updatePostSchema)])
+  .delete([requireUser, validateResource(deletePostSchema)], deletePostHandler);
 
 export default routes;

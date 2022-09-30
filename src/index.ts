@@ -9,6 +9,7 @@ import logger from './config/logger';
 import routes from './routes';
 import swaggerDocs from './config/swagger';
 import deserializeUser from './middlewares/deserializeUser';
+import { handleErrorMiddleware } from './middlewares/handleError';
 import './database/dataSource';
 
 const app = express();
@@ -28,6 +29,7 @@ app.listen(config.port, async () => {
   logger.info(`API rodando em http://${config.publicUrl}:${config.port}`);
 
   routes(app);
+  app.use(handleErrorMiddleware);
 
   if (config.env !== environments.PRODUCTION) {
     swaggerDocs(app, config.publicUrl, config.port);
