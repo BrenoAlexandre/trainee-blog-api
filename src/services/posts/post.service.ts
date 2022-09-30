@@ -52,6 +52,13 @@ export async function patchPost(input: IPatchInput) {
   return post;
 }
 
+export async function findMyPosts(ownerId: string) {
+  const post = await postRepository.findPostsByOwner(ownerId);
+
+  if (!post) throw CustomError.badRequest('Post not found');
+  return post;
+}
+
 export async function deletePost(input: IDeleteInput) {
   const { postId, userId } = input;
   const deleted = await postRepository.deletePost(postId, userId);

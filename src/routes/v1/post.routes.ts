@@ -4,6 +4,7 @@ import { findPostsHandler } from '../../controllers/posts/findPosts.controller';
 import { findPostHandler } from '../../controllers/posts/findPost.controller';
 import { deletePostHandler } from '../../controllers/posts/deletePost.controller';
 import { patchPostHandler } from '../../controllers/posts/patchPost.controller';
+import { findMyPostsHandler } from '../../controllers/posts/findMyPosts.controller';
 import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
 
@@ -61,8 +62,8 @@ const routes = Router();
  *     - in: path
  *       name: postId
  *     responses:
- *       201:
- *         description: Created
+ *       200:
+ *         description: Ok
  *         content:
  *          application/json:
  *           schema:
@@ -102,7 +103,23 @@ const routes = Router();
  *         description: Continue
  *       404:
  *         description: Unable to delete post
+ * '/api/v1/post/myPosts':
+ *  get:
+ *     tags:
+ *     - Posts
+ *     summary: Return posts for the signed user
+ *     responses:
+ *       201:
+ *         description: Created
+ *         content:
+ *          application/json:
+ *           schema:
+ *              $ref: '#/components/schemas/Post'
+ *       404:
+ *         description: Posts not found
  */
+
+routes.route('/myPosts').get(requireUser, findMyPostsHandler);
 
 routes
   .route('/')
