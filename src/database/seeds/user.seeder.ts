@@ -5,27 +5,23 @@ import User from '../entities/User.Entity';
 export default class UserSeeder implements Seeder {
   public async run(
     dataSource: DataSource,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     factoryManager: SeederFactoryManager
   ): Promise<any> {
     const repository = dataSource.getRepository(User);
-    await repository.insert([
-      {
-        name: 'admin',
-        email: 'admin@mail.com',
-        password: 'admin123',
-        role: 'admin',
-      },
-      {
-        name: 'john doe',
-        email: 'user@mail.com',
-        password: '123123',
-        role: 'user',
-      },
-    ]);
 
-    const userFactory = factoryManager.get(User);
-    await userFactory.save();
+    const data = {
+      name: 'admin',
+      email: 'admin@mail.com',
+      password: 'admin123',
+      role: 'admin',
+    };
 
-    await userFactory.saveMany(5);
+    const userExists = await repository.findOneBy({ email: data.email });
+
+    if (!userExists) {
+      const newUser = repository.create(data);
+      await repository.save(newUser);
+    }
   }
 }

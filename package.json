@@ -33,7 +33,7 @@
     "typeorm:drop": "npm run typeorm schema:drop",
     "typeorm:sync": "npm run typeorm schema:sync",
     "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js -n ./src/database/dataSource.ts config",
-    "seed:run": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed --dataSource ./src/database/dataSource.ts",
+    "seed:run": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed -r ./src/database -d ./src/database/dataSource",
     "typeorm:test:sync": "cross-env NODE_ENV=test DOTENV_CONFIG_PATH=.env.test ts-node -r dotenv/config ./node_modules/typeorm/cli.js -- -d ./src/database/dataSource.ts schema:sync"
   },
   "repository": {
@@ -100,7 +100,6 @@
     "swagger-ui-express": "^4.1.6",
     "typeorm": "0.3.10",
     "typeorm-extension": "^2.1.10",
-    "typeorm-seeding": "^1.6.1",
     "winston": "^3.3.3",
     "yup": "^0.32.11"
   }

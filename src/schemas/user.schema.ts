@@ -4,20 +4,17 @@ import { object, string, InferType, mixed } from 'yup';
  * @openapi
  * components:
  *   schemas:
- *     UserCreation:
+ *     User:
  *       type: object
  *       required:
  *        - name
  *        - email
- *        - password
  *        - role
  *       properties:
  *         name:
  *           type: string
  *           maximun: 120
  *         email:
- *           type: string
- *         password:
  *           type: string
  *         role:
  *           type: string

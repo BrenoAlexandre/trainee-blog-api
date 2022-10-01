@@ -2,6 +2,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 import { SeederOptions } from 'typeorm-extension';
 import config from '../config/config';
 import logger from '../config/logger';
+import MainSeeder from './seeds/main.seeder';
 
 const options: DataSourceOptions & SeederOptions = {
   type: 'postgres',
@@ -13,6 +14,7 @@ const options: DataSourceOptions & SeederOptions = {
   logger: 'advanced-console',
   entities: [`${__dirname}/entities/*{.js,.ts}`],
   migrations: [`${__dirname}/migrations/*{.js,.ts}`],
+  seeds: [MainSeeder],
   synchronize: false,
   logging: false,
 };
@@ -25,7 +27,5 @@ AppDataSource.initialize()
   .catch((err) => {
     logger.error('Error during AppDataSource initialization:', err);
   });
-
-// runSeeders(AppDataSource);
 
 export default AppDataSource;
