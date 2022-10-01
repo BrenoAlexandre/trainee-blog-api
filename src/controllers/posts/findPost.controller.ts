@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import logger from '../../config/logger';
 import { ReadPostInput } from '../../schemas/post.schema';
 
-import { findPost } from '../../services/posts/post.service';
+import { findPost } from '../../services/post.service';
 
 export async function findPostHandler(
   request: Request<ReadPostInput['params'], {}, {}>,

@@ -1,10 +1,10 @@
 import { hash, compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { omit } from 'lodash';
-import config from '../../config/config';
-import User from '../../database/entities/User.Entity';
-import userRepository from '../../database/repositories/user.repository';
-import { CustomError } from '../../utils/customError.util';
+import config from '../config/config';
+import User from '../database/entities/User.Entity';
+import userRepository from '../database/repositories/user.repository';
+import { CustomError } from '../utils/customError.util';
 
 interface ICreateUserInput {
   name: string;

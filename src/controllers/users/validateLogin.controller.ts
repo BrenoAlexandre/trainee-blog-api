@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import logger from '../../config/logger';
 import { ValidateLoginInput } from '../../schemas/user.schema';
 
-import { validateLogin } from '../../services/users/user.service';
+import { validateLogin } from '../../services/user.service';
 
 export async function validateLoginHandler(
   request: Request<{}, {}, ValidateLoginInput['body']>,

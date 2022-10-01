@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import logger from '../../config/logger';
 import { UpdateUserInput } from '../../schemas/user.schema';
 
-import { updateUser } from '../../services/users/user.service';
+import { updateUser } from '../../services/user.service';
 
 export async function updateUserHandler(
   request: Request<{}, {}, UpdateUserInput['body']>,

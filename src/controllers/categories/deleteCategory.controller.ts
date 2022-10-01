@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import logger from '../../config/logger';
 import { DeleteCategoryInput } from '../../schemas/category.schema';
 
-import { deleteCategory } from '../../services/categories/category.service';
+import { deleteCategory } from '../../services/category.service';
 
 export async function deleteCategoryHandler(
   request: Request<DeleteCategoryInput['params'], {}, {}>,

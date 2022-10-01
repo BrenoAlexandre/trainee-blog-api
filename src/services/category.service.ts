@@ -1,6 +1,6 @@
-import User from '../../database/entities/User.Entity';
-import categoryRepository from '../../database/repositories/category.repository';
-import { CustomError } from '../../utils/customError.util';
+import User from '../database/entities/User.Entity';
+import categoryRepository from '../database/repositories/category.repository';
+import { CustomError } from '../utils/customError.util';
 
 interface ICreateCategoryInput {
   title: string;

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import logger from '../../config/logger';
 
-import { findMyPosts } from '../../services/posts/post.service';
+import { findMyPosts } from '../../services/post.service';
 
 export async function findMyPostsHandler(
   request: Request<{}, {}, {}>,

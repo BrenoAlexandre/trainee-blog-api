@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import logger from '../../config/logger';
 import { CreatePostInput } from '../../schemas/post.schema';
 
-import { createPost } from '../../services/posts/post.service';
+import { createPost } from '../../services/post.service';
 
 export async function createPostHandler(
   request: Request<{}, {}, CreatePostInput['body']>,

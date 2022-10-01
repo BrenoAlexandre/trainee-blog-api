@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import logger from '../../config/logger';
 import { DeletePostInput } from '../../schemas/post.schema';
 
-import { deletePost } from '../../services/posts/post.service';
+import { deletePost } from '../../services/post.service';
 
 export async function deletePostHandler(
   request: Request<DeletePostInput['params']>,

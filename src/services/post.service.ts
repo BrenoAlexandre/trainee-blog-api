@@ -1,5 +1,5 @@
-import postRepository from '../../database/repositories/post.repository';
-import { CustomError } from '../../utils/customError.util';
+import postRepository from '../database/repositories/post.repository';
+import { CustomError } from '../utils/customError.util';
 
 interface ICreatePostInput {
   title: string;

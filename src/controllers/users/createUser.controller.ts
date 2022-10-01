@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import logger from '../../config/logger';
 import { CreateUserInput } from '../../schemas/user.schema';
 
-import { createUser } from '../../services/users/user.service';
+import { createUser } from '../../services/user.service';
 
 export async function createUserHandler(
   request: Request<{}, {}, CreateUserInput['body']>,

@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import logger from '../../config/logger';
 import { ReadCategoryInput } from '../../schemas/category.schema';
 
-import { findCategory } from '../../services/categories/category.service';
+import { findCategory } from '../../services/category.service';
 
 export async function findCategoryHandler(
   request: Request<ReadCategoryInput['params'], {}, {}>,

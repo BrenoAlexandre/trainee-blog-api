@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import logger from '../../config/logger';
 import { CreateCategoryInput } from '../../schemas/category.schema';
 
-import { createCategory } from '../../services/categories/category.service';
+import { createCategory } from '../../services/category.service';
 
 export async function createCategoryHandler(
   request: Request<{}, {}, CreateCategoryInput['body']>,

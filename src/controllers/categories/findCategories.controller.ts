@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import logger from '../../config/logger';
 
-import { findCategories } from '../../services/categories/category.service';
+import { findCategories } from '../../services/category.service';
 
 export async function findCategoriesHandler(
   request: Request<{}, {}, {}>,

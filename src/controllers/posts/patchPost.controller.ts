@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import logger from '../../config/logger';
 import { UpdatePostInput } from '../../schemas/post.schema';
 
-import { patchPost } from '../../services/posts/post.service';
+import { patchPost } from '../../services/post.service';
 
 export async function patchPostHandler(
   request: Request<UpdatePostInput['params'], {}, UpdatePostInput['body']>,
