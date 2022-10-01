@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { createUserHandler } from '../../controllers/users/createUser.controller';
+import { updateUserHandler } from '../../controllers/users/updateUser.controller';
 import { validateLoginHandler } from '../../controllers/users/validateLogin.controller';
+import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
 
 import {
@@ -16,14 +18,14 @@ const routes = Router();
  *  post:
  *     tags:
  *     - Users
- *     summary: Create a user
+ *     summary: Create user
  *     security:
  *      - bearerAuth: []
  *     requestBody:
  *      content:
  *       application/json:
  *        schema:
- *           $ref: '#/components/schemas/User'
+ *           $ref: '#/components/schemas/UserCreation'
  *     responses:
  *       201:
  *         description: Created
@@ -31,11 +33,31 @@ const routes = Router();
  *          application/json:
  *           schema:
  *              $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Bad Request
+ * '/api/v1/user/login/':
+ *  post:
+ *     tags:
+ *     - Users
+ *     summary: Login
+ *     security:
+ *      - bearerAuth: []
+ *     requestBody:
+ *      content:
+ *       application/json:
+ *        schema:
+ *           $ref: '#/components/schemas/UserLogin'
+ *     responses:
+ *       200:
+ *         description: OK - Return authorization headers
  *       404:
- *         description: User not found
+ *         description: Not Found
  */
 
-routes.route('/').post([validateResource(createUserSchema)], createUserHandler);
+routes
+  .route('/')
+  .post([validateResource(createUserSchema)], createUserHandler)
+  .put([requireUser], updateUserHandler);
 routes
   .route('/login')
   .post([validateResource(validateLoginSchema)], validateLoginHandler);

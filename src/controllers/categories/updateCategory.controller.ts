@@ -19,8 +19,8 @@ export async function updateCategoryHandler(
     const { categoryId } = request.params;
     const { title } = request.body;
 
-    const category = await updateCategory(categoryId, title, user);
-    response.status(StatusCodes.CONTINUE).send(category);
+    await updateCategory(categoryId, title, user);
+    response.status(StatusCodes.CONTINUE).send();
   } catch (error) {
     logger.error(`updateCategoryHandler :>> ${error}`);
     next(error);

@@ -43,13 +43,12 @@ export async function findPost(postId: string) {
   return post;
 }
 
-export async function patchPost(input: IPatchInput) {
+export async function patchPost(input: IPatchInput): Promise<void> {
   const edited = await postRepository.patchPost(input);
 
   if (!edited) {
     throw CustomError.unprocess('Unable to update post');
   }
-  return edited;
 }
 
 export async function findMyPosts(ownerId: string) {
@@ -59,10 +58,9 @@ export async function findMyPosts(ownerId: string) {
   return post;
 }
 
-export async function deletePost(input: IDeleteInput) {
+export async function deletePost(input: IDeleteInput): Promise<void> {
   const { postId, userId } = input;
   const deleted = await postRepository.deletePost(postId, userId);
 
   if (!deleted) throw CustomError.unprocess('Unable to delete post');
-  return deleted;
 }

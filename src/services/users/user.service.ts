@@ -4,6 +4,7 @@ import { omit } from 'lodash';
 import config from '../../config/config';
 import User from '../../database/entities/User.Entity';
 import userRepository from '../../database/repositories/user.repository';
+import { CustomError } from '../../utils/customError.util';
 
 interface ICreateUserInput {
   name: string;
@@ -11,6 +12,11 @@ interface ICreateUserInput {
   password: string;
   passwordConfirmation: string;
   role: string;
+}
+
+interface IUpdateInput {
+  name: string;
+  user: User;
 }
 
 interface ILoginInput {
@@ -36,6 +42,17 @@ export async function createUser(
 
   const newUser = await userRepository.createUser(input);
   return newUser;
+}
+
+export async function updateUser(input: IUpdateInput): Promise<void> {
+  const { name, user } = input;
+  const { id } = user;
+
+  if (user.name === name) return;
+
+  const updatedUser = await userRepository.updateUserName(id.toString(), name);
+
+  if (!updatedUser) CustomError.notFound('User not found');
 }
 
 export async function validateLogin(input: ILoginInput) {

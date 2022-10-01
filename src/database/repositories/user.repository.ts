@@ -22,10 +22,10 @@ const userRepository = AppDataSource.getRepository(User).extend({
       .getOne();
     return user;
   },
-  async updateUserName(id: string, newName: string): Promise<boolean> {
+  async updateUserName(id: string, name: string): Promise<boolean> {
     const updateResult = await this.createQueryBuilder('user')
       .update(User)
-      .set({ name: newName })
+      .set({ name })
       .where('user.id = :id', { id })
       .execute();
 

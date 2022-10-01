@@ -72,7 +72,7 @@ const routes = Router();
  *         description: Not Found
  *  put:
  *     tags:
- *     - Posts
+ *     - Categories
  *     summary: Update a category
  *     security:
  *      - bearerAuth: []
@@ -93,7 +93,7 @@ const routes = Router();
  *         description: Unauthorized
  *  delete:
  *     tags:
- *     - Posts
+ *     - Categories
  *     summary: Delete a post
  *     security:
  *      - bearerAuth: []

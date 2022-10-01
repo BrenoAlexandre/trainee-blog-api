@@ -17,8 +17,8 @@ export async function deletePostHandler(
 
     const data = { postId, userId: user.id };
 
-    const post = await deletePost(data);
-    response.status(StatusCodes.CONTINUE).send(post);
+    await deletePost(data);
+    response.status(StatusCodes.CONTINUE).send();
   } catch (error) {
     logger.error(`deletePostHandler :>> ${error}`);
     next(error);

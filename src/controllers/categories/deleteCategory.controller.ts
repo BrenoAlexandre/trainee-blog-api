@@ -14,8 +14,8 @@ export async function deleteCategoryHandler(
     const { user } = response.locals;
     const { categoryId } = request.params;
 
-    const category = await deleteCategory(categoryId, user);
-    response.status(StatusCodes.CONTINUE).send({ category });
+    await deleteCategory(categoryId, user);
+    response.status(StatusCodes.CONTINUE).send();
   } catch (error) {
     logger.error(`deleteCategoryHandler :>> ${error}`);
     next(error);

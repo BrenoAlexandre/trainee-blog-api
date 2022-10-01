@@ -24,8 +24,8 @@ export async function patchPostHandler(
       ownerId: user.id,
     };
 
-    const post = await patchPost(data);
-    response.status(StatusCodes.CONTINUE).send(post);
+    await patchPost(data);
+    response.status(StatusCodes.CONTINUE).send();
   } catch (error) {
     logger.error(`patchPostHandler :>> ${error}`);
     next(error);

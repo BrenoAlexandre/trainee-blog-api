@@ -37,7 +37,7 @@ export async function updateCategory(
   categoryId: string,
   title: string,
   user: User
-) {
+): Promise<void> {
   const category = await categoryRepository.findCategoryById(categoryId);
 
   if (category?.posts.length)
@@ -53,17 +53,18 @@ export async function updateCategory(
     title
   );
 
-  if (!editedCategory) throw CustomError.badRequest('Category not found');
-  return editedCategory;
+  if (!editedCategory) throw CustomError.notFound('Category not found');
 }
 
-export async function deleteCategory(categoryId: string, user: User) {
+export async function deleteCategory(
+  categoryId: string,
+  user: User
+): Promise<void> {
   if (user.role !== 'admin') {
     CustomError.authorization('You dont have permission to delete a category');
   }
 
-  const category = await categoryRepository.deleteCategory(categoryId); // delete
+  const category = await categoryRepository.deleteCategory(categoryId);
 
-  if (!category) throw CustomError.badRequest('Category not found');
-  return category;
+  if (!category) throw CustomError.notFound('Category not found');
 }

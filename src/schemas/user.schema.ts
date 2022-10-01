@@ -4,7 +4,7 @@ import { object, string, InferType, mixed } from 'yup';
  * @openapi
  * components:
  *   schemas:
- *     User:
+ *     UserCreation:
  *       type: object
  *       required:
  *        - name
@@ -18,10 +18,41 @@ import { object, string, InferType, mixed } from 'yup';
  *         email:
  *           type: string
  *         password:
- *           type: number
+ *           type: string
  *         role:
  *           type: string
  *           enum: ['user', 'admin']
+ *     UserCreation:
+ *       type: object
+ *       required:
+ *        - name
+ *        - email
+ *        - password
+ *        - passwordConfirmation
+ *        - role
+ *       properties:
+ *         name:
+ *           type: string
+ *           maximun: 120
+ *         email:
+ *           type: string
+ *         password:
+ *           type: string
+ *         passwordConfirmation:
+ *           type: string
+ *         role:
+ *           type: string
+ *           enum: ['user', 'admin']
+ *     UserLogin:
+ *       type: object
+ *       required:
+ *        - email
+ *        - password
+ *       properties:
+ *         email:
+ *           type: string
+ *         password:
+ *           type: string
  */
 
 const payload = {
