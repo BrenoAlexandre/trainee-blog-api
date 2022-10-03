@@ -14,10 +14,12 @@ export async function validateLoginHandler(
     const { body } = request;
     const { email, password } = body;
     const data = { email, password };
-    const tokens = await validateLogin(data);
+    const { token, refreshToken } = await validateLogin(data);
+
     response
       .status(StatusCodes.OK)
-      .set({ authorization: tokens.token, refreshToken: tokens.refreshToken })
+      .setHeader('authorization', token)
+      .setHeader('refreshToken', refreshToken)
       .send();
   } catch (error) {
     logger.error(`validateLoginHandler :>> ${error}`);
