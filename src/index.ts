@@ -12,12 +12,16 @@ import deserializeUser from './middlewares/deserializeUser';
 import { handleErrorMiddleware } from './middlewares/handleError';
 import './database/dataSource';
 
+const corsOptions = {
+  exposedHeaders: 'Authorization',
+};
+
 const app = express();
 
 app.use(express.json());
 app.use(helmet());
 app.use(compression());
-app.use(cors());
+app.use(cors(corsOptions));
 app.options('*', cors());
 app.use(deserializeUser);
 
