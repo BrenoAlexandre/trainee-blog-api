@@ -59,7 +59,15 @@ const payload = {
 };
 
 const params = {
-  params: object({ postId: string().defined('postId is required') }),
+  params: object({
+    postId: string().defined('postId is required'),
+  }),
+};
+
+const categoryPostsParams = {
+  params: object({
+    categoryId: string().defined('categoryId is required'),
+  }),
 };
 
 export const createPostSchema = object({
@@ -79,7 +87,12 @@ export const getPostSchema = object({
   ...params,
 });
 
+export const getCategoryPostsSchema = object({
+  ...categoryPostsParams,
+});
+
 export type CreatePostInput = InferType<typeof createPostSchema>;
 export type UpdatePostInput = InferType<typeof updatePostSchema>;
 export type ReadPostInput = InferType<typeof getPostSchema>;
+export type ReadCategoryPostsInput = InferType<typeof getCategoryPostsSchema>;
 export type DeletePostInput = InferType<typeof deletePostSchema>;

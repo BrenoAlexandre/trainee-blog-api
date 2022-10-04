@@ -59,6 +59,14 @@ export async function findMyPosts(ownerId: string) {
   return post;
 }
 
+export async function findCategoryPosts(categoryId: string) {
+  const data = await postRepository.findPostsByCategory(categoryId);
+
+  if (!data) throw CustomError.notFound('Post not found');
+
+  return data;
+}
+
 export async function deletePost(input: IDeleteInput): Promise<void> {
   const { postId, userId } = input;
   const deleted = await postRepository.deletePost(postId, userId);

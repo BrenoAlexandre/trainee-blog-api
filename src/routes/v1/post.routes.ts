@@ -5,6 +5,7 @@ import { findPostHandler } from '../../controllers/posts/findPost.controller';
 import { deletePostHandler } from '../../controllers/posts/deletePost.controller';
 import { updatePostHandler } from '../../controllers/posts/updatePost.controller';
 import { findMyPostsHandler } from '../../controllers/posts/findMyPosts.controller';
+import { findCategoryPostsHandler } from '../../controllers/posts/findCategoryPosts.controller';
 import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
 
@@ -120,6 +121,10 @@ const routes = Router();
  */
 
 routes.route('/myPosts').get([requireUser], findMyPostsHandler);
+
+routes
+  .route('/category/:categoryId')
+  .get([requireUser], findCategoryPostsHandler);
 
 routes
   .route('/')
