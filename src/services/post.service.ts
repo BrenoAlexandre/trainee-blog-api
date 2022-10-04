@@ -43,12 +43,13 @@ export async function findPost(postId: string) {
   return post;
 }
 
-export async function patchPost(input: IPatchInput): Promise<void> {
+export async function patchPost(input: IPatchInput): Promise<boolean> {
   const edited = await postRepository.patchPost(input);
 
   if (!edited) {
     throw CustomError.unprocess('Unable to update post');
   }
+  return edited;
 }
 
 export async function findMyPosts(ownerId: string) {

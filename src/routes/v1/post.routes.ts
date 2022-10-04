@@ -3,7 +3,7 @@ import { createPostHandler } from '../../controllers/posts/createPost.controller
 import { findPostsHandler } from '../../controllers/posts/findPosts.controller';
 import { findPostHandler } from '../../controllers/posts/findPost.controller';
 import { deletePostHandler } from '../../controllers/posts/deletePost.controller';
-import { patchPostHandler } from '../../controllers/posts/patchPost.controller';
+import { updatePostHandler } from '../../controllers/posts/updatePost.controller';
 import { findMyPostsHandler } from '../../controllers/posts/findMyPosts.controller';
 import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
@@ -70,7 +70,7 @@ const routes = Router();
  *              $ref: '#/components/schemas/Post'
  *       404:
  *         description: Not Found
- *  patch:
+ *  put:
  *     tags:
  *     - Posts
  *     summary: Update post data
@@ -129,7 +129,7 @@ routes
 routes
   .route('/:postId')
   .get([validateResource(getPostSchema)], findPostHandler)
-  .patch([requireUser, validateResource(updatePostSchema)], patchPostHandler)
+  .put([requireUser, validateResource(updatePostSchema)], updatePostHandler)
   .delete([requireUser, validateResource(deletePostSchema)], deletePostHandler);
 
 export default routes;

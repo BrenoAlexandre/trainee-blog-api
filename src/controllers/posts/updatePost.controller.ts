@@ -5,7 +5,7 @@ import { UpdatePostInput } from '../../schemas/post.schema';
 
 import { patchPost } from '../../services/post.service';
 
-export async function patchPostHandler(
+export async function updatePostHandler(
   request: Request<UpdatePostInput['params'], {}, UpdatePostInput['body']>,
   response: Response,
   next: NextFunction
@@ -25,7 +25,7 @@ export async function patchPostHandler(
     };
 
     await patchPost(data);
-    response.status(StatusCodes.CONTINUE).send();
+    response.status(StatusCodes.CONTINUE).json({});
   } catch (error) {
     logger.error(`patchPostHandler :>> ${error}`);
     next(error);
