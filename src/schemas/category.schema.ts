@@ -11,6 +11,22 @@ import { object, string, InferType } from 'yup';
  *       properties:
  *         title:
  *           type: string
+ *         owner:
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: string
+ *             name:
+ *               type: string
+ *     CategoryPost:
+ *       type: object
+ *       required:
+ *        - title
+ *       properties:
+ *         title:
+ *           type: string
+ *         owner:
+ *           type: string
  *     CategoryPut:
  *       type: object
  *       required:

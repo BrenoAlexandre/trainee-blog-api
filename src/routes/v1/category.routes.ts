@@ -28,7 +28,7 @@ const routes = Router();
  *      content:
  *       application/json:
  *        schema:
- *           $ref: '#/components/schemas/Category'
+ *           $ref: '#/components/schemas/CategoryPost'
  *     responses:
  *       201:
  *         description: Created

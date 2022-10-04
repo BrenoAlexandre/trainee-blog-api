@@ -19,9 +19,19 @@ import { object, string, number, InferType } from 'yup';
  *         likes:
  *           type: number
  *         category:
- *           type: string
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: string
+ *             title:
+ *               type: string
  *         owner:
- *           type: string
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: string
+ *             name:
+ *               type: string
  *     PostPatch:
  *       type: object
  *       required:

@@ -21,6 +21,7 @@ const postRepository = AppDataSource.getRepository(Post).extend({
         'post.created_at',
         'owner.id',
         'owner.name',
+        'category.id',
         'category.title',
       ])
       .getOne();
@@ -41,6 +42,7 @@ const postRepository = AppDataSource.getRepository(Post).extend({
         'post.created_at',
         'owner.id',
         'owner.name',
+        'category.id',
         'category.title',
       ])
       .orderBy('post.created_at', order)
@@ -66,6 +68,7 @@ const postRepository = AppDataSource.getRepository(Post).extend({
         'post.created_at',
         'owner.id',
         'owner.name',
+        'category.id',
         'category.title',
       ])
       .orderBy('post.created_at', order)
@@ -90,6 +93,7 @@ const postRepository = AppDataSource.getRepository(Post).extend({
         'post.likes',
         'post.created_at',
         'owner.name',
+        'category.id',
         'category.title',
       ])
       .orderBy('post.created_at', order)

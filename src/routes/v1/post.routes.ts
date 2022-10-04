@@ -119,7 +119,7 @@ const routes = Router();
  *         description: Posts not found
  */
 
-routes.route('/myPosts').get(requireUser, findMyPostsHandler);
+routes.route('/myPosts').get([requireUser], findMyPostsHandler);
 
 routes
   .route('/')

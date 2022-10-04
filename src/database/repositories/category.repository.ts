@@ -43,7 +43,7 @@ const categoryRepository = AppDataSource.getRepository(Category).extend({
   async findCategories(order: 'ASC' | 'DESC' = 'ASC'): Promise<Category[]> {
     const categories = await this.createQueryBuilder('category')
       .innerJoinAndSelect('category.owner', 'owner')
-      .select(['category.id', 'category.title', 'owner.name'])
+      .select(['category.id', 'category.title', 'owner.id', 'owner.name'])
       .orderBy('category.created_at', order)
       .getMany();
 
