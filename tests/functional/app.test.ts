@@ -1,5 +1,14 @@
 import supertest from 'supertest';
-import app from '../../src/index';
+import app from '../../src/app';
+import db from '../db';
+
+beforeAll(async () => {
+  await db.create();
+});
+
+afterAll(async () => {
+  await db.close();
+});
 
 describe('App', () => {
   it('should return hello world', async () => {

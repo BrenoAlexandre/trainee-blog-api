@@ -28,6 +28,7 @@ const envVarsSchema = yup
     JWT_SECRET: yup.string().required('Secret is required').default('1q2w3e4r'),
     POSTGRES_HOST: yup.string(), // .required('POSTGRES_HOST is required'),
     POSTGRES_PORT: yup.number().default(5432),
+    POSTGRES_TEST_PORT: yup.number().default(5432),
     POSTGRES_USER: yup.string(), // .required('POSTGRES_USER is required'),
     POSTGRES_PASSWORD: yup.string(), // .required('POSTGRES_PASSWORD is required'),
     POSTGRES_DB: yup.string(), // .required('POSTGRES_DB is required'),
@@ -50,6 +51,7 @@ const config = {
   postgresDb: {
     host: envVars.POSTGRES_HOST,
     port: envVars.POSTGRES_PORT,
+    testPort: envVars.POSTGRES_TEST_PORT,
     username: envVars.POSTGRES_USER,
     password: envVars.POSTGRES_PASSWORD,
     database: envVars.POSTGRES_DB,
