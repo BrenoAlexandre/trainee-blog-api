@@ -14,7 +14,7 @@ export async function findUserHandler(
     const { userId } = request.params;
 
     const user = await findUser(userId);
-    response.status(StatusCodes.OK).json({ user });
+    response.status(StatusCodes.OK).json(user);
   } catch (error) {
     logger.error(`findUserHandler :>> ${error}`);
     next(error);
