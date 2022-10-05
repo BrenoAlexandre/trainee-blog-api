@@ -6,6 +6,7 @@ import { deletePostHandler } from '../../controllers/posts/deletePost.controller
 import { updatePostHandler } from '../../controllers/posts/updatePost.controller';
 import { findMyPostsHandler } from '../../controllers/posts/findMyPosts.controller';
 import { findCategoryPostsHandler } from '../../controllers/posts/findCategoryPosts.controller';
+import { findUserPostsHandler } from '../../controllers/posts/findUserPosts.controller';
 import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
 
@@ -118,6 +119,44 @@ const routes = Router();
  *              $ref: '#/components/schemas/Post'
  *       404:
  *         description: Posts not found
+ * '/api/v1/post/category/:categoryId':
+ *  get:
+ *     tags:
+ *     - Posts
+ *     summary: Return all posts from a category
+ *     security:
+ *      - bearerAuth: []
+ *     parameters:
+ *     - in: path
+ *       name: categoryId
+ *     responses:
+ *       201:
+ *         description: Created
+ *         content:
+ *          application/json:
+ *           schema:
+ *              $ref: '#/components/schemas/Post'
+ *       404:
+ *         description: Posts not found
+ * '/api/v1/post/user/:userId':
+ *  get:
+ *     tags:
+ *     - Posts
+ *     summary: Return all posts from a user
+ *     security:
+ *      - bearerAuth: []
+ *     parameters:
+ *     - in: path
+ *       name: userId
+ *     responses:
+ *       201:
+ *         description: Created
+ *         content:
+ *          application/json:
+ *           schema:
+ *              $ref: '#/components/schemas/Post'
+ *       404:
+ *         description: Posts not found
  */
 
 routes.route('/myPosts').get([requireUser], findMyPostsHandler);
@@ -125,6 +164,8 @@ routes.route('/myPosts').get([requireUser], findMyPostsHandler);
 routes
   .route('/category/:categoryId')
   .get([requireUser], findCategoryPostsHandler);
+
+routes.route('/user/:userId').get([requireUser], findUserPostsHandler);
 
 routes
   .route('/')

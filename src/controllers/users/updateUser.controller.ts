@@ -16,7 +16,7 @@ export async function updateUserHandler(
     const { name } = body;
 
     await updateUser({ name, user });
-    response.status(StatusCodes.CREATED).send();
+    response.status(StatusCodes.OK).send();
   } catch (error) {
     logger.error(`updateUserHandler :>> ${error}`);
     next(error);

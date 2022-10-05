@@ -92,6 +92,7 @@ const postRepository = AppDataSource.getRepository(Post).extend({
         'post.description',
         'post.likes',
         'post.created_at',
+        'owner.id',
         'owner.name',
         'category.id',
         'category.title',

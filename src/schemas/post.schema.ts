@@ -70,6 +70,12 @@ const categoryPostsParams = {
   }),
 };
 
+const userPostsParams = {
+  params: object({
+    userId: string().defined('userId is required'),
+  }),
+};
+
 export const createPostSchema = object({
   ...payload,
 });
@@ -91,8 +97,13 @@ export const getCategoryPostsSchema = object({
   ...categoryPostsParams,
 });
 
+export const getUserPostsSchema = object({
+  ...userPostsParams,
+});
+
 export type CreatePostInput = InferType<typeof createPostSchema>;
 export type UpdatePostInput = InferType<typeof updatePostSchema>;
 export type ReadPostInput = InferType<typeof getPostSchema>;
 export type ReadCategoryPostsInput = InferType<typeof getCategoryPostsSchema>;
+export type ReadUserPostsInput = InferType<typeof getUserPostsSchema>;
 export type DeletePostInput = InferType<typeof deletePostSchema>;

@@ -35,6 +35,29 @@ const routes = Router();
  *              $ref: '#/components/schemas/User'
  *       400:
  *         description: Bad Request
+ *  put:
+ *     tags:
+ *     - Users
+ *     summary: Create user
+ *     security:
+ *      - bearerAuth: []
+ *     requestBody:
+ *      content:
+ *       application/json:
+ *        schema:
+ *           type: object
+ *           properties:
+ *             name:
+ *               type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *           schema:
+ *              $ref: '#/components/schemas/User'
+ *       404:
+ *         description: Not Found
  * '/api/v1/user/login/':
  *  post:
  *     tags:

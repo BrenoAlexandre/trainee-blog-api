@@ -62,7 +62,15 @@ export async function findMyPosts(ownerId: string) {
 export async function findCategoryPosts(categoryId: string) {
   const data = await postRepository.findPostsByCategory(categoryId);
 
-  if (!data) throw CustomError.notFound('Post not found');
+  if (!data) throw CustomError.notFound('Posts not found');
+
+  return data;
+}
+
+export async function findUserPosts(userId: string) {
+  const data = await postRepository.findPostsByOwner(userId);
+
+  if (!data) throw CustomError.notFound('Posts not found');
 
   return data;
 }
