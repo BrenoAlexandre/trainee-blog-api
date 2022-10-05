@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { createUserHandler } from '../../controllers/users/createUser.controller';
 import { updateUserHandler } from '../../controllers/users/updateUser.controller';
 import { validateLoginHandler } from '../../controllers/users/validateLogin.controller';
+import { findUserHandler } from '../../controllers/users/getUser.controller';
 import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
 
@@ -81,6 +82,9 @@ routes
   .route('/')
   .post([validateResource(createUserSchema)], createUserHandler)
   .put([requireUser], updateUserHandler);
+
+routes.route('/:userId').get(findUserHandler);
+
 routes
   .route('/login')
   .post([validateResource(validateLoginSchema)], validateLoginHandler);

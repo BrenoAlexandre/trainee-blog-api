@@ -12,7 +12,7 @@ const userRepository = AppDataSource.getRepository(User).extend({
   async findUserById(id: string): Promise<Omit<User, 'password'> | null> {
     const user = await this.createQueryBuilder('user')
       .where('user.id = :id', { id })
-      .select(['user.id', 'user.name'])
+      .select(['user.id', 'user.name', 'user.email', 'user.role'])
       .getOne();
     return omit(user, ['password']);
   },

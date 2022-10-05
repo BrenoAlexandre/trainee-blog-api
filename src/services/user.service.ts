@@ -29,7 +29,7 @@ export async function createUser(
 ): Promise<Omit<User, 'password'>> {
   const { email, password, passwordConfirmation } = input;
   if (!password || password !== passwordConfirmation) {
-    throw new Error(`Password confirmation doesn't match.`);
+    throw CustomError.badRequest(`Password confirmation doesn't match.`);
   }
 
   const passwordHash = await hash(password, config.saltWorkFactor);
@@ -38,10 +38,18 @@ export async function createUser(
   user.password = passwordHash;
 
   const emailRegistered = await userRepository.findUserByEmail(email);
-  if (emailRegistered) throw new Error('Email already in use.');
+  if (emailRegistered) throw CustomError.unprocess('Email already in use.');
 
   const newUser = await userRepository.createUser(input);
   return newUser;
+}
+
+export async function findUser(id: string): Promise<Omit<User, 'password'>> {
+  const user = await userRepository.findUserById(id);
+
+  if (!user) throw CustomError.notFound('User not found');
+
+  return user;
 }
 
 export async function updateUser(input: IUpdateInput): Promise<void> {
@@ -52,7 +60,7 @@ export async function updateUser(input: IUpdateInput): Promise<void> {
 
   const updatedUser = await userRepository.updateUserName(id.toString(), name);
 
-  if (!updatedUser) CustomError.notFound('User not found');
+  if (!updatedUser) throw CustomError.notFound('User not found');
 }
 
 export async function validateLogin(input: ILoginInput) {
@@ -61,7 +69,7 @@ export async function validateLogin(input: ILoginInput) {
   if (!user) throw new Error('Incorrect login');
 
   const isPasswordCorrect = await compare(password, user.password);
-  if (!isPasswordCorrect) throw new Error('Incorrect login');
+  if (!isPasswordCorrect) throw CustomError.badRequest('Incorrect login');
 
   const secureUser = omit(user, 'password');
   const token = sign(secureUser, config.jwtSecret, {
