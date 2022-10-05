@@ -42,6 +42,7 @@ export class Category2064394383905 implements MigrationInterface {
             columnNames: ['owner_id'],
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
+            onDelete: 'SET NULL',
           },
         ],
       }),
