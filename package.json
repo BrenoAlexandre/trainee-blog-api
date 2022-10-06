@@ -28,12 +28,14 @@
     "typeorm:migrate": "npm run typeorm migration:generate -- -n",
     "typeorm:migrate:create": "npm run typeorm migration:create -- -n",
     "typeorm:run": "npm run typeorm migration:run -- -d ./src/database/dataSource.ts",
+    "typeorm:run:test": "npm run typeorm migration:run -- -d ./tests/db.ts",
     "typeorm:deploy:run": "npm run typeorm:deploy migration:run",
     "typeorm:undo": "npm run typeorm migration:revert -- -d ./src/database/dataSource.ts",
     "typeorm:drop": "npm run typeorm schema:drop",
     "typeorm:sync": "npm run typeorm schema:sync",
     "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js -n ./src/database/dataSource.ts config",
     "seed:run": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed -r ./src/database -d ./src/database/dataSource",
+    "seed:test:run": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed -r ./tests -d ./tests/db",
     "typeorm:test:sync": "cross-env NODE_ENV=test DOTENV_CONFIG_PATH=.env.test ts-node -r dotenv/config ./node_modules/typeorm/cli.js -- -d ./src/database/dataSource.ts schema:sync"
   },
   "repository": {

@@ -1,19 +1,15 @@
 import supertest from 'supertest';
 import app from '../../src/app';
-import db from '../db';
+import { connection } from '../db';
 
-beforeAll(async () => {
-  await db.create();
-});
+beforeAll(async () => connection.create());
 
-afterAll(async () => {
-  await db.close();
-});
+afterAll(async () => connection.close());
 
 describe('App', () => {
   it('should return hello world', async () => {
-    const { text, status } = await supertest(app).get('/');
-    expect(status).toBe(200);
-    expect(text).toBe('Hello world');
+    const res = await supertest(app).get('/api/healthcheck');
+    expect(res.status).toBe(200);
+    expect(res.text).toBe('OK');
   });
 });

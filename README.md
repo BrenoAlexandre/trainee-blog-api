@@ -10,15 +10,21 @@ Ter o Docker instalado e rodar o seguinte comando
 
 Copiar as variáveis do .env.example para um arquivo .env
 
-# Seed
+# Criar Tabelas
 
 Digite os comandos:
 
 `$ yarn typeorm:run`
 
+`$ yarn typeorm:run:test`
+
+# Seed
+
 `$ yarn seed:run`
 
-Isso criará a tabela de usuários e os primeiros registros no banco
+`$ yarn seed:test:run`
+
+Isso criará os primeiros registros no banco
 
 ## Registros criados
 

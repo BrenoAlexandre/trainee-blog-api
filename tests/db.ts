@@ -1,5 +1,5 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { runSeeder, SeederOptions } from 'typeorm-extension';
+import { SeederOptions, runSeeder } from 'typeorm-extension';
 import MainSeeder from './functional/seeds/main.seeder';
 import logger from '../src/config/logger';
 import config from '../src/config/config';
@@ -12,26 +12,24 @@ const options: DataSourceOptions & SeederOptions = {
   password: config.postgresDb.password,
   database: config.postgresDb.database,
   logger: 'advanced-console',
-  entities: [`${__dirname}/entities/*{.js,.ts}`],
-  migrations: [`${__dirname}/migrations/*{.js,.ts}`],
+  entities: ['./src/database/entities/*.Entity{.js,.ts}'],
+  migrations: ['./src/database/migrations/*{.js,.ts}'],
   seeds: [MainSeeder],
   synchronize: false,
   logging: false,
 };
 
 const AppDataSource = new DataSource(options);
-const connection = {
+export const connection = {
   async create() {
-    AppDataSource.initialize()
-      .then(async () => {
-        logger.info('Postgres connected :>> AppDataSource initialized.');
-        await runSeeder(AppDataSource, MainSeeder).then(() => {
-          logger.info('Postgres populated :>> Seeds ran.');
-        });
-      })
-      .catch((err) => {
-        logger.error('Error during AppDataSource initialization:', err);
-      });
+    try {
+      await AppDataSource.initialize();
+      logger.info('Postgres connected :>> AppDataSource initialized.');
+      await runSeeder(AppDataSource, MainSeeder);
+      logger.info('Postgres populated :>> Seeds ran.');
+    } catch (err) {
+      logger.error('Error during test AppDataSource initialization :>>', err);
+    }
   },
 
   async close() {
@@ -46,4 +44,4 @@ const connection = {
   },
 };
 
-export default connection;
+export default AppDataSource;
