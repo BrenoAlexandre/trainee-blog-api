@@ -1,4 +1,5 @@
 import postRepository from '../database/repositories/post.repository';
+import { IFindParams } from '../interfaces/IFindParams';
 import { CustomError } from '../utils/customError.util';
 
 interface ICreatePostInput {
@@ -29,8 +30,8 @@ export async function createPost(input: ICreatePostInput) {
   return newPost;
 }
 
-export async function findPosts() {
-  const posts = await postRepository.findPosts();
+export async function findPosts(findOptions: IFindParams) {
+  const posts = await postRepository.findPosts(findOptions);
 
   if (posts.length === 0) throw CustomError.notFound('Posts not found');
   return posts;

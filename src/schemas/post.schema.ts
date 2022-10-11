@@ -64,6 +64,15 @@ const params = {
   }),
 };
 
+const postsQueryParams = {
+  params: object({
+    page: string().defined('Page number is required'),
+    take: number()
+      .min(0, 'Invalid number')
+      .defined('Take number must be at least 0'),
+  }),
+};
+
 const categoryPostsParams = {
   params: object({
     categoryId: string().defined('categoryId is required'),
@@ -93,6 +102,10 @@ export const getPostSchema = object({
   ...params,
 });
 
+export const getPaginatedPostsSchema = object({
+  ...postsQueryParams,
+});
+
 export const getCategoryPostsSchema = object({
   ...categoryPostsParams,
 });
@@ -104,6 +117,7 @@ export const getUserPostsSchema = object({
 export type CreatePostInput = InferType<typeof createPostSchema>;
 export type UpdatePostInput = InferType<typeof updatePostSchema>;
 export type ReadPostInput = InferType<typeof getPostSchema>;
+export type ReadPaginatedPostsInput = InferType<typeof getPaginatedPostsSchema>;
 export type ReadCategoryPostsInput = InferType<typeof getCategoryPostsSchema>;
 export type ReadUserPostsInput = InferType<typeof getUserPostsSchema>;
 export type DeletePostInput = InferType<typeof deletePostSchema>;

@@ -169,8 +169,9 @@ routes.route('/user/:userId').get([requireUser], findUserPostsHandler);
 
 routes
   .route('/')
-  .get(findPostsHandler)
   .post([requireUser, validateResource(createPostSchema)], createPostHandler);
+
+routes.route('/query=page-:page&take-:take').get(findPostsHandler);
 
 routes
   .route('/:postId')

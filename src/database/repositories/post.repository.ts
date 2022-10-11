@@ -1,6 +1,7 @@
 import AppDataSource from '../dataSource';
 import { ICreatePost, IUpdatePost } from '../../models/post.model';
 import Post from '../entities/Post.Entity';
+import { IFindParams } from '../../interfaces/IFindParams';
 
 const postRepository = AppDataSource.getRepository(Post).extend({
   async createPost(data: ICreatePost): Promise<Post> {
@@ -29,8 +30,7 @@ const postRepository = AppDataSource.getRepository(Post).extend({
     if (!post) return null;
     return post;
   },
-  async findPosts(order: 'ASC' | 'DESC' = 'ASC'): Promise<Post[]> {
-    //! Implementar paginação
+  async findPosts({ pagination, order }: IFindParams): Promise<Post[]> {
     const posts = await this.createQueryBuilder('post')
       .innerJoinAndSelect('post.owner', 'owner')
       .innerJoinAndSelect('post.category', 'category')
@@ -45,6 +45,8 @@ const postRepository = AppDataSource.getRepository(Post).extend({
         'category.id',
         'category.title',
       ])
+      .skip(pagination.page * pagination.take)
+      .take(pagination.take)
       .orderBy('post.created_at', order)
       .getMany();
 
