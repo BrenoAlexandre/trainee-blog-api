@@ -144,7 +144,7 @@ const routes = Router();
  *              $ref: '#/components/schemas/Post'
  *       404:
  *         description: Posts not found
- * '/api/v1/query=page-:page&take-:take':
+ * '/api/v1/page=:page&take=:take':
  *  get:
  *     tags:
  *     - Posts
@@ -186,7 +186,7 @@ routes
   .route('/')
   .post([requireUser, validateResource(createPostSchema)], createPostHandler);
 
-routes.route('/query=page-:page&take-:take').get(findPostsHandler);
+routes.route('/page=:page&take=:take').get(findPostsHandler);
 
 routes
   .route('/:postId')
