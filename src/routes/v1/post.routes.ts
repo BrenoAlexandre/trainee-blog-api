@@ -144,7 +144,7 @@ const routes = Router();
  *              $ref: '#/components/schemas/Post'
  *       404:
  *         description: Posts not found
- * '/api/v1/page=:page&take=:take':
+ * '/api/v1/post/page=:page&take=:take':
  *  get:
  *     tags:
  *     - Posts
