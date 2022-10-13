@@ -42,19 +42,6 @@ const routes = Router();
  *              $ref: '#/components/schemas/Post'
  *       404:
  *         description: Not Found
- *  get:
- *     tags:
- *     - Posts
- *     summary: Return public posts
- *     responses:
- *       200:
- *         description: OK
- *         content:
- *          application/json:
- *           schema:
- *            $ref: '#/components/schemas/Post'
- *       404:
- *         description: Not Found
  * '/api/v1/post/:postId':
  *  get:
  *     tags:
@@ -157,6 +144,34 @@ const routes = Router();
  *              $ref: '#/components/schemas/Post'
  *       404:
  *         description: Posts not found
+ * '/api/v1/query=page-:page&take-:take':
+ *  get:
+ *     tags:
+ *     - Posts
+ *     summary: Return public posts
+ *     parameters:
+ *     - in: path
+ *       name: page
+ *     - in: path
+ *       name: take
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *           schema:
+ *            type: object
+ *            properties:
+ *              data:
+ *                type: array
+ *                items:
+ *                  $ref: '#/components/schemas/Post'
+ *              previous:
+ *                type: number
+ *              next:
+ *                type: number
+ *       404:
+ *         description: Not Found
  */
 
 routes.route('/myPosts').get([requireUser], findMyPostsHandler);
