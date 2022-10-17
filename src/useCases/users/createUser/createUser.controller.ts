@@ -3,15 +3,14 @@ import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import { Body, Post, SuccessResponse } from 'tsoa';
 import logger from '../../../config/logger';
 import { IController } from '../../../interfaces/IController';
+import { IUseCase } from '../../../interfaces/IUseCase';
 import { CreateUserInput } from '../../../schemas/user.schema';
-
-import { CreateUserUseCase } from './createUserUseCase';
 import { ICreateUserInput } from './interface';
 
 @SuccessResponse(StatusCodes.CREATED, ReasonPhrases.CREATED)
 @Post()
 export class CreateUserController implements IController {
-  constructor(private createUserUseCase: CreateUserUseCase) {}
+  constructor(private createUserUseCase: IUseCase) {}
 
   public async handler(
     @Body() request: Request<{}, {}, CreateUserInput['body']>,

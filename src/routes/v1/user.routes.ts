@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import createUserController from '../../useCases/users/createUser';
-import { updateUserHandler } from '../../controllers/users/updateUser.controller';
+import updateUserController from '../../useCases/users/updateUser';
 import validateLoginController from '../../useCases/users/login';
-import { findUserHandler } from '../../controllers/users/getUser.controller';
+import findUserController from '../../useCases/users/findUser';
 import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
 
 import {
   createUserSchema,
+  ReadUserInput,
   validateLoginSchema,
 } from '../../schemas/user.schema';
 
@@ -86,9 +87,21 @@ routes
       createUserController.handler(req, res, next);
     }
   )
-  .put([requireUser], updateUserHandler);
+  .put([requireUser], (req: Request, res: Response, next: NextFunction) => {
+    updateUserController.handler(req, res, next);
+  });
 
-routes.route('/:userId').get(findUserHandler);
+routes
+  .route('/:userId')
+  .get(
+    (
+      req: Request<ReadUserInput['params'], {}, {}>,
+      res: Response,
+      next: NextFunction
+    ) => {
+      findUserController.handler(req, res, next);
+    }
+  );
 
 routes
   .route('/login')

@@ -5,11 +5,11 @@ import logger from '../../../config/logger';
 import { ValidateLoginInput } from '../../../schemas/user.schema';
 import { IController } from '../../../interfaces/IController';
 
-import { LoginUseCase } from './loginUseCase';
 import { ILoginInput } from './interfaces';
+import { IUseCase } from '../../../interfaces/IUseCase';
 
 export class LoginController implements IController {
-  constructor(private loginUseCase: LoginUseCase) {}
+  constructor(private loginUseCase: IUseCase) {}
 
   @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
   @Post('/login')
