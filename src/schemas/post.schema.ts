@@ -67,9 +67,7 @@ const params = {
 const postsQueryParams = {
   params: object({
     page: string().defined('Page number is required'),
-    take: number()
-      .min(0, 'Invalid number')
-      .defined('Take number must be at least 0'),
+    take: string().defined('Take number must be at least 0'),
   }),
 };
 

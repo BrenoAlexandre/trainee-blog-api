@@ -1,14 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import { /* Body, Path, */ Post, SuccessResponse } from 'tsoa';
+import { /* Body, Path, */ Get, Route, SuccessResponse } from 'tsoa';
 import logger from '../../../config/logger';
 import { IUseCase } from '../../../interfaces/IUseCase';
 
-@SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
-@Post('{userId}')
+@Route('users')
 export class FindUserController {
   constructor(private findUserUseCase: IUseCase) {}
 
+  @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
+  @Get('{userId}')
   public async handler(
     // @Path() userId: number,
     /* @Body() */

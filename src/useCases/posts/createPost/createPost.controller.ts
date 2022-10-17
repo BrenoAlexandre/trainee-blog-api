@@ -7,7 +7,7 @@ import logger from '../../../config/logger';
 import { CreatePostInput } from '../../../schemas/post.schema';
 import CreatePostUseCase from './createPostUseCase';
 
-@Route('Users')
+@Route('posts')
 export class CreatePostController implements IController {
   constructor(private createPostUseCase: CreatePostUseCase) {}
 

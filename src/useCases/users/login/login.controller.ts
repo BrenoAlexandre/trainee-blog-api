@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import { Post, Body, SuccessResponse } from 'tsoa';
+import { Post, Body, Route, SuccessResponse } from 'tsoa';
 import logger from '../../../config/logger';
 import { ValidateLoginInput } from '../../../schemas/user.schema';
 import { IController } from '../../../interfaces/IController';
@@ -8,10 +8,11 @@ import { IController } from '../../../interfaces/IController';
 import { ILoginInput } from './interfaces';
 import { IUseCase } from '../../../interfaces/IUseCase';
 
+@Route('users')
 export class LoginController implements IController {
   constructor(private loginUseCase: IUseCase) {}
 
-  @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
+  @SuccessResponse(StatusCodes.CONTINUE, ReasonPhrases.CONTINUE)
   @Post('/login')
   public async handler(
     @Body() request: Request<{}, {}, ValidateLoginInput['body']>,
@@ -26,7 +27,7 @@ export class LoginController implements IController {
 
       const { token, refreshToken } = await this.loginUseCase.execute(data);
       response
-        .status(StatusCodes.OK)
+        .status(StatusCodes.CONTINUE)
         .setHeader('authorization', token)
         .setHeader('refreshToken', refreshToken)
         .send();

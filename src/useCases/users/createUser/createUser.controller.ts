@@ -1,17 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import { Body, Post, SuccessResponse } from 'tsoa';
+import { Body, Post, Route, SuccessResponse } from 'tsoa';
 import logger from '../../../config/logger';
 import { IController } from '../../../interfaces/IController';
 import { IUseCase } from '../../../interfaces/IUseCase';
 import { CreateUserInput } from '../../../schemas/user.schema';
 import { ICreateUserInput } from './interface';
 
-@SuccessResponse(StatusCodes.CREATED, ReasonPhrases.CREATED)
-@Post()
+@Route('users')
 export class CreateUserController implements IController {
   constructor(private createUserUseCase: IUseCase) {}
 
+  @SuccessResponse(StatusCodes.CREATED, ReasonPhrases.CREATED)
+  @Post()
   public async handler(
     @Body() request: Request<{}, {}, CreateUserInput['body']>,
     response: Response,

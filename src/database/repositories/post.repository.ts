@@ -105,7 +105,7 @@ const postRepository = AppDataSource.getRepository(Post).extend({
     if (!posts) return [];
     return posts;
   },
-  async patchPost(data: IUpdatePost): Promise<boolean> {
+  async updatePost(data: IUpdatePost): Promise<boolean> {
     const { title, description, categoryId, postId, ownerId } = data;
     const patchBlock = { title, description, category: categoryId };
     const updateResult = await this.createQueryBuilder('post')

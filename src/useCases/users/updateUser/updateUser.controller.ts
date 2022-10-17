@@ -1,17 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import { Body, Post, SuccessResponse } from 'tsoa';
+import { Body, Put, Route, SuccessResponse } from 'tsoa';
 import logger from '../../../config/logger';
 import { IController } from '../../../interfaces/IController';
 import { IUseCase } from '../../../interfaces/IUseCase';
 import { UpdateUserInput } from '../../../schemas/user.schema';
 import { IUpdateInput } from './interfaces';
 
+@Route('users')
 export class UpdateUserController implements IController {
   constructor(private updateUserUseCase: IUseCase) {}
 
-  @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
-  @Post()
+  @SuccessResponse(StatusCodes.CONTINUE, ReasonPhrases.CONTINUE)
+  @Put()
   public async handler(
     @Body() request: Request<{}, {}, UpdateUserInput['body']>,
     response: Response,
@@ -26,7 +27,7 @@ export class UpdateUserController implements IController {
 
       await this.updateUserUseCase.execute(data);
 
-      response.status(StatusCodes.OK).send();
+      response.status(StatusCodes.CONTINUE).send();
     } catch (error) {
       logger.error(`updateUserController :>> ${error}`);
       next(error);
