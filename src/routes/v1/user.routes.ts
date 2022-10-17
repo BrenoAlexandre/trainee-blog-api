@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import { createUserHandler } from '../../controllers/users/createUser.controller';
+import { NextFunction, Request, Response, Router } from 'express';
+import createUserController from '../../useCases/users/createUser';
 import { updateUserHandler } from '../../controllers/users/updateUser.controller';
-import { validateLoginHandler } from '../../controllers/users/validateLogin.controller';
+import validateLoginController from '../../useCases/users/login';
 import { findUserHandler } from '../../controllers/users/getUser.controller';
 import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
@@ -80,13 +80,23 @@ const routes = Router();
 
 routes
   .route('/')
-  .post([validateResource(createUserSchema)], createUserHandler)
+  .post(
+    [validateResource(createUserSchema)],
+    (req: Request, res: Response, next: NextFunction) => {
+      createUserController.handler(req, res, next);
+    }
+  )
   .put([requireUser], updateUserHandler);
 
 routes.route('/:userId').get(findUserHandler);
 
 routes
   .route('/login')
-  .post([validateResource(validateLoginSchema)], validateLoginHandler);
+  .post(
+    [validateResource(validateLoginSchema)],
+    (req: Request, res: Response, next: NextFunction) => {
+      validateLoginController.handler(req, res, next);
+    }
+  );
 
 export default routes;

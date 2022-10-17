@@ -1,4 +1,4 @@
-import Post from '../../database/entities/Post.Entity';
+import Post from '../../../database/entities/Post.Entity';
 
 export interface ICreatePostResponse {
   newPost: Post;

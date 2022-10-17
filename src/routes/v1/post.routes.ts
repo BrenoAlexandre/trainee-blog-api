@@ -1,5 +1,5 @@
 import { Router, NextFunction, Request, Response } from 'express';
-import createPostController from '../../useCases/createPost';
+import createPostController from '../../useCases/posts/createPost';
 import { findPostsHandler } from '../../controllers/posts/findPosts.controller';
 import { findPostHandler } from '../../controllers/posts/findPost.controller';
 import { deletePostHandler } from '../../controllers/posts/deletePost.controller';
