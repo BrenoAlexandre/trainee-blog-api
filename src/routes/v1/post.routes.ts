@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import { createPostHandler } from '../../controllers/posts/createPost.controller';
+import { Router, NextFunction, Request, Response } from 'express';
+import createPostController from '../../useCases/createPost';
 import { findPostsHandler } from '../../controllers/posts/findPosts.controller';
 import { findPostHandler } from '../../controllers/posts/findPost.controller';
 import { deletePostHandler } from '../../controllers/posts/deletePost.controller';
@@ -184,7 +184,12 @@ routes.route('/user/:userId').get([requireUser], findUserPostsHandler);
 
 routes
   .route('/')
-  .post([requireUser, validateResource(createPostSchema)], createPostHandler);
+  .post(
+    [requireUser, validateResource(createPostSchema)],
+    (req: Request, res: Response, next: NextFunction) => {
+      createPostController.handler(req, res, next);
+    }
+  );
 
 routes.route('/page=:page&take=:take').get(findPostsHandler);
 
