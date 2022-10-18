@@ -24,7 +24,7 @@ export class FindUserController {
 
       response.status(StatusCodes.OK).json(user);
     } catch (error) {
-      logger.error(`findUserHandler :>> ${error}`);
+      logger.error(`findUserController :>> ${error}`);
       next(error);
     }
   }

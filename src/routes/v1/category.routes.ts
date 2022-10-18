@@ -1,15 +1,18 @@
-import { Router } from 'express';
-import { createCategoryHandler } from '../../controllers/categories/createCategory.controller';
-import { findCategoriesHandler } from '../../controllers/categories/findCategories.controller';
-import { findCategoryHandler } from '../../controllers/categories/findCategory.controller';
-import { updateCategoryHandler } from '../../controllers/categories/updateCategory.controller';
-import { deleteCategoryHandler } from '../../controllers/categories/deleteCategory.controller';
+import { NextFunction, Request, Response, Router } from 'express';
+import createCategoryController from '../../useCases/categories/createCategory';
+import findCategoriesController from '../../useCases/categories/findCategories';
+import findCategoryController from '../../useCases/categories/findCategory';
+import updateCategoryController from '../../useCases/categories/updateCategory';
+import deleteCategoryController from '../../useCases/categories/deleteCategory';
 import requireUser from '../../middlewares/requireUser';
 import validateResource from '../../middlewares/validateResource';
 
 import {
   createCategorySchema,
+  DeleteCategoryInput,
   deleteCategorySchema,
+  ReadCategoryInput,
+  UpdateCategoryInput,
   updateCategorySchema,
 } from '../../schemas/category.schema';
 
@@ -113,20 +116,48 @@ routes
   .route('/')
   .post(
     [requireUser, validateResource(createCategorySchema)],
-    createCategoryHandler
+    (req: Request, res: Response, next: NextFunction) => {
+      createCategoryController.handler(req, res, next);
+    }
   )
-  .get(findCategoriesHandler);
+  .get((req: Request, res: Response, next: NextFunction) => {
+    findCategoriesController.handler(req, res, next);
+  });
 
 routes
   .route('/:categoryId')
-  .get(findCategoryHandler)
+  .get(
+    (
+      req: Request<ReadCategoryInput['params'], {}, {}>,
+      res: Response,
+      next: NextFunction
+    ) => {
+      findCategoryController.handler(req, res, next);
+    }
+  )
   .put(
     [requireUser, validateResource(updateCategorySchema)],
-    updateCategoryHandler
+    (
+      req: Request<
+        UpdateCategoryInput['params'],
+        {},
+        UpdateCategoryInput['body']
+      >,
+      res: Response,
+      next: NextFunction
+    ) => {
+      updateCategoryController.handler(req, res, next);
+    }
   )
   .delete(
     [requireUser, validateResource(deleteCategorySchema)],
-    deleteCategoryHandler
+    (
+      req: Request<DeleteCategoryInput['params'], {}, {}>,
+      res: Response,
+      next: NextFunction
+    ) => {
+      deleteCategoryController.handler(req, res, next);
+    }
   );
 
 export default routes;
