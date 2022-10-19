@@ -1,31 +1,21 @@
-import { NextFunction, Request, Response } from 'express';
+import * as Express from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-import { Delete, Route, SuccessResponse } from 'tsoa';
-import logger from '../../../config/logger';
-import { IController } from '../../../interfaces/IController';
-import { IUseCase } from '../../../interfaces/IUseCase';
+import { Delete, Path, Request, Route, SuccessResponse, Tags } from 'tsoa';
+import { UUID } from '../../../interfaces';
+import { DeleteCategoryUseCase } from './DeleteCategoryUseCase';
 
-@Route('categories')
-export class DeleteCategoryController implements IController {
-  constructor(private deleteCategoryUseCase: IUseCase) {}
+@Route('category')
+@Tags('categories')
+export class DeleteCategoryController {
+  constructor(private deleteCategoryUseCase: DeleteCategoryUseCase) {}
 
   @SuccessResponse(StatusCodes.CONTINUE, ReasonPhrases.CONTINUE)
   @Delete('{categoryId}')
   public async handler(
-    // @Path() categoryId: UUID
-    request: Request,
-    response: Response,
-    next: NextFunction
+    @Path() categoryId: UUID,
+    @Request() request: Express.Request
   ) {
-    try {
-      const { user } = response.locals;
-      const { categoryId } = request.params;
-
-      await this.deleteCategoryUseCase.execute({ categoryId, user });
-      response.status(StatusCodes.CONTINUE).send();
-    } catch (error) {
-      logger.error(`deleteCategoryController :>> ${error}`);
-      next(error);
-    }
+    const { user } = request.body;
+    await this.deleteCategoryUseCase.execute({ categoryId, user });
   }
 }

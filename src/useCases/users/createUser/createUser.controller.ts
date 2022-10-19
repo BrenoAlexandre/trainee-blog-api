@@ -1,40 +1,29 @@
-import { NextFunction, Request, Response } from 'express';
+import * as Express from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import { Body, Post, Route, SuccessResponse } from 'tsoa';
-import logger from '../../../config/logger';
-import { IController } from '../../../interfaces/IController';
-import { IUseCase } from '../../../interfaces/IUseCase';
-import { CreateUserInput } from '../../../schemas/user.schema';
+import { Post, Request, Route, SuccessResponse } from 'tsoa';
+import { injectable } from 'tsyringe';
+import { CreateUserUseCase } from './createUserUseCase';
 import { ICreateUserInput } from './interface';
 
+@injectable()
 @Route('users')
-export class CreateUserController implements IController {
-  constructor(private createUserUseCase: IUseCase) {}
+export class CreateUserController {
+  constructor(private createUserUseCase: CreateUserUseCase) {}
 
   @SuccessResponse(StatusCodes.CREATED, ReasonPhrases.CREATED)
   @Post()
-  public async handler(
-    @Body() request: Request<{}, {}, CreateUserInput['body']>,
-    response: Response,
-    next: NextFunction
-  ) {
-    try {
-      const { body } = request;
-      const { name, email, password, passwordConfirmation, role } = body;
+  public async handler(@Request() request: Express.Request) {
+    const { name, email, password, passwordConfirmation, role } = request.body;
 
-      const data: ICreateUserInput = {
-        name,
-        email,
-        password,
-        passwordConfirmation,
-        role,
-      };
+    const data: ICreateUserInput = {
+      name,
+      email,
+      password,
+      passwordConfirmation,
+      role,
+    };
 
-      const user = await this.createUserUseCase.execute(data);
-      response.status(StatusCodes.CREATED).json(user);
-    } catch (error) {
-      logger.error(`createUserController :>> ${error}`);
-      next(error);
-    }
+    const user = await this.createUserUseCase.execute(data);
+    return user;
   }
 }

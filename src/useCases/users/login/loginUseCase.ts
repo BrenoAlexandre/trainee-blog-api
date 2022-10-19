@@ -1,15 +1,16 @@
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { omit } from 'lodash';
+import { singleton } from 'tsyringe';
 import config from '../../../config/config';
 import User from '../../../database/entities/User.Entity';
-import UserRepository from '../../../database/repositories/user.repository';
-import { IUseCase } from '../../../interfaces/IUseCase';
+import { IUseCase, IUserRepository } from '../../../interfaces';
 import { CustomError } from '../../../utils/customError.util';
 import { ILoginInput } from './interfaces';
 
+@singleton()
 export class LoginUseCase implements IUseCase {
-  constructor(private userRepository: typeof UserRepository) {}
+  constructor(private userRepository: IUserRepository) {}
 
   private async getUser(input: ILoginInput): Promise<User> {
     const { email } = input;

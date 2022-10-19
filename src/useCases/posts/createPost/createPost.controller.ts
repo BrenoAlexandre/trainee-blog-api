@@ -1,41 +1,28 @@
-import { NextFunction, Request, Response } from 'express';
+import * as Express from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import { Route, SuccessResponse, Post, Body } from 'tsoa';
-import { ICreatePostInput } from './interfaces';
-import { IController } from '../../../interfaces/IController';
-import logger from '../../../config/logger';
-import { CreatePostInput } from '../../../schemas/post.schema';
+import { Route, SuccessResponse, Post, Request } from 'tsoa';
 import CreatePostUseCase from './createPostUseCase';
+import { ICreatePostInput } from './interfaces';
 
 @Route('posts')
-export class CreatePostController implements IController {
+export class CreatePostController {
   constructor(private createPostUseCase: CreatePostUseCase) {}
 
   @SuccessResponse(StatusCodes.CREATED, ReasonPhrases.CREATED)
   @Post()
-  public async handler(
-    @Body() request: Request<{}, {}, CreatePostInput['body']>,
-    response: Response,
-    next: NextFunction
-  ) {
-    try {
-      const { user } = response.locals;
-      const { body } = request;
-      const { title, description, category, likes = 0 } = body;
+  public async handler(@Request() request: Express.Request) {
+    const { body } = request;
+    const { title, description, category, likes = 0, user } = body;
 
-      const data: ICreatePostInput = {
-        title,
-        description,
-        likes,
-        category,
-        owner: user.id,
-      };
+    const data: ICreatePostInput = {
+      title,
+      description,
+      likes,
+      category,
+      owner: user.id,
+    };
 
-      const newPost = await this.createPostUseCase.execute(data);
-      response.status(StatusCodes.CREATED).json(newPost);
-    } catch (error) {
-      logger.error(`createPostController :>> ${error}`);
-      next(error);
-    }
+    const newPost = await this.createPostUseCase.execute(data);
+    return newPost;
   }
 }

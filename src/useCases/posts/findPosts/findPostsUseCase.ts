@@ -1,10 +1,10 @@
-import PostRepository from '../../../database/repositories/post.repository';
 import { CustomError } from '../../../utils/customError.util';
 import { IUseCase } from '../../../interfaces/IUseCase';
 import { IFindParams } from '../../../interfaces/IFindParams';
+import { IPostRepository } from '../../../interfaces';
 
 export class FindPostsUseCase implements IUseCase {
-  constructor(private postRepository: typeof PostRepository) {}
+  constructor(private postRepository: IPostRepository) {}
 
   public async execute({ page, take }: { page: string; take: string }) {
     const pageNumber = parseInt(page, 10);

@@ -1,10 +1,10 @@
-import CategoryRepository from '../../../database/repositories/category.repository';
 import User from '../../../database/entities/User.Entity';
 import { CustomError } from '../../../utils/customError.util';
 import { IUseCase } from '../../../interfaces/IUseCase';
+import { ICategoryRepository } from '../../../interfaces';
 
 export class UpdateCategoryUseCase implements IUseCase {
-  constructor(private categoryRepository: typeof CategoryRepository) {}
+  constructor(private categoryRepository: ICategoryRepository) {}
 
   public async execute({
     categoryId,

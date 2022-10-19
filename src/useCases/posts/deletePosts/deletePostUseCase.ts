@@ -1,10 +1,9 @@
-import PostRepository from '../../../database/repositories/post.repository';
-import { IUseCase } from '../../../interfaces/IUseCase';
+import { IPostRepository, IUseCase } from '../../../interfaces';
 import { CustomError } from '../../../utils/customError.util';
 import { IDeleteInput } from './interfaces';
 
 export class DeletePostUseCase implements IUseCase {
-  constructor(private postRepository: typeof PostRepository) {}
+  constructor(private postRepository: IPostRepository) {}
 
   public async execute(input: IDeleteInput): Promise<void> {
     const { postId, userId } = input;

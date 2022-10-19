@@ -1,30 +1,16 @@
-import { NextFunction, Request, Response } from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-import { Get, Route, SuccessResponse } from 'tsoa';
-import logger from '../../../config/logger';
-import { IController } from '../../../interfaces/IController';
-import { IUseCase } from '../../../interfaces/IUseCase';
+import { Get, Path, Route, SuccessResponse } from 'tsoa';
+import { UUID } from '../../../interfaces';
+import { FindUserPostsUseCase } from './findUserPostsUseCase';
 
 @Route('posts')
-export class FindUserPostsController implements IController {
-  constructor(private findUserPostsUseCase: IUseCase) {}
+export class FindUserPostsController {
+  constructor(private findUserPostsUseCase: FindUserPostsUseCase) {}
 
   @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
   @Get('user/{userId}')
-  public async handler(
-    // @Path() userId: string
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) {
-    try {
-      const { userId } = request.params;
-
-      const post = await this.findUserPostsUseCase.execute(userId);
-      response.status(StatusCodes.OK).json(post);
-    } catch (error) {
-      logger.error(`findUserPostsController :>> ${error}`);
-      next(error);
-    }
+  public async handler(@Path() userId: UUID) {
+    const post = await this.findUserPostsUseCase.execute(userId);
+    return post;
   }
 }

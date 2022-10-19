@@ -1,12 +1,27 @@
 {
   "entryFile": "src/index.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
-  "controllerPathGlobs": ["src/**/*controller.ts"],
+  "controllerPathGlobs": ["src/**/*.controller.ts"],
   "spec": {
-    "outputDirectory": "build",
-    "specVersion": 3
+    "outputDirectory": "dist",
+    "specVersion": 3,
+    "securityDefinitions": {
+      "api_key": {
+        "type": "jwt",
+        "name": "authorization",
+        "in": "headers"
+      }
+    }
+  },
+  "swagger": {
+    "outputDirectory": "."
   },
   "routes": {
-    "routesDir": "build"
+    "basePath": "/",
+    "entryFile": "src/index.ts",
+    "routesDir": "src/routes",
+    "iocModule": "src/tsyringeTsoaIocContainer.ts",
+    "controllerPathGlobs": ["src/useCases/**/*.controller.ts"],
+    "custome-module": ["src/database/entities/*.Entity.ts"]
   }
 }

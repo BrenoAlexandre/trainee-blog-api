@@ -1,31 +1,21 @@
-import { NextFunction, Request, Response } from 'express';
+import * as Express from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import { Put, Route, SuccessResponse } from 'tsoa';
-import logger from '../../../config/logger';
-import { IUseCase } from '../../../interfaces/IUseCase';
+import { Path, Put, Request, Route, SuccessResponse, Tags } from 'tsoa';
+import { UUID } from '../../../interfaces';
+import { UpdateCategoryUseCase } from './updateCategoryUseCase';
 
-@Route('categories')
+@Route('category')
+@Tags('categories')
 export class UpdateCategoryController {
-  constructor(private updateCategoryUseHandler: IUseCase) {}
+  constructor(private updateCategoryUseHandler: UpdateCategoryUseCase) {}
 
   @SuccessResponse(StatusCodes.CONTINUE, ReasonPhrases.CONTINUE)
   @Put('{categoryId}')
   public async handler(
-    // Path() categoryId: UUID
-    request: Request,
-    response: Response,
-    next: NextFunction
+    @Path() categoryId: UUID,
+    @Request() request: Express.Request
   ) {
-    try {
-      const { user } = response.locals;
-      const { categoryId } = request.params;
-      const { title } = request.body;
-
-      await this.updateCategoryUseHandler.execute({ categoryId, title, user });
-      response.status(StatusCodes.CONTINUE).send();
-    } catch (error) {
-      logger.error(`updateCategoryController :>> ${error}`);
-      next(error);
-    }
+    const { user, title } = request.body;
+    await this.updateCategoryUseHandler.execute({ categoryId, title, user });
   }
 }

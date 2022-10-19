@@ -1,12 +1,13 @@
 import Post from '../../../database/entities/Post.Entity';
-import postRepository from '../../../database/repositories/post.repository';
-import { IUseCase } from '../../../interfaces/IUseCase';
+import { IPostRepository, IUseCase } from '../../../interfaces';
 import { ICreatePostInput } from './interfaces';
 import { CustomError } from '../../../utils/customError.util';
 
 export default class CreatePostUseCase implements IUseCase {
+  constructor(private postRepository: IPostRepository) {}
+
   public async execute(input: ICreatePostInput): Promise<Post> {
-    const newPost = await postRepository.createPost(input);
+    const newPost = await this.postRepository.createPost(input);
 
     if (!newPost) throw CustomError.unprocess('Unable to create post');
     return newPost;

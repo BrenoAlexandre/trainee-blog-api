@@ -1,10 +1,11 @@
-import CategoryRepository from '../../../database/repositories/category.repository';
+import { ICategoryRepository } from '../../../interfaces';
 import { IUseCase } from '../../../interfaces/IUseCase';
 import { CustomError } from '../../../utils/customError.util';
-import { ICreateCategoryInput } from './inerfaces';
+import { ICreateCategoryResponseDTO } from './createCategoryResponseDTO';
+import { ICreateCategoryInput } from './interfaces';
 
 export class CreateCategoryUseCase implements IUseCase {
-  constructor(private categoryRepository: typeof CategoryRepository) {}
+  constructor(private categoryRepository: ICategoryRepository) {}
 
   private validate(user: ICreateCategoryInput['user']) {
     if (user.role !== 'admin') {
@@ -14,7 +15,9 @@ export class CreateCategoryUseCase implements IUseCase {
     }
   }
 
-  public async execute(input: ICreateCategoryInput) {
+  public async execute(
+    input: ICreateCategoryInput
+  ): Promise<ICreateCategoryResponseDTO['newCategory']> {
     const { user } = input;
 
     this.validate(user);

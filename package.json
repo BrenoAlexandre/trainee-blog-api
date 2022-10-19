@@ -36,7 +36,8 @@
     "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js -n ./src/database/dataSource.ts config",
     "seed:run": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed -r ./src/database -d ./src/database/dataSource",
     "seed:test:run": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed -r ./tests -d ./tests/db",
-    "typeorm:test:sync": "cross-env NODE_ENV=test DOTENV_CONFIG_PATH=.env.test ts-node -r dotenv/config ./node_modules/typeorm/cli.js -- -d ./src/database/dataSource.ts schema:sync"
+    "typeorm:test:sync": "cross-env NODE_ENV=test DOTENV_CONFIG_PATH=.env.test ts-node -r dotenv/config ./node_modules/typeorm/cli.js -- -d ./src/database/dataSource.ts schema:sync",
+    "run:tsoa": "tsoa spec-and-routes && tsc && tsoa swagger"
   },
   "repository": {
     "type": "git",
@@ -83,6 +84,7 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
+    "@tsoa/runtime": "^4.1.3",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
@@ -97,10 +99,11 @@
     "morgan": "^1.10.0",
     "nanoid": "^3.1.30",
     "pg": "^8.8.0",
-    "reflect-metadata": "^0.1.10",
+    "reflect-metadata": "^0.1.13",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.1.6",
     "tsoa": "^4.1.3",
+    "tsyringe": "^4.7.0",
     "typeorm": "0.3.10",
     "typeorm-extension": "^2.1.10",
     "typeorm-pagination": "^2.0.3",

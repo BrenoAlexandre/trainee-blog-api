@@ -1,10 +1,12 @@
+import { singleton } from 'tsyringe';
 import { IUseCase } from '../../../interfaces/IUseCase';
 import { CustomError } from '../../../utils/customError.util';
+import { IUserRepository } from '../../../interfaces';
 import { IUpdateInput } from './interfaces';
-import UserRepository from '../../../database/repositories/user.repository';
 
+@singleton()
 export class UpdateUserUseCase implements IUseCase {
-  constructor(private userRepository: typeof UserRepository) {}
+  constructor(private userRepository: IUserRepository) {}
 
   public async execute(input: IUpdateInput): Promise<void> {
     const { name, user } = input;

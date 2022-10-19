@@ -1,36 +1,25 @@
-import { NextFunction, Request, Response } from 'express';
+import * as Express from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-import { Body, Post, Route, SuccessResponse } from 'tsoa';
-import logger from '../../../config/logger';
-import { IController } from '../../../interfaces/IController';
-import { IUseCase } from '../../../interfaces/IUseCase';
-import { CreateCategoryInput } from '../../../schemas/category.schema';
-import { ICreateCategoryInput } from './inerfaces';
+import { Post, Request, Route, SuccessResponse, Tags } from 'tsoa';
+import { ICreateCategoryResponseDTO } from './createCategoryResponseDTO';
+import { CreateCategoryUseCase } from './createCategoryUseCase';
+import { ICreateCategoryInput } from './interfaces';
 
-@Route('categories')
-export class CreateCategoryController implements IController {
-  constructor(private createCategoryUseCase: IUseCase) {}
+@Route('category')
+@Tags('categories')
+export class CreateCategoryController {
+  constructor(private createCategoryUseCase: CreateCategoryUseCase) {}
 
   @SuccessResponse(StatusCodes.CREATED, ReasonPhrases.CREATED)
   @Post()
-  public async handler(
-    @Body() request: Request<{}, {}, CreateCategoryInput['body']>,
-    response: Response,
-    next: NextFunction
-  ) {
-    try {
-      const { user } = response.locals;
-      const { body } = request;
-      const { title } = body;
+  public async handler(@Request() request: Express.Request) {
+    const { title, user } = request.body;
 
-      const data: ICreateCategoryInput = { title, user };
+    const data: ICreateCategoryInput = { title, user };
 
-      const product = await this.createCategoryUseCase.execute(data);
+    const category: ICreateCategoryResponseDTO['newCategory'] =
+      await this.createCategoryUseCase.execute(data);
 
-      response.status(StatusCodes.CREATED).json(product);
-    } catch (error) {
-      logger.error(`createCategoryController :>> ${error}`);
-      next(error);
-    }
+    return category;
   }
 }

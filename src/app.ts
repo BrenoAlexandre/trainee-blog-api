@@ -7,7 +7,10 @@ import cors from 'cors';
 import config, { environments } from './config/config';
 import deserializeUser from './middlewares/deserializeUser';
 import { handleErrorMiddleware } from './middlewares/handleError';
-import routes from './routes';
+// import { RegisterRoutes } from '../dist/src/routes/routes';
+import { RegisterRoutes } from './routes/routes';
+
+import './useCases/users/createUser';
 
 const corsOptions = {
   exposedHeaders: 'Authorization',
@@ -26,7 +29,7 @@ if (config.env !== environments.PRODUCTION) {
   app.use(morgan('tiny'));
 }
 
-routes(app);
+RegisterRoutes(app);
 app.use(handleErrorMiddleware);
 
 export default app;

@@ -1,9 +1,9 @@
-import PostRepository from '../../../database/repositories/post.repository';
+import { IPostRepository } from '../../../interfaces';
 import { IUseCase } from '../../../interfaces/IUseCase';
 import { CustomError } from '../../../utils/customError.util';
 
 export class FindPostUseCase implements IUseCase {
-  constructor(private postRepository: typeof PostRepository) {}
+  constructor(private postRepository: IPostRepository) {}
 
   public async execute(postId: string) {
     const post = await this.postRepository.findPostById(postId);
