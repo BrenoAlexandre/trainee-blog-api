@@ -1,10 +1,8 @@
-import UserRepository from '../../../database/repositories/user.repository';
+import { UserRepository } from '../../../services/implementation/UserRepository';
 import { CreateUserController } from './createUser.controller';
 import { CreateUserUseCase } from './createUserUseCase';
 
-const userRepository = UserRepository;
+const userRepository = new UserRepository();
 
 const useCase = new CreateUserUseCase(userRepository);
-const controller = new CreateUserController(useCase);
-
-export default controller;
+export const controller = new CreateUserController(useCase);

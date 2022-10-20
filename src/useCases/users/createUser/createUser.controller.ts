@@ -1,21 +1,34 @@
-import * as Express from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import { Post, Request, Route, SuccessResponse } from 'tsoa';
+import { Body, Controller, Post, Route, SuccessResponse, Tags } from 'tsoa';
 import { injectable } from 'tsyringe';
+import { IUser } from '../../../models/user.model';
 import { CreateUserUseCase } from './createUserUseCase';
-import { ICreateUserInput } from './interface';
+import { RequestDTO } from './RequestDTO';
 
 @injectable()
-@Route('users')
-export class CreateUserController {
-  constructor(private createUserUseCase: CreateUserUseCase) {}
+@Route('user')
+export class CreateUserController extends Controller {
+  constructor(private createUserUseCase: CreateUserUseCase) {
+    super();
+  }
 
+  /**
+   * A partir dos dados abaixo, um novo usuário é criado.
+   * @summary Cria um novo usuário.
+   */
+  @Tags('users')
   @SuccessResponse(StatusCodes.CREATED, ReasonPhrases.CREATED)
   @Post()
-  public async handler(@Request() request: Express.Request) {
-    const { name, email, password, passwordConfirmation, role } = request.body;
+  public async handler(@Body() requestBody: RequestDTO): Promise<IUser> {
+    const {
+      name,
+      email,
+      password,
+      passwordConfirmation,
+      role = 'user',
+    } = requestBody;
 
-    const data: ICreateUserInput = {
+    const data: RequestDTO = {
       name,
       email,
       password,

@@ -7,10 +7,7 @@ import cors from 'cors';
 import config, { environments } from './config/config';
 import deserializeUser from './middlewares/deserializeUser';
 import { handleErrorMiddleware } from './middlewares/handleError';
-// import { RegisterRoutes } from '../dist/src/routes/routes';
-import { RegisterRoutes } from './routes/routes';
-
-import './useCases/users/createUser';
+import { RegisterRoutes } from './routes';
 
 const corsOptions = {
   exposedHeaders: 'Authorization',

@@ -1,16 +1,17 @@
 import { hash } from 'bcrypt';
 import { singleton } from 'tsyringe';
 import config from '../../../config/config';
+import { IUseCase } from '../../../interfaces';
 import { CustomError } from '../../../utils/customError.util';
-import { IUseCase, IUserRepository } from '../../../interfaces';
-import { ICreateUserInput } from './interface';
-import { IUser } from '../../../models/user.model';
+import { UserRepository } from '../../../services/implementation/UserRepository';
+import { RequestDTO } from './RequestDTO';
+import { ResponseDTO } from './ResponseDTO';
 
 @singleton()
 export class CreateUserUseCase implements IUseCase {
-  constructor(private userRepository: IUserRepository) {}
+  constructor(private userRepository: UserRepository) {}
 
-  public async execute(input: ICreateUserInput): Promise<IUser> {
+  public async execute(input: RequestDTO): Promise<ResponseDTO> {
     const { email, password, passwordConfirmation } = input;
     if (!password || password !== passwordConfirmation) {
       throw CustomError.badRequest(`Password confirmation doesn't match.`);

@@ -10,5 +10,5 @@ export interface ICreateUser {
   email: string;
   password: string;
   passwordConfirmation: string;
-  role: string;
+  role?: 'user' | 'admin';
 }

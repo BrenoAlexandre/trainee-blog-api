@@ -1,13 +1,13 @@
-import { omit } from 'lodash';
+import { omit, pick } from 'lodash';
 import AppDataSource from '../dataSource';
 import { ICreateUser, IUser } from '../../models/user.model';
 import User from '../entities/User.Entity';
 
-const userRepository = AppDataSource.getRepository(User).extend({
+export const userRepository = AppDataSource.getRepository(User).extend({
   async createUser(data: ICreateUser): Promise<IUser> {
     const user = this.create(data);
     const newUser = await this.save(user);
-    return newUser;
+    return pick(newUser, ['id', 'name', 'email', 'role']);
   },
   async findUserById(id: string): Promise<IUser | null> {
     const user = await this.createQueryBuilder('user')
@@ -34,5 +34,3 @@ const userRepository = AppDataSource.getRepository(User).extend({
     await this.delete(id);
   },
 });
-
-export default userRepository;

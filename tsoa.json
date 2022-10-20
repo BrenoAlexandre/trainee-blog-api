@@ -1,10 +1,13 @@
 {
   "entryFile": "src/index.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
-  "controllerPathGlobs": ["src/**/*.controller.ts"],
+  "controllerPathGlobs": ["src/useCases/**/*.controller.ts"],
   "spec": {
-    "outputDirectory": "dist",
+    "outputDirectory": "src",
     "specVersion": 3,
+    "schemes": ["http", "https"],
+    "host": "localhost:3001",
+    "basePath": "/api/v1",
     "securityDefinitions": {
       "api_key": {
         "type": "jwt",
@@ -17,11 +20,11 @@
     "outputDirectory": "."
   },
   "routes": {
-    "basePath": "/",
+    "basePath": "/api/v1",
     "entryFile": "src/index.ts",
-    "routesDir": "src/routes",
-    "iocModule": "src/tsyringeTsoaIocContainer.ts",
-    "controllerPathGlobs": ["src/useCases/**/*.controller.ts"],
+    "routesDir": "src",
+    "iocModule": "src/iocConfig.ts",
     "custome-module": ["src/database/entities/*.Entity.ts"]
-  }
+  },
+  "ignore": ["**/node_modules/**"]
 }

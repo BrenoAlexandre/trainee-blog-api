@@ -4,13 +4,14 @@ import { omit } from 'lodash';
 import { singleton } from 'tsyringe';
 import config from '../../../config/config';
 import User from '../../../database/entities/User.Entity';
-import { IUseCase, IUserRepository } from '../../../interfaces';
+import { IUseCase } from '../../../interfaces';
+import { UserRepository } from '../../../services/implementation/UserRepository';
 import { CustomError } from '../../../utils/customError.util';
 import { ILoginInput } from './interfaces';
 
 @singleton()
 export class LoginUseCase implements IUseCase {
-  constructor(private userRepository: IUserRepository) {}
+  constructor(private userRepository: UserRepository) {}
 
   private async getUser(input: ILoginInput): Promise<User> {
     const { email } = input;

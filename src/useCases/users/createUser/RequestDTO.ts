@@ -1,7 +1,7 @@
-export interface ICreateUserInput {
+export interface RequestDTO {
   name: string;
   email: string;
   password: string;
   passwordConfirmation: string;
-  role: string;
+  role?: 'user' | 'admin';
 }

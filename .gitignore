@@ -132,4 +132,7 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
+src/swagger.json
+src/routes.ts
+
 # End of https://www.toptal.com/developers/gitignore/api/node
