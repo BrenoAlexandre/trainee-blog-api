@@ -1,3 +1,4 @@
+export * from './IAuthRequest';
 export * from './ICategoryRepository';
 export * from './IController';
 export * from './IFindParams';

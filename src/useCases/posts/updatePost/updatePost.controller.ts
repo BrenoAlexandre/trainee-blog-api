@@ -1,14 +1,15 @@
 import * as Express from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-import { Path, Put, Request, Route, SuccessResponse } from 'tsoa';
+import { Path, Put, Request, Route, SuccessResponse, Tags } from 'tsoa';
 import { UUID } from '../../../interfaces';
 import { IUpdateInput } from './interfaces';
 import { UpdatePostUseCase } from './updatePostUseCase';
 
-@Route('posts')
+@Route('post')
 export class UpdatePostController {
   constructor(private updatePostUseCase: UpdatePostUseCase) {}
 
+  @Tags('Posts')
   @SuccessResponse(StatusCodes.CONTINUE, ReasonPhrases.CONTINUE)
   @Put('{postId}')
   public async handler(

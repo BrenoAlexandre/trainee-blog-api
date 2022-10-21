@@ -9,10 +9,10 @@
     "host": "localhost:3001",
     "basePath": "/api/v1",
     "securityDefinitions": {
-      "api_key": {
-        "type": "jwt",
-        "name": "authorization",
-        "in": "headers"
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   },
@@ -24,7 +24,8 @@
     "entryFile": "src/index.ts",
     "routesDir": "src",
     "iocModule": "src/iocConfig.ts",
-    "custome-module": ["src/database/entities/*.Entity.ts"]
+    "custome-module": ["src/database/entities/*.Entity.ts"],
+    "authenticationModule": "src/middlewares/expressAuthentication.ts"
   },
   "ignore": ["**/node_modules/**"]
 }

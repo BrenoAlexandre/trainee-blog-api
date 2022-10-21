@@ -13,9 +13,7 @@ import { ILoginInput } from './interfaces';
 export class LoginUseCase implements IUseCase {
   constructor(private userRepository: UserRepository) {}
 
-  private async getUser(input: ILoginInput): Promise<User> {
-    const { email } = input;
-
+  private async getUser(email: string): Promise<User> {
     const user = await this.userRepository.findUserByEmail(email);
     if (!user) throw CustomError.badRequest('Incorrect login');
 
@@ -30,9 +28,10 @@ export class LoginUseCase implements IUseCase {
   }
 
   public async execute(input: ILoginInput) {
-    const user = await this.getUser(input);
+    const { email, password } = input;
+    const user = await this.getUser(email);
 
-    this.validate(user, input.password);
+    this.validate(user, password);
 
     const secureUser = omit(user, 'password');
     const token = sign(secureUser, config.jwtSecret, {

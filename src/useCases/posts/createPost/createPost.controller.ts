@@ -1,13 +1,14 @@
 import * as Express from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import { Route, SuccessResponse, Post, Request } from 'tsoa';
+import { Route, SuccessResponse, Post, Request, Tags } from 'tsoa';
 import CreatePostUseCase from './createPostUseCase';
 import { ICreatePostInput } from './interfaces';
 
-@Route('posts')
+@Route('post')
 export class CreatePostController {
   constructor(private createPostUseCase: CreatePostUseCase) {}
 
+  @Tags('Posts')
   @SuccessResponse(StatusCodes.CREATED, ReasonPhrases.CREATED)
   @Post()
   public async handler(@Request() request: Express.Request) {

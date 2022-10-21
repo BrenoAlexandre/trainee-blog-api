@@ -5,7 +5,6 @@ import helmet from 'helmet';
 import compression from 'compression';
 import cors from 'cors';
 import config, { environments } from './config/config';
-import deserializeUser from './middlewares/deserializeUser';
 import { handleErrorMiddleware } from './middlewares/handleError';
 import { RegisterRoutes } from './routes';
 
@@ -20,7 +19,6 @@ app.use(helmet());
 app.use(compression());
 app.use(cors(corsOptions));
 app.options('*', cors());
-app.use(deserializeUser);
 
 if (config.env !== environments.PRODUCTION) {
   app.use(morgan('tiny'));

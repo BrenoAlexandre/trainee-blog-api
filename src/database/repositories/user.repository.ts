@@ -1,4 +1,4 @@
-import { omit, pick } from 'lodash';
+import { pick } from 'lodash';
 import AppDataSource from '../dataSource';
 import { ICreateUser, IUser } from '../../models/user.model';
 import User from '../entities/User.Entity';
@@ -14,7 +14,7 @@ export const userRepository = AppDataSource.getRepository(User).extend({
       .where('user.id = :id', { id })
       .select(['user.id', 'user.name', 'user.email', 'user.role'])
       .getOne();
-    return omit(user, ['password']);
+    return user ? pick(user, ['id', 'name', 'email', 'role']) : null;
   },
   async findUserByEmail(email: string): Promise<User | null> {
     const user = await this.createQueryBuilder('user')

@@ -4,17 +4,19 @@ import config from '../../../config/config';
 import { IUseCase } from '../../../interfaces';
 import { CustomError } from '../../../utils/customError.util';
 import { UserRepository } from '../../../services/implementation/UserRepository';
-import { RequestDTO } from './RequestDTO';
-import { ResponseDTO } from './ResponseDTO';
+import { CreateUserRequestDTO } from './CreateUserRequestDTO';
+import { CreateUserResponseDTO } from './CreateUserResponseDTO';
 
 @singleton()
 export class CreateUserUseCase implements IUseCase {
   constructor(private userRepository: UserRepository) {}
 
-  public async execute(input: RequestDTO): Promise<ResponseDTO> {
+  public async execute(
+    input: CreateUserRequestDTO
+  ): Promise<CreateUserResponseDTO> {
     const { email, password, passwordConfirmation } = input;
     if (!password || password !== passwordConfirmation) {
-      throw CustomError.badRequest(`Password confirmation doesn't match.`);
+      throw CustomError.badRequest(`Password confirmation doesn't match`);
     }
 
     const passwordHash = await hash(password, config.saltWorkFactor);
@@ -23,7 +25,7 @@ export class CreateUserUseCase implements IUseCase {
     user.password = passwordHash;
 
     const emailRegistered = await this.userRepository.findUserByEmail(email);
-    if (emailRegistered) throw CustomError.unprocess('Email already in use.');
+    if (emailRegistered) throw CustomError.unprocess('Email already in use');
 
     const newUser = await this.userRepository.createUser(input);
     return newUser;

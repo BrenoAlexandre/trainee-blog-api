@@ -1,9 +1,17 @@
-import * as Express from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import { Post, Route, SuccessResponse, Request, Controller, Tags } from 'tsoa';
+import {
+  Post,
+  Route,
+  SuccessResponse,
+  Controller,
+  Tags,
+  Body,
+  Response,
+} from 'tsoa';
 import { injectable } from 'tsyringe';
-import { ILoginInput } from './interfaces';
 import { LoginUseCase } from './loginUseCase';
+import { LoginRequestDTO } from './LoginRequestDTO';
+import { IBadRequest } from '../../../interfaces/httpStatus';
 
 @injectable()
 @Route('user')
@@ -12,18 +20,24 @@ export class LoginController extends Controller {
     super();
   }
 
+  /**
+   *  Recebe seus dados de login e retorna tokens de autenticação (JWT Bearer) no header.
+   *  @summary Fazer login na plataforma
+   */
   @Tags('users')
   @SuccessResponse(StatusCodes.NO_CONTENT, ReasonPhrases.NO_CONTENT)
+  @Response<IBadRequest>(400, 'Bad request', {
+    message: 'Incorrect login',
+    error: [],
+  })
   @Post('/login')
-  public async handler(@Request() request: Express.Request) {
-    const { email, password } = request.body;
+  public async handler(@Body() request: LoginRequestDTO) {
+    const { email, password } = request;
 
-    const data: ILoginInput = { email, password };
-
+    const data = { email, password };
     const { token, refreshToken } = await this.loginUseCase.execute(data);
 
     this.setHeader('authorization', token);
     this.setHeader('refreshToken', refreshToken);
-    this.setStatus(StatusCodes.NO_CONTENT);
   }
 }

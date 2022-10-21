@@ -1,18 +1,47 @@
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import { Get, Path, Route, SuccessResponse, Tags } from 'tsoa';
+import {
+  Controller,
+  Example,
+  Get,
+  Path,
+  Response,
+  Route,
+  SuccessResponse,
+  Tags,
+} from 'tsoa';
 import { injectable } from 'tsyringe';
 import { UUID } from '../../../interfaces';
 import { FindUserUseCase } from './findUserUseCase';
+import { FindUserResponseDTO } from './FindUserResponseDTO';
+import { INotFound } from '../../../interfaces/httpStatus';
 
 @injectable()
 @Route('user')
-export class FindUserController {
-  constructor(private findUserUseCase: FindUserUseCase) {}
+export class FindUserController extends Controller {
+  constructor(private findUserUseCase: FindUserUseCase) {
+    super();
+  }
 
+  /**
+   * Encontra um usuário pelo id indicado.
+   * @summary Encontra um usuário.
+   * @param userId Id do usuário que deseja encontrar
+   * @example userId "52907745-7672-470e-a803-a2f8feb52944"
+   */
   @Tags('users')
   @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
+  @Response<INotFound>(404, 'Not found', {
+    message: 'User not found',
+    error: [],
+  })
   @Get('{userId}')
-  public async handler(@Path() userId: UUID) {
+  @Example<FindUserResponseDTO>({
+    id: '52907745-7672-470e-a803-a2f8feb52944',
+    name: 'John Doe',
+    email: 'john@mail.com',
+    role: 'user',
+  })
+  public async handler(@Path() userId: UUID): Promise<FindUserResponseDTO> {
     const user = await this.findUserUseCase.execute(userId);
     return user;
   }

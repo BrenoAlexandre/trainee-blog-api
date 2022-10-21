@@ -1,15 +1,16 @@
 import * as Express from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import { Delete, Path, Request, Route, SuccessResponse } from 'tsoa';
+import { Delete, Path, Request, Route, SuccessResponse, Tags } from 'tsoa';
 import { UUID } from '../../../interfaces';
 import { DeletePostUseCase } from './deletePostUseCase';
 
 import { IDeleteInput } from './interfaces';
 
-@Route('posts')
+@Route('post')
 export class DeletePostController {
   constructor(private deletePostUseCase: DeletePostUseCase) {}
 
+  @Tags('Posts')
   @SuccessResponse(StatusCodes.CONTINUE, ReasonPhrases.CONTINUE)
   @Delete('{postId}')
   public async handler(

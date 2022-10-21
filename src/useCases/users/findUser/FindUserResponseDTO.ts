@@ -1,4 +1,4 @@
-export interface ResponseDTO {
+export interface FindUserResponseDTO {
   id: string;
   name: string;
   email: string;
