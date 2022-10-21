@@ -22,12 +22,12 @@ export class DeleteCategoryController extends Controller {
   }
 
   /**
-   * Deleta uma categoria pelo parâmetro indicado na rota.
+   * Deleta uma categoria pelo id indicado na rota.
    * @summary Deleta uma categoria
    * @param categoryId
    */
   @Tags('categories')
-  @SuccessResponse(StatusCodes.CONTINUE, ReasonPhrases.CONTINUE)
+  @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
   @Response<IUnauthorized>(401, 'Unauthorized', {
     message: 'You dont have permission to delete a category',
     error: [],

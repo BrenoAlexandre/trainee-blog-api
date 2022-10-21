@@ -1,24 +1,43 @@
-import * as Express from 'express';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
-import { Delete, Path, Request, Route, SuccessResponse, Tags } from 'tsoa';
-import { UUID } from '../../../interfaces';
+import {
+  Controller,
+  Delete,
+  OperationId,
+  Path,
+  Request,
+  Response,
+  Route,
+  Security,
+  SuccessResponse,
+  Tags,
+} from 'tsoa';
+import { IAuthRequest, UUID } from '../../../interfaces';
+import { IUnprocess } from '../../../interfaces/httpStatus';
 import { DeletePostUseCase } from './deletePostUseCase';
 
-import { IDeleteInput } from './interfaces';
-
 @Route('post')
-export class DeletePostController {
-  constructor(private deletePostUseCase: DeletePostUseCase) {}
+export class DeletePostController extends Controller {
+  constructor(private deletePostUseCase: DeletePostUseCase) {
+    super();
+  }
 
+  /**
+   * Deleta uma publicação pelo id indicado na rota.
+   * @summary Deleta uma publicação
+   * @param postId
+   */
   @Tags('Posts')
-  @SuccessResponse(StatusCodes.CONTINUE, ReasonPhrases.CONTINUE)
+  @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
+  @Response<IUnprocess>(422, 'Unprocesses', {
+    message: 'Unable to delete post',
+    error: [],
+  })
+  @Security('bearer')
   @Delete('{postId}')
-  public async handler(
-    @Path() postId: UUID,
-    @Request() request: Express.Request
-  ) {
-    const { user } = request.body;
-    const data: IDeleteInput = { postId, userId: user.id };
+  @OperationId('DeletePost')
+  public async handler(@Path() postId: UUID, @Request() request: IAuthRequest) {
+    const { user } = request;
+    const data = { postId, userId: user.id };
     await this.deletePostUseCase.execute(data);
   }
 }

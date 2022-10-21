@@ -33,7 +33,7 @@ export class UpdateCategoryController extends Controller {
    * @param categoryId
    */
   @Tags('categories')
-  @SuccessResponse(StatusCodes.CONTINUE, ReasonPhrases.CONTINUE)
+  @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
   @Response<IBadRequest>(400, 'Bad request', {
     message: 'You cant update a category with post associated to it',
     error: [],

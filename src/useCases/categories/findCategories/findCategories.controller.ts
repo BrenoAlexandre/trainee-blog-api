@@ -20,7 +20,7 @@ export class FindCategoriesController extends Controller {
   }
 
   /**
-   * Retorna todas as categorias e seus posts.
+   * Retorna todas as categorias e suas publicações.
    * @summary Busca todas categorias
    */
   @Tags('categories')

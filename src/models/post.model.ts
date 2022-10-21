@@ -13,7 +13,6 @@ export interface IPost {
 export interface ICreatePost {
   title: string;
   description: string;
-  likes: number;
   owner: string;
   category: string;
 }

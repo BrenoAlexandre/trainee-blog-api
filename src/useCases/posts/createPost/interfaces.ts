@@ -7,7 +7,6 @@ export interface ICreatePostResponse {
 export interface ICreatePostInput {
   title: string;
   description: string;
-  likes: number;
   category: string;
   owner: string;
 }
