@@ -1,6 +1,7 @@
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import {
   Body,
+  Controller,
   OperationId,
   Post,
   Request,
@@ -18,8 +19,10 @@ import { CreateCategoryUseCase } from './createCategoryUseCase';
 import { ICreateCategoryInput } from './interfaces';
 
 @Route('category')
-export class CreateCategoryController {
-  constructor(private createCategoryUseCase: CreateCategoryUseCase) {}
+export class CreateCategoryController extends Controller {
+  constructor(private createCategoryUseCase: CreateCategoryUseCase) {
+    super();
+  }
 
   /**
    *  Cria uma nova categoria a partir do título enviado.

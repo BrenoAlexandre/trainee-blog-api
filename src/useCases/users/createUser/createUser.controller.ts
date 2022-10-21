@@ -3,6 +3,7 @@ import {
   Body,
   Controller,
   Example,
+  OperationId,
   Post,
   Response,
   Route,
@@ -25,7 +26,7 @@ export class CreateUserController extends Controller {
 
   /**
    * A partir dos dados abaixo, um novo usuário é criado.
-   * @summary Cria um novo usuário.
+   * @summary Cria um novo usuário
    */
   @Tags('users')
   @Example<CreateUserResponseDTO>({
@@ -44,6 +45,7 @@ export class CreateUserController extends Controller {
     error: [],
   })
   @Post()
+  @OperationId('CreateUser')
   public async handler(
     @Body() requestBody: CreateUserRequestDTO
   ): Promise<IUser> {

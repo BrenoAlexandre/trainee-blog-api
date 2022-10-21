@@ -1,4 +1,4 @@
 export interface IUnprocess {
   message: string;
-  error: string[];
+  error?: string[];
 }

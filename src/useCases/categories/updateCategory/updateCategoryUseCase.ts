@@ -1,7 +1,7 @@
-import User from '../../../database/entities/User.Entity';
 import { CustomError } from '../../../utils/customError.util';
 import { IUseCase } from '../../../interfaces/IUseCase';
 import { ICategoryRepository } from '../../../interfaces';
+import { IUser } from '../../../models/user.model';
 
 export class UpdateCategoryUseCase implements IUseCase {
   constructor(private categoryRepository: ICategoryRepository) {}
@@ -13,7 +13,7 @@ export class UpdateCategoryUseCase implements IUseCase {
   }: {
     categoryId: string;
     title: string;
-    user: User;
+    user: IUser;
   }): Promise<void> {
     const category = await this.categoryRepository.findCategoryById(categoryId);
 

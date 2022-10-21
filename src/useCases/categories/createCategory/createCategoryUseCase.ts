@@ -1,3 +1,4 @@
+import { pick } from 'lodash';
 import { ICategoryRepository, IUseCase } from '../../../interfaces';
 import { CustomError } from '../../../utils/customError.util';
 import { ICreateCategoryResponseDTO } from './createCategoryResponseDTO';
@@ -24,11 +25,6 @@ export class CreateCategoryUseCase implements IUseCase {
     const category = { title, owner: user.id.toString() };
     const newCategory = await this.categoryRepository.createCategory(category);
 
-    return {
-      id: newCategory.id,
-      title: newCategory.title,
-      ownerId: newCategory.owner,
-      created_at: newCategory.created_at,
-    };
+    return pick(newCategory, ['id', 'title', 'owner', 'created_at']);
   }
 }

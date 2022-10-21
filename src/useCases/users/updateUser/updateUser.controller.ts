@@ -2,6 +2,7 @@ import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import {
   Body,
   Controller,
+  OperationId,
   Put,
   Request,
   Response,
@@ -24,6 +25,10 @@ export class UpdateUserController extends Controller {
     super();
   }
 
+  /**
+   * Edita o nome do usuário autenticado.
+   * @summary Edita o nome do usuário
+   */
   @Tags('users')
   @SuccessResponse(StatusCodes.NO_CONTENT, ReasonPhrases.NO_CONTENT)
   @Response<INotFound>(404, 'Not Found', {
@@ -32,6 +37,7 @@ export class UpdateUserController extends Controller {
   })
   @Security('bearer')
   @Put()
+  @OperationId('UpdateUser')
   public async handler(
     @Body() request: UpdateUserRequestDTO,
     @Request() req: IAuthRequest

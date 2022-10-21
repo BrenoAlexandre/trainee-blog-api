@@ -7,6 +7,7 @@ import {
   Tags,
   Body,
   Response,
+  OperationId,
 } from 'tsoa';
 import { injectable } from 'tsyringe';
 import { IUnauthorized } from '../../../interfaces/httpStatus';
@@ -31,6 +32,7 @@ export class LoginController extends Controller {
     error: [],
   })
   @Post('/login')
+  @OperationId('Login')
   public async handler(@Body() request: LoginRequestDTO) {
     const { email, password } = request;
 

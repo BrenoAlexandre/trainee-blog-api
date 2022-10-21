@@ -1,6 +1,5 @@
-import User from '../../../database/entities/User.Entity';
-import { ICategoryRepository } from '../../../interfaces';
-import { IUseCase } from '../../../interfaces/IUseCase';
+import { ICategoryRepository, IUseCase } from '../../../interfaces';
+import { IUser } from '../../../models/user.model';
 import { CustomError } from '../../../utils/customError.util';
 
 export class DeleteCategoryUseCase implements IUseCase {
@@ -11,7 +10,7 @@ export class DeleteCategoryUseCase implements IUseCase {
     user,
   }: {
     categoryId: string;
-    user: User;
+    user: IUser;
   }): Promise<void> {
     if (user.role !== 'admin') {
       CustomError.authorization(

@@ -1,5 +1,5 @@
 {
-  "name": "quickstart-node-typescript-api",
+  "name": "blog-api",
   "version": "1.0.0",
   "description": "Quickstart NodeJs API com Typescript",
   "projectPrefix": "blog",
