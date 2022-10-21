@@ -9,9 +9,9 @@ import {
   Response,
 } from 'tsoa';
 import { injectable } from 'tsyringe';
+import { IUnauthorized } from '../../../interfaces/httpStatus';
 import { LoginUseCase } from './loginUseCase';
 import { LoginRequestDTO } from './LoginRequestDTO';
-import { IBadRequest } from '../../../interfaces/httpStatus';
 
 @injectable()
 @Route('user')
@@ -26,7 +26,7 @@ export class LoginController extends Controller {
    */
   @Tags('users')
   @SuccessResponse(StatusCodes.NO_CONTENT, ReasonPhrases.NO_CONTENT)
-  @Response<IBadRequest>(400, 'Bad request', {
+  @Response<IUnauthorized>(401, 'Unauthorized', {
     message: 'Incorrect login',
     error: [],
   })

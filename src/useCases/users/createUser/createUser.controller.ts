@@ -36,11 +36,11 @@ export class CreateUserController extends Controller {
   })
   @SuccessResponse(StatusCodes.CREATED, ReasonPhrases.CREATED)
   @Response<IBadRequest>(400, 'Bad Request', {
-    message: `Password confirmation doesn't match.`,
+    message: "Password confirmation doesn't match",
     error: [],
   })
   @Response<IUnprocess>(422, 'Unprocessable entity', {
-    message: `Email already in use`,
+    message: 'Email already in use',
     error: [],
   })
   @Post()

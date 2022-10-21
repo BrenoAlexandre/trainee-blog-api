@@ -1,5 +1,4 @@
-import { ICategoryRepository } from '../../../interfaces';
-import { IUseCase } from '../../../interfaces/IUseCase';
+import { ICategoryRepository, IUseCase } from '../../../interfaces';
 import { CustomError } from '../../../utils/customError.util';
 import { ICreateCategoryResponseDTO } from './createCategoryResponseDTO';
 import { ICreateCategoryInput } from './interfaces';
@@ -17,13 +16,19 @@ export class CreateCategoryUseCase implements IUseCase {
 
   public async execute(
     input: ICreateCategoryInput
-  ): Promise<ICreateCategoryResponseDTO['newCategory']> {
-    const { user } = input;
+  ): Promise<ICreateCategoryResponseDTO> {
+    const { title, user } = input;
 
     this.validate(user);
 
-    const category = { title: input.title, owner: user.id.toString() };
+    const category = { title, owner: user.id.toString() };
     const newCategory = await this.categoryRepository.createCategory(category);
-    return newCategory;
+
+    return {
+      id: newCategory.id,
+      title: newCategory.title,
+      ownerId: newCategory.owner,
+      created_at: newCategory.created_at,
+    };
   }
 }
