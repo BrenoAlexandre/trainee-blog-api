@@ -23,7 +23,7 @@ export class FindCategoryPostsController extends Controller {
   /**
    * Encontra todos as publicações de uma categoria indicada pelo id na rota.
    * @summary Encontra as publicações de uma categoria
-   * @param categoryId
+   * @param categoryId id da categoria.
    * @example categoryId "adac0e9d-de2b-4a0a-baff-b02f812d8e5f"
    */
   @Tags('Posts')
