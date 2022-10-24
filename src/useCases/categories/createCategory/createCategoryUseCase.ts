@@ -1,9 +1,11 @@
 import { pick } from 'lodash';
+import { singleton } from 'tsyringe';
 import { ICategoryRepository, IUseCase } from '../../../interfaces';
 import { CustomError } from '../../../utils/customError.util';
 import { ICreateCategoryResponseDTO } from './createCategoryResponseDTO';
 import { ICreateCategoryInput } from './interfaces';
 
+@singleton()
 export class CreateCategoryUseCase implements IUseCase {
   constructor(private categoryRepository: ICategoryRepository) {}
 

@@ -12,6 +12,7 @@ import {
   Security,
   Example,
 } from 'tsoa';
+import { injectable } from 'tsyringe';
 import { IAuthRequest } from '../../../interfaces';
 import { IUnprocess } from '../../../interfaces/httpStatus';
 import { CreatePostRequestDTO } from './createPostRequestDTO';
@@ -19,6 +20,7 @@ import { CreatePostResponseDTO } from './createPostResponseDTO';
 import CreatePostUseCase from './createPostUseCase';
 import { ICreatePostInput } from './interfaces';
 
+@injectable()
 @Route('post')
 export class CreatePostController extends Controller {
   constructor(private createPostUseCase: CreatePostUseCase) {

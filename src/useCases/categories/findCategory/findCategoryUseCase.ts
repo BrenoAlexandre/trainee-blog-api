@@ -1,7 +1,9 @@
+import { singleton } from 'tsyringe';
 import { ICategoryRepository } from '../../../interfaces';
 import { IUseCase } from '../../../interfaces/IUseCase';
 import { CustomError } from '../../../utils/customError.util';
 
+@singleton()
 export class FindCategoryUseCase implements IUseCase {
   constructor(private categoryRepository: ICategoryRepository) {}
 

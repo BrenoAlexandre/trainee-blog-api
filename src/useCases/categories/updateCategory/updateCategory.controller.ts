@@ -1,3 +1,4 @@
+import { injectable } from 'tsyringe';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import {
   Body,
@@ -20,6 +21,7 @@ import {
 import { UpdateCategoryRequestDTO } from './updateCategoryRequestDTO';
 import { UpdateCategoryUseCase } from './updateCategoryUseCase';
 
+@injectable()
 @Route('category')
 export class UpdateCategoryController extends Controller {
   constructor(private updateCategoryUseHandler: UpdateCategoryUseCase) {

@@ -1,8 +1,10 @@
+import { singleton } from 'tsyringe';
 import { CustomError } from '../../../utils/customError.util';
-import { IUseCase } from '../../../interfaces/IUseCase';
 import { ICategoryRepository } from '../../../interfaces';
+import { IUseCase } from '../../../interfaces/IUseCase';
 import { IUser } from '../../../models/user.model';
 
+@singleton()
 export class UpdateCategoryUseCase implements IUseCase {
   constructor(private categoryRepository: ICategoryRepository) {}
 

@@ -1,3 +1,4 @@
+import { injectable } from 'tsyringe';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import {
   Body,
@@ -18,6 +19,7 @@ import { IUpdateInput } from './interfaces';
 import { UpdatePostRequestDTO } from './updatePostRequestDTO';
 import { UpdatePostUseCase } from './updatePostUseCase';
 
+@injectable()
 @Route('post')
 export class UpdatePostController extends Controller {
   constructor(private updatePostUseCase: UpdatePostUseCase) {

@@ -1,3 +1,4 @@
+import { injectable } from 'tsyringe';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import {
   Controller,
@@ -13,6 +14,7 @@ import { INotFound } from '../../../interfaces/httpStatus';
 import { FindCategoriesResponseDTO } from './findCategoriesResponseDTO';
 import { FindCategoriesUseCase } from './findCategoriesUseCase';
 
+@injectable()
 @Route('category')
 export class FindCategoriesController extends Controller {
   constructor(private findCategoriesUseCase: FindCategoriesUseCase) {

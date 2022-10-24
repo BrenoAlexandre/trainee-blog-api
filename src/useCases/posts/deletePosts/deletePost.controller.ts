@@ -1,3 +1,4 @@
+import { injectable } from 'tsyringe';
 import { StatusCodes, ReasonPhrases } from 'http-status-codes';
 import {
   Controller,
@@ -15,6 +16,7 @@ import { IAuthRequest, UUID } from '../../../interfaces';
 import { IUnprocess } from '../../../interfaces/httpStatus';
 import { DeletePostUseCase } from './deletePostUseCase';
 
+@injectable()
 @Route('post')
 export class DeletePostController extends Controller {
   constructor(private deletePostUseCase: DeletePostUseCase) {

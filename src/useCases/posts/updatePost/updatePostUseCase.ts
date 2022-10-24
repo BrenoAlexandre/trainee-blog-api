@@ -1,8 +1,10 @@
+import { singleton } from 'tsyringe';
 import { IPostRepository } from '../../../interfaces';
 import { IUseCase } from '../../../interfaces/IUseCase';
 import { CustomError } from '../../../utils/customError.util';
 import { IUpdateInput } from './interfaces';
 
+@singleton()
 export class UpdatePostUseCase implements IUseCase {
   constructor(private postRepository: IPostRepository) {}
 

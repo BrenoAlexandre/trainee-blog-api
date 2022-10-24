@@ -1,3 +1,4 @@
+import { injectable } from 'tsyringe';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import {
   Controller,
@@ -14,6 +15,7 @@ import Post from '../../../database/entities/Post.Entity';
 import { INotFound } from '../../../interfaces/httpStatus';
 import { FindUserPostsUseCase } from './findUserPostsUseCase';
 
+@injectable()
 @Route('post')
 export class FindUserPostsController extends Controller {
   constructor(private findUserPostsUseCase: FindUserPostsUseCase) {

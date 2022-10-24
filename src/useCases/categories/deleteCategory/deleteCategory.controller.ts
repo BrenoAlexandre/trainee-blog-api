@@ -1,3 +1,4 @@
+import { injectable } from 'tsyringe';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import {
   Controller,
@@ -15,6 +16,7 @@ import { IAuthRequest, UUID } from '../../../interfaces';
 import { INotFound, IUnauthorized } from '../../../interfaces/httpStatus';
 import { DeleteCategoryUseCase } from './DeleteCategoryUseCase';
 
+@injectable()
 @Route('category')
 export class DeleteCategoryController extends Controller {
   constructor(private deleteCategoryUseCase: DeleteCategoryUseCase) {

@@ -1,3 +1,4 @@
+import { injectable } from 'tsyringe';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import {
   Body,
@@ -18,6 +19,7 @@ import { ICreateCategoryResponseDTO } from './createCategoryResponseDTO';
 import { CreateCategoryUseCase } from './createCategoryUseCase';
 import { ICreateCategoryInput } from './interfaces';
 
+@injectable()
 @Route('category')
 export class CreateCategoryController extends Controller {
   constructor(private createCategoryUseCase: CreateCategoryUseCase) {
