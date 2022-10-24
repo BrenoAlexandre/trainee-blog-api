@@ -1,12 +1,11 @@
 import { singleton } from 'tsyringe';
 import { CustomError } from '../../../utils/customError.util';
-import { IUseCase } from '../../../interfaces/IUseCase';
-import { IFindParams } from '../../../interfaces/IFindParams';
-import { IPostRepository } from '../../../interfaces';
+import { IFindParams, IUseCase } from '../../../interfaces';
+import { PostRepository } from '../../../services/implementation/PostRepository';
 
 @singleton()
 export class FindPostsUseCase implements IUseCase {
-  constructor(private postRepository: IPostRepository) {}
+  constructor(private postRepository: PostRepository) {}
 
   public async execute({ page, take }: { page: string; take: string }) {
     const pageNumber = parseInt(page, 10);

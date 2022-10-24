@@ -1,13 +1,14 @@
 import { pick } from 'lodash';
 import { singleton } from 'tsyringe';
-import { ICategoryRepository, IUseCase } from '../../../interfaces';
+import { IUseCase } from '../../../interfaces';
+import { CategoryRepository } from '../../../services/implementation/CategoryRepository';
 import { CustomError } from '../../../utils/customError.util';
 import { ICreateCategoryResponseDTO } from './createCategoryResponseDTO';
 import { ICreateCategoryInput } from './interfaces';
 
 @singleton()
 export class CreateCategoryUseCase implements IUseCase {
-  constructor(private categoryRepository: ICategoryRepository) {}
+  constructor(private categoryRepository: CategoryRepository) {}
 
   private validate(user: ICreateCategoryInput['user']) {
     if (user.role !== 'admin') {

@@ -1,11 +1,11 @@
 import { singleton } from 'tsyringe';
-import { IPostRepository } from '../../../interfaces';
-import { IUseCase } from '../../../interfaces/IUseCase';
+import { IUseCase } from '../../../interfaces';
+import { PostRepository } from '../../../services/implementation/PostRepository';
 import { CustomError } from '../../../utils/customError.util';
 
 @singleton()
 export class FindCategoryPostsUseCase implements IUseCase {
-  constructor(private postRepository: IPostRepository) {}
+  constructor(private postRepository: PostRepository) {}
 
   public async execute(categoryId: string) {
     const data = await this.postRepository.findPostsByCategory(categoryId);

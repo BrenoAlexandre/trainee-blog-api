@@ -1,10 +1,11 @@
 import { singleton } from 'tsyringe';
-import { IPostRepository, IUseCase } from '../../../interfaces';
+import { IUseCase } from '../../../interfaces';
+import { PostRepository } from '../../../services/implementation/PostRepository';
 import { CustomError } from '../../../utils/customError.util';
 
 @singleton()
 export class DeletePostUseCase implements IUseCase {
-  constructor(private postRepository: IPostRepository) {}
+  constructor(private postRepository: PostRepository) {}
 
   public async execute(input: {
     postId: string;
