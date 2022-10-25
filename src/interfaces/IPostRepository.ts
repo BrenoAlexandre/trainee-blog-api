@@ -5,7 +5,10 @@ import { IFindParams } from './IFindParams';
 export interface IPostRepository {
   createPost(data: ICreatePost): Promise<Post>;
   findPostById(postId: string): Promise<Post | null>;
-  findPosts({ pagination, order }: IFindParams): Promise<Post[]>;
+  findPosts({
+    pagination,
+    order,
+  }: IFindParams): Promise<[Post[], number] | null>;
   findPostsByCategory(
     categoryId: string,
     order?: 'ASC' | 'DESC'

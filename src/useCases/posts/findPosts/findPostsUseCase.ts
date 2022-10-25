@@ -18,15 +18,29 @@ export class FindPostsUseCase implements IUseCase {
 
     const posts = await this.postRepository.findPosts(findOptions);
 
-    if (posts.length === 0) throw CustomError.notFound('Posts not found');
+    if (!posts) throw CustomError.notFound('No posts found');
 
-    const previous = pageNumber < 2 ? 0 : pageNumber - 1;
-    const nextPage = pageNumber + 1;
+    const [allPosts, postCount] = posts;
+
+    if (allPosts.length === 0) throw CustomError.notFound('Posts not found');
+
+    let previous;
+    let next: number | null = pageNumber + 1;
+    const total = Math.floor(postCount / takeNumber);
+
+    if (pageNumber < 2) {
+      previous = previous === 0 ? null : 0;
+    } else {
+      previous = pageNumber - 1;
+    }
+
+    next = next > total ? null : next;
 
     const response = {
-      data: [...posts],
+      data: allPosts,
       previous,
-      next: nextPage,
+      next,
+      total,
     };
 
     return response;

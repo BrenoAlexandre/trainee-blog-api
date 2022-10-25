@@ -5,7 +5,7 @@ import {
   Example,
   Get,
   OperationId,
-  Path,
+  Query,
   Response,
   Route,
   SuccessResponse,
@@ -28,7 +28,7 @@ export class FindPostsController extends Controller {
    * @summary Encontra diversas publicações
    * @param page  Número da página.
    * @example page "1"
-   * @param take  Quantidade de publicações que requisitadas (É ideal que se mantenha o mesmo).
+   * @param take  Quantidade de publicações requisitadas (É ideal que se mantenha o mesmo).
    * @example take "10"
    *
    */
@@ -58,15 +58,16 @@ export class FindPostsController extends Controller {
     ],
     next: 2,
     previous: 0,
+    total: 16,
   })
   @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
   @Response<INotFound>(404, 'Not found', {
     message: 'Posts not found',
     error: [],
   })
-  @Get('page={page}&take={take}')
+  @Get()
   @OperationId('FindPosts')
-  public async handler(@Path() page: string, @Path() take: string) {
+  public async handler(@Query() page: string, @Query() take: string) {
     const data: IPaginationResponse = await this.findPostsUseCase.execute({
       page,
       take,

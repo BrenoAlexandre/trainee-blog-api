@@ -26,6 +26,7 @@ export class Post3064394362200 implements MigrationInterface {
           {
             name: 'likes',
             type: 'integer',
+            default: 0,
           },
           {
             name: 'category_id',

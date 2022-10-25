@@ -17,8 +17,9 @@ export class PostRepository implements IPostRepository {
   public findPosts = async ({
     pagination,
     order,
-  }: IFindParams): Promise<PostEntity[]> => {
+  }: IFindParams): Promise<[PostEntity[], number] | null> => {
     const posts = await postRepository.findPosts({ pagination, order });
+
     return posts;
   };
 

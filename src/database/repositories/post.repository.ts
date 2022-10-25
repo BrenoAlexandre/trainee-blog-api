@@ -11,7 +11,7 @@ const postRepository = AppDataSource.getRepository(Post).extend({
   },
   async findPostById(postId: string): Promise<Post | null> {
     const post = await this.createQueryBuilder('post')
-      .where('post.id = :postId', { postId })
+      .where('post.id::text = :postId', { postId })
       .innerJoinAndSelect('post.owner', 'owner')
       .innerJoinAndSelect('post.category', 'category')
       .select([
@@ -30,27 +30,24 @@ const postRepository = AppDataSource.getRepository(Post).extend({
     if (!post) return null;
     return post;
   },
-  async findPosts({ pagination, order }: IFindParams): Promise<Post[]> {
-    const posts = await this.createQueryBuilder('post')
-      .innerJoinAndSelect('post.owner', 'owner')
-      .innerJoinAndSelect('post.category', 'category')
-      .select([
-        'post.id',
-        'post.title',
-        'post.description',
-        'post.likes',
-        'post.created_at',
-        'owner.id',
-        'owner.name',
-        'category.id',
-        'category.title',
-      ])
-      .skip(pagination.page * pagination.take)
-      .take(pagination.take)
-      .orderBy('post.created_at', order)
-      .getMany();
+  async findPosts({
+    pagination,
+    order,
+  }: IFindParams): Promise<[Post[], number] | null> {
+    const posts = await this.findAndCount({
+      relations: {
+        owner: true,
+        category: true,
+      },
+      skip: pagination.page * pagination.take,
+      take: pagination.take,
+      order: {
+        created_at: order,
+      },
+    });
 
-    if (!posts) return [];
+    if (!posts) return null;
+
     return posts;
   },
   async findPostsByCategory(
