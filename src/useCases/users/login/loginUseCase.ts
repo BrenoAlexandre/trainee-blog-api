@@ -20,18 +20,12 @@ export class LoginUseCase implements IUseCase {
     return user;
   }
 
-  private async validate(user: User, password: string) {
-    const isPasswordCorrect = await compare(password, user.password);
-    if (!isPasswordCorrect) throw CustomError.badRequest('Incorrect login');
-
-    return user;
-  }
-
   public async execute(input: ILoginInput) {
     const { email, password } = input;
     const user = await this.getUser(email);
 
-    this.validate(user, password);
+    const isPasswordCorrect = await compare(password, user.password);
+    if (!isPasswordCorrect) throw CustomError.badRequest('Incorrect login');
 
     const secureUser = omit(user, 'password');
     const token = sign(secureUser, config.jwtSecret, {
