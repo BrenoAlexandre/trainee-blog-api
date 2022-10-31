@@ -1,5 +1,5 @@
 import { singleton } from 'tsyringe';
-import { IUseCase } from '../../../interfaces';
+import { EErrorMessages, IUseCase } from '../../../interfaces';
 import { CustomError } from '../../../utils/customError.util';
 import { IUpdateInput } from './interfaces';
 import { UserRepository } from '../../../services/implementation/UserRepository';
@@ -19,6 +19,9 @@ export class UpdateUserUseCase implements IUseCase {
       name
     );
 
-    if (!updatedUser) throw CustomError.notFound('User not found');
+    if (!updatedUser)
+      throw CustomError.notFound(EErrorMessages.USER_NOT_FOUND, {
+        message: 'User not found',
+      });
   }
 }

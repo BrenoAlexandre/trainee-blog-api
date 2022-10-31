@@ -32,8 +32,8 @@ export class UpdateUserController extends Controller {
   @Tags('users')
   @SuccessResponse(StatusCodes.NO_CONTENT, ReasonPhrases.NO_CONTENT)
   @Response<INotFound>(404, 'Not Found', {
-    message: 'User not found',
-    error: [],
+    message: 'USER_NOT_FOUND',
+    error: ['User not found'],
   })
   @Security('bearer')
   @Put()
@@ -47,7 +47,5 @@ export class UpdateUserController extends Controller {
 
     const data: IUpdateInput = { name, user };
     await this.updateUserUseCase.execute(data);
-
-    this.setStatus(StatusCodes.NO_CONTENT);
   }
 }

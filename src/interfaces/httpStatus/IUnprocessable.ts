@@ -1,4 +1,4 @@
-export interface IUnprocess {
+export interface IUnprocessable {
   message: string;
   error?: string[];
 }

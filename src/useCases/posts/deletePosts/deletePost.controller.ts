@@ -13,7 +13,7 @@ import {
   Tags,
 } from 'tsoa';
 import { IAuthRequest, UUID } from '../../../interfaces';
-import { IUnprocess } from '../../../interfaces/httpStatus';
+import { IUnprocessable } from '../../../interfaces/httpStatus';
 import { DeletePostUseCase } from './deletePostUseCase';
 
 @injectable()
@@ -30,9 +30,9 @@ export class DeletePostController extends Controller {
    */
   @Tags('Posts')
   @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
-  @Response<IUnprocess>(422, 'Unprocesses', {
-    message: 'Unable to delete post',
-    error: [],
+  @Response<IUnprocessable>(422, 'Unprocessable entity', {
+    message: 'INVALID_OPERATION',
+    error: ['Unable to delete post'],
   })
   @Security('bearer')
   @Delete('{postId}')

@@ -4,7 +4,7 @@ import { omit } from 'lodash';
 import { singleton } from 'tsyringe';
 import config from '../../../config/config';
 import User from '../../../database/entities/User.Entity';
-import { IUseCase } from '../../../interfaces';
+import { EErrorMessages, IUseCase } from '../../../interfaces';
 import { UserRepository } from '../../../services/implementation/UserRepository';
 import { CustomError } from '../../../utils/customError.util';
 import { ILoginInput } from './interfaces';
@@ -15,7 +15,10 @@ export class LoginUseCase implements IUseCase {
 
   private async getUser(email: string): Promise<User> {
     const user = await this.userRepository.findUserByEmail(email);
-    if (!user) throw CustomError.badRequest('Incorrect login');
+    if (!user)
+      throw CustomError.unprocessable(EErrorMessages.INVALID_OPERATION, {
+        message: 'Incorrect login',
+      });
 
     return user;
   }
@@ -25,7 +28,10 @@ export class LoginUseCase implements IUseCase {
     const user = await this.getUser(email);
 
     const isPasswordCorrect = await compare(password, user.password);
-    if (!isPasswordCorrect) throw CustomError.badRequest('Incorrect login');
+    if (!isPasswordCorrect)
+      throw CustomError.unprocessable(EErrorMessages.INVALID_OPERATION, {
+        message: 'Incorrect login',
+      });
 
     const secureUser = omit(user, 'password');
     const token = sign(secureUser, config.jwtSecret, {

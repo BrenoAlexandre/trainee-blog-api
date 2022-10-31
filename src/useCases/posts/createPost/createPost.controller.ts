@@ -14,7 +14,7 @@ import {
 } from 'tsoa';
 import { injectable } from 'tsyringe';
 import { IAuthRequest } from '../../../interfaces';
-import { IUnprocess } from '../../../interfaces/httpStatus';
+import { IUnprocessable } from '../../../interfaces/httpStatus';
 import { CreatePostRequestDTO } from './createPostRequestDTO';
 import { CreatePostResponseDTO } from './createPostResponseDTO';
 import CreatePostUseCase from './createPostUseCase';
@@ -43,9 +43,9 @@ export class CreatePostController extends Controller {
     updated_at: new Date('2022-10-22T21:34:51.456Z'),
   })
   @SuccessResponse(StatusCodes.CREATED, ReasonPhrases.CREATED)
-  @Response<IUnprocess>(422, 'Unprocess', {
-    message: 'Unable to create post',
-    error: [],
+  @Response<IUnprocessable>(422, 'Unprocessable entity', {
+    message: 'INVALID_OPERATION',
+    error: ['Unable to create post'],
   })
   @Security('bearer')
   @Post()

@@ -1,6 +1,6 @@
 import { singleton } from 'tsyringe';
 import { CustomError } from '../../../utils/customError.util';
-import { IFindParams, IUseCase } from '../../../interfaces';
+import { EErrorMessages, IFindParams, IUseCase } from '../../../interfaces';
 import { PostRepository } from '../../../services/implementation/PostRepository';
 
 @singleton()
@@ -18,11 +18,17 @@ export class FindPostsUseCase implements IUseCase {
 
     const posts = await this.postRepository.findPosts(findOptions);
 
-    if (!posts) throw CustomError.notFound('No posts found');
+    if (!posts)
+      throw CustomError.notFound(EErrorMessages.POST_NOT_FOUND, {
+        message: 'Posts not found',
+      });
 
     const [allPosts, postCount] = posts;
 
-    if (allPosts.length === 0) throw CustomError.notFound('Posts not found');
+    if (allPosts.length === 0)
+      throw CustomError.notFound(EErrorMessages.POST_NOT_FOUND, {
+        message: 'Posts not found',
+      });
 
     let previous;
     let next: number | null = pageNumber + 1;

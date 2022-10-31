@@ -14,7 +14,7 @@ import {
   Tags,
 } from 'tsoa';
 import { IAuthRequest } from '../../../interfaces';
-import { IUnprocess } from '../../../interfaces/httpStatus';
+import { IUnprocessable } from '../../../interfaces/httpStatus';
 import { IUpdateInput } from './interfaces';
 import { UpdatePostRequestDTO } from './updatePostRequestDTO';
 import { UpdatePostUseCase } from './updatePostUseCase';
@@ -34,9 +34,9 @@ export class UpdatePostController extends Controller {
    */
   @Tags('Posts')
   @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
-  @Response<IUnprocess>(422, 'Unprocess', {
-    message: 'Unable to update post',
-    error: [],
+  @Response<IUnprocessable>(422, 'Unprocessable entity', {
+    message: 'INVALID_OPERATION',
+    error: ['Unable to update post'],
   })
   @Put('{postId}')
   @Security('bearer')

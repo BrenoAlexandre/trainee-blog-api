@@ -1,6 +1,6 @@
 import { pick } from 'lodash';
 import { singleton } from 'tsyringe';
-import { IUseCase } from '../../../interfaces';
+import { EErrorMessages, IUseCase } from '../../../interfaces';
 import { CategoryRepository } from '../../../services/implementation/CategoryRepository';
 import { CustomError } from '../../../utils/customError.util';
 import { ICreateCategoryResponseDTO } from './createCategoryResponseDTO';
@@ -12,9 +12,9 @@ export class CreateCategoryUseCase implements IUseCase {
 
   private validate(user: ICreateCategoryInput['user']) {
     if (user.role !== 'admin') {
-      CustomError.authorization(
-        'You dont have permission to create a category'
-      );
+      CustomError.forbidden(EErrorMessages.FORBIDDEN_OPERATION, {
+        message: `You don't  have permission to create a category`,
+      });
     }
   }
 

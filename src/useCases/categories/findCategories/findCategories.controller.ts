@@ -28,8 +28,8 @@ export class FindCategoriesController extends Controller {
   @Tags('categories')
   @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
   @Response<INotFound>(404, 'Not found', {
-    message: 'Categories not found',
-    error: [],
+    message: 'CATEGORY_NOT_FOUND',
+    error: ['Categories not found'],
   })
   @Security('bearer')
   @Get()

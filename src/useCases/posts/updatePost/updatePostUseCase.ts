@@ -1,5 +1,5 @@
 import { singleton } from 'tsyringe';
-import { IUseCase } from '../../../interfaces';
+import { EErrorMessages, IUseCase } from '../../../interfaces';
 import { PostRepository } from '../../../services/implementation/PostRepository';
 import { CustomError } from '../../../utils/customError.util';
 import { IUpdateInput } from './interfaces';
@@ -12,7 +12,9 @@ export class UpdatePostUseCase implements IUseCase {
     const edited = await this.postRepository.updatePost(input);
 
     if (!edited) {
-      throw CustomError.unprocess('Unable to update post');
+      throw CustomError.unprocessable(EErrorMessages.INVALID_OPERATION, {
+        message: 'Unable to update post',
+      });
     }
     return edited;
   }

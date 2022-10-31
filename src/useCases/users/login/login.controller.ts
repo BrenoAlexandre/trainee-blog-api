@@ -10,7 +10,7 @@ import {
   OperationId,
 } from 'tsoa';
 import { injectable } from 'tsyringe';
-import { IUnauthorized } from '../../../interfaces/httpStatus';
+import { IUnprocessable } from '../../../interfaces/httpStatus';
 import { LoginUseCase } from './loginUseCase';
 import { LoginRequestDTO } from './LoginRequestDTO';
 
@@ -27,9 +27,9 @@ export class LoginController extends Controller {
    */
   @Tags('users')
   @SuccessResponse(StatusCodes.NO_CONTENT, ReasonPhrases.NO_CONTENT)
-  @Response<IUnauthorized>(401, 'Unauthorized', {
-    message: 'Incorrect login',
-    error: [],
+  @Response<IUnprocessable>(422, 'Unprocessable entity', {
+    message: 'INVALID_OPERATION',
+    error: ['Incorrect login'],
   })
   @Post('/login')
   @OperationId('Login')

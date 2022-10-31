@@ -37,8 +37,8 @@ export class FindUserController extends Controller {
   })
   @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
   @Response<INotFound>(404, 'Not found', {
-    message: 'User not found',
-    error: [],
+    message: 'USER_NOT_FOUND',
+    error: ['User not found'],
   })
   @Get('{userId}')
   @OperationId('FindUser')

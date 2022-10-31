@@ -1,5 +1,5 @@
 import { singleton } from 'tsyringe';
-import { IUseCase } from '../../../interfaces';
+import { EErrorMessages, IUseCase } from '../../../interfaces';
 import { PostRepository } from '../../../services/implementation/PostRepository';
 import { CustomError } from '../../../utils/customError.util';
 
@@ -14,6 +14,9 @@ export class DeletePostUseCase implements IUseCase {
     const { postId, userId } = input;
     const deleted = await this.postRepository.deletePost(postId, userId);
 
-    if (!deleted) throw CustomError.unprocess('Unable to delete post');
+    if (!deleted)
+      throw CustomError.unprocessable(EErrorMessages.INVALID_OPERATION, {
+        message: 'Unable to delete post',
+      });
   }
 }

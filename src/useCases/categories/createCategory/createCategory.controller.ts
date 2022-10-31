@@ -13,7 +13,7 @@ import {
   Tags,
 } from 'tsoa';
 import { IAuthRequest } from '../../../interfaces';
-import { IUnauthorized } from '../../../interfaces/httpStatus';
+import { IForbidden } from '../../../interfaces/httpStatus';
 import { ICreateCategoryRequestDTO } from './createCategoryRequestDTO';
 import { ICreateCategoryResponseDTO } from './createCategoryResponseDTO';
 import { CreateCategoryUseCase } from './createCategoryUseCase';
@@ -32,9 +32,9 @@ export class CreateCategoryController extends Controller {
    */
   @Tags('categories')
   @SuccessResponse(StatusCodes.CREATED, ReasonPhrases.CREATED)
-  @Response<IUnauthorized>(401, 'Unauthorized', {
-    message: 'You dont have permission to create a category',
-    error: [],
+  @Response<IForbidden>(403, 'Forbidden', {
+    message: 'FORBIDDEN_OPERATION',
+    error: [`You don't  have permission to create a category`],
   })
   @Security('bearer')
   @Post()

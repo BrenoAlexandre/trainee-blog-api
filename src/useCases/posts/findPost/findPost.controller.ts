@@ -41,8 +41,8 @@ export class FindPostController extends Controller {
   })
   @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
   @Response<INotFound>(404, 'Not found', {
-    message: 'Post not found',
-    error: [],
+    message: 'POST_NOT_FOUND',
+    error: ['Post not found'],
   })
   @Get('{postId}')
   @OperationId('FindPost')

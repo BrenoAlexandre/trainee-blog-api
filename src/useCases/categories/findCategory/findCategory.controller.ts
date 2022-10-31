@@ -32,7 +32,7 @@ export class FindCategoryController extends Controller {
   @Tags('categories')
   @Example<FindCategoryResponseDTO>({
     id: '6315e319-67fd-46a4-9c70-c858c41399b4',
-    title: 'Pair proggraming tips',
+    title: 'Pair programing tips',
     owner: '6b65489c-2f00-40f2-a117-5b95857f23f5',
     posts: [
       {
@@ -51,8 +51,8 @@ export class FindCategoryController extends Controller {
   })
   @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
   @Response<INotFound>(404, 'Not found', {
-    message: 'Category not found',
-    error: [],
+    message: 'CATEGORY_NOT_FOUND',
+    error: ['Category not found'],
   })
   @Security('bearer')
   @Get('{categoryId}')

@@ -9,14 +9,15 @@ import {
   Request,
   Response,
   Route,
+  Security,
   SuccessResponse,
   Tags,
 } from 'tsoa';
 import { IAuthRequest, UUID } from '../../../interfaces';
 import {
-  IBadRequest,
   INotFound,
-  IUnauthorized,
+  IForbidden,
+  IUnprocessable,
 } from '../../../interfaces/httpStatus';
 import { UpdateCategoryRequestDTO } from './updateCategoryRequestDTO';
 import { UpdateCategoryUseCase } from './updateCategoryUseCase';
@@ -36,18 +37,19 @@ export class UpdateCategoryController extends Controller {
    */
   @Tags('categories')
   @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
-  @Response<IBadRequest>(400, 'Bad request', {
-    message: 'You cant update a category with post associated to it',
-    error: [],
+  @Response<IUnprocessable>(422, 'Unprocessable entity', {
+    message: 'INVALID_OPERATION',
+    error: [`You  can't update a category with post associated to it`],
   })
-  @Response<IUnauthorized>(401, 'Unauthorized', {
-    message: 'You dont have permission to update a category',
-    error: [],
+  @Response<IForbidden>(403, 'Forbidden', {
+    message: 'FORBIDDEN_OPERATION',
+    error: [`You  don't have permission to update a category`],
   })
   @Response<INotFound>(404, 'Not found', {
-    message: 'Category not found',
-    error: [],
+    message: 'CATEGORY_NOT_FOUND',
+    error: ['Category not found'],
   })
+  @Security('bearer')
   @Put('{categoryId}')
   @OperationId('UpdateCategory')
   public async handler(

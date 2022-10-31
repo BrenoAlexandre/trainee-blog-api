@@ -13,7 +13,7 @@ import {
   Tags,
 } from 'tsoa';
 import { IAuthRequest, UUID } from '../../../interfaces';
-import { INotFound, IUnauthorized } from '../../../interfaces/httpStatus';
+import { INotFound, IForbidden } from '../../../interfaces/httpStatus';
 import { DeleteCategoryUseCase } from './DeleteCategoryUseCase';
 
 @injectable()
@@ -30,13 +30,13 @@ export class DeleteCategoryController extends Controller {
    */
   @Tags('categories')
   @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
-  @Response<IUnauthorized>(401, 'Unauthorized', {
-    message: 'You dont have permission to delete a category',
-    error: [],
+  @Response<IForbidden>(403, 'Forbidden', {
+    message: 'FORBIDDEN_OPERATION',
+    error: [`You don't  have permission to delete a category`],
   })
   @Response<INotFound>(404, 'Not found', {
-    message: 'Category not found',
-    error: [],
+    message: 'CATEGORY_NOT_FOUND',
+    error: ['Category not found'],
   })
   @Security('bearer')
   @Delete('{categoryId}')

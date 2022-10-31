@@ -1,6 +1,6 @@
 import { singleton } from 'tsyringe';
 import Post from '../../../database/entities/Post.Entity';
-import { IUseCase } from '../../../interfaces';
+import { EErrorMessages, IUseCase } from '../../../interfaces';
 import { ICreatePostInput } from './interfaces';
 import { CustomError } from '../../../utils/customError.util';
 import { PostRepository } from '../../../services/implementation/PostRepository';
@@ -12,7 +12,10 @@ export default class CreatePostUseCase implements IUseCase {
   public async execute(input: ICreatePostInput): Promise<Post> {
     const newPost = await this.postRepository.createPost(input);
 
-    if (!newPost) throw CustomError.unprocess('Unable to create post');
+    if (!newPost)
+      throw CustomError.unprocessable(EErrorMessages.INVALID_OPERATION, {
+        message: 'Unable to create post',
+      });
     return newPost;
   }
 }

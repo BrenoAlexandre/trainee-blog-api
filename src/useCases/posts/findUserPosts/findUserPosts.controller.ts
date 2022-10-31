@@ -26,7 +26,7 @@ export class FindUserPostsController extends Controller {
    * Encontra todas as publicações de um usuário pelo id indicado na rota.
    * @summary Encontra as publicações de um usuário
    * @param userId id do usuário
-   * @eample userId "7a8664fa-f4d3-47b8-83bc-2cce7f9424fa"
+   * @example userId "7a8664fa-f4d3-47b8-83bc-2cce7f9424fa"
    */
   @Tags('Posts')
   @Example<Post[]>([
@@ -43,8 +43,8 @@ export class FindUserPostsController extends Controller {
   ])
   @SuccessResponse(StatusCodes.OK, ReasonPhrases.OK)
   @Response<INotFound>(404, 'Not found', {
-    message: 'Posts not found',
-    error: [],
+    message: 'POSTS_NOT_FOUND',
+    error: ['Posts not found'],
   })
   @Get('user/{userId}')
   @OperationId('FindUserPosts')

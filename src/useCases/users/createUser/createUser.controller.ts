@@ -15,7 +15,7 @@ import { IUser } from '../../../models/user.model';
 import { CreateUserUseCase } from './createUserUseCase';
 import { CreateUserRequestDTO } from './CreateUserRequestDTO';
 import { CreateUserResponseDTO } from './CreateUserResponseDTO';
-import { IBadRequest, IUnprocess } from '../../../interfaces/httpStatus';
+import { IUnprocessable } from '../../../interfaces/httpStatus';
 
 @injectable()
 @Route('user')
@@ -36,13 +36,9 @@ export class CreateUserController extends Controller {
     role: 'user',
   })
   @SuccessResponse(StatusCodes.CREATED, ReasonPhrases.CREATED)
-  @Response<IBadRequest>(400, 'Bad Request', {
-    message: "Password confirmation doesn't match",
-    error: [],
-  })
-  @Response<IUnprocess>(422, 'Unprocessable entity', {
-    message: 'Email already in use',
-    error: [],
+  @Response<IUnprocessable>(422, 'Unprocessable entity', {
+    message: 'WRONG_CREDENTIALS',
+    error: ['Email already in use', `Password confirmation doesn't match`],
   })
   @Post()
   @OperationId('CreateUser')

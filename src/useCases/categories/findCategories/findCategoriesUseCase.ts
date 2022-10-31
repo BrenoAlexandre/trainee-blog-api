@@ -1,5 +1,5 @@
 import { singleton } from 'tsyringe';
-import { IUseCase } from '../../../interfaces';
+import { EErrorMessages, IUseCase } from '../../../interfaces';
 import { CategoryRepository } from '../../../services/implementation/CategoryRepository';
 import { CustomError } from '../../../utils/customError.util';
 
@@ -10,7 +10,10 @@ export class FindCategoriesUseCase implements IUseCase {
   public async execute() {
     const categories = await this.categoryRepository.findCategories();
 
-    if (!categories) throw CustomError.notFound('Categories not found');
+    if (!categories)
+      throw CustomError.notFound(EErrorMessages.CATEGORY_NOT_FOUND, {
+        message: 'Categories not found',
+      });
     return categories;
   }
 }
