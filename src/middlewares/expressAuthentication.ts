@@ -3,6 +3,7 @@ import { get } from 'lodash';
 import * as jwt from 'jsonwebtoken';
 import config from '../config/config';
 import { CustomError } from '../utils/customError.util';
+import { EErrorMessages } from '../interfaces';
 
 export const expressAuthentication = async (
   request: Request,
@@ -19,12 +20,20 @@ export const expressAuthentication = async (
 
     return new Promise((resolve, reject) => {
       if (!token) {
-        reject(CustomError.authorization('No token provided'));
+        reject(
+          CustomError.authorization(EErrorMessages.FORBIDDEN_OPERATION, {
+            message: 'No token provided',
+          })
+        );
       }
 
       jwt.verify(token, config.jwtSecret, (err: any, decoded: any) => {
         if (err) {
-          reject(CustomError.authorization('Provided token has expired'));
+          reject(
+            CustomError.authorization(EErrorMessages.FORBIDDEN_OPERATION, {
+              message: 'Provided token has expired',
+            })
+          );
         } else {
           resolve(decoded);
         }
