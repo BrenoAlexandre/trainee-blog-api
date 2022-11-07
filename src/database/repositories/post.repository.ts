@@ -5,7 +5,7 @@ import { IFindParams } from '../../interfaces/IFindParams';
 
 const postRepository = AppDataSource.getRepository(Post).extend({
   async createPost(data: ICreatePost): Promise<Post> {
-    const post = this.create(data);
+    const post = this.create({ ...data, likes: 0 });
     const newPost = await this.save(post);
     return newPost;
   },
