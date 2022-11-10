@@ -21,26 +21,47 @@ const options: DataSourceOptions & SeederOptions = {
 
 const AppDataSource = new DataSource(options);
 export const connection = {
+  async seed() {
+    try {
+      await runSeeder(AppDataSource, MainSeeder);
+      logger.info('Postgres populated :>> Seeds ran.');
+    } catch (err) {
+      logger.error('Error during test database seeding :>>', err);
+    }
+  },
+
   async create() {
     try {
       await AppDataSource.initialize();
       logger.info('Postgres connected :>> AppDataSource initialized.');
-      await runSeeder(AppDataSource, MainSeeder);
-      logger.info('Postgres populated :>> Seeds ran.');
     } catch (err) {
-      logger.error('Error during test AppDataSource initialization :>>', err);
+      logger.error('Error during test database initialization :>>', err);
     }
   },
 
   async close() {
-    const entities = AppDataSource.entityMetadatas;
+    try {
+      AppDataSource.destroy();
+      logger.info('Postgres close :>> AppDataSource connection closed.');
+    } catch (err) {
+      logger.error('Error during test database closing sequence :>>', err);
+    }
+  },
 
-    entities.forEach(async (entity) => {
-      const repository = AppDataSource.getRepository(entity.name);
-      await repository.query(`DELETE FROM ${entity.tableName}`);
-    });
+  async clean() {
+    try {
+      const entities = AppDataSource.entityMetadatas;
 
-    AppDataSource.destroy();
+      entities.forEach(async (entity) => {
+        const repository = AppDataSource.getRepository(entity.name);
+        await repository.query(`DELETE FROM ${entity.tableName}`);
+      });
+      logger.info(
+        'Postgres cleanse :>> AppDataSource repository data deleted.'
+      );
+    } catch (err) {
+      logger.error('Error during test database cleaning :>>', err);
+    }
   },
 };
 
