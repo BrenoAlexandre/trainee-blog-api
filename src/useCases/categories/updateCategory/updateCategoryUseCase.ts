@@ -1,12 +1,12 @@
 import { singleton } from 'tsyringe';
 import { EErrorMessages, IUseCase } from '../../../interfaces';
-import { CategoryRepository } from '../../../services/implementation/CategoryRepository';
+import { CategoryService } from '../../../services/implementation/CategoryService';
 import { CustomError } from '../../../utils/customError.util';
 import { IUser } from '../../../models/user.model';
 
 @singleton()
 export class UpdateCategoryUseCase implements IUseCase {
-  constructor(private categoryRepository: CategoryRepository) {}
+  constructor(private categoryRepository: CategoryService) {}
 
   public async execute({
     categoryId,

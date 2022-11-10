@@ -17,7 +17,7 @@ import { IForbidden } from '../../../interfaces/httpStatus';
 import { ICreateCategoryRequestDTO } from './createCategoryRequestDTO';
 import { ICreateCategoryResponseDTO } from './createCategoryResponseDTO';
 import { CreateCategoryUseCase } from './createCategoryUseCase';
-import { ICreateCategoryInput } from './interfaces';
+import { ICreateCategory } from '../../../models/category.model';
 
 @injectable()
 @Route('category')
@@ -34,7 +34,7 @@ export class CreateCategoryController extends Controller {
   @SuccessResponse(StatusCodes.CREATED, ReasonPhrases.CREATED)
   @Response<IForbidden>(403, 'Forbidden', {
     message: 'FORBIDDEN_OPERATION',
-    error: [`You don't  have permission to create a category`],
+    error: [`You don't  have the permission to create a category`],
   })
   @Security('bearer')
   @Post()
@@ -46,10 +46,10 @@ export class CreateCategoryController extends Controller {
     const { title } = request;
     const { user } = req;
 
-    const data: ICreateCategoryInput = { title, user };
+    const input: ICreateCategory = { title, owner: user.id };
 
     const category: ICreateCategoryResponseDTO =
-      await this.createCategoryUseCase.execute(data);
+      await this.createCategoryUseCase.execute({ input, userRole: user.role });
 
     return category;
   }

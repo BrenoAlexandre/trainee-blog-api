@@ -1,12 +1,12 @@
 import { singleton } from 'tsyringe';
 import { EErrorMessages, IUseCase } from '../../../interfaces';
 import { IUser } from '../../../models/user.model';
-import { UserRepository } from '../../../services/implementation/UserRepository';
+import { UserService } from '../../../services/implementation/UserService';
 import { CustomError } from '../../../utils/customError.util';
 
 @singleton()
 export class FindUserUseCase implements IUseCase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: UserService) {}
 
   public async execute(id: string): Promise<IUser> {
     const user = await this.userRepository.findUserById(id);

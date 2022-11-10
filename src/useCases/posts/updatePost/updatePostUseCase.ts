@@ -1,12 +1,12 @@
 import { singleton } from 'tsyringe';
 import { EErrorMessages, IUseCase } from '../../../interfaces';
-import { PostRepository } from '../../../services/implementation/PostRepository';
+import { PostService } from '../../../services/implementation/PostService';
 import { CustomError } from '../../../utils/customError.util';
 import { IUpdateInput } from './interfaces';
 
 @singleton()
 export class UpdatePostUseCase implements IUseCase {
-  constructor(private postRepository: PostRepository) {}
+  constructor(private postRepository: PostService) {}
 
   public async execute(input: IUpdateInput): Promise<boolean> {
     const edited = await this.postRepository.updatePost(input);

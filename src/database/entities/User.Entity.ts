@@ -12,7 +12,7 @@ export default class User extends Base {
   @Column({ unique: true })
   public email: string;
 
-  @Column()
+  @Column({ select: false })
   public password: string;
 
   @Column({ type: 'enum', enum: ['user', 'admin'], default: 'user' })

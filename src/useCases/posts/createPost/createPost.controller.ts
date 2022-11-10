@@ -15,10 +15,10 @@ import {
 import { injectable } from 'tsyringe';
 import { IAuthRequest } from '../../../interfaces';
 import { IUnprocessable } from '../../../interfaces/httpStatus';
+import { ICreatePost } from '../../../models/post.model';
 import { CreatePostRequestDTO } from './createPostRequestDTO';
 import { CreatePostResponseDTO } from './createPostResponseDTO';
 import CreatePostUseCase from './createPostUseCase';
-import { ICreatePostInput } from './interfaces';
 
 @injectable()
 @Route('post')
@@ -37,8 +37,8 @@ export class CreatePostController extends Controller {
     title: 'O que aprender?',
     description: 'Estou começando hoje. O que devo aprender?',
     likes: 0,
-    category: 'adac0e9d-de2b-4a0a-baff-b02f812d8e5f',
-    owner: 'b5c33998-9e4a-401c-bb2c-7aeecd7cf18b',
+    categoryId: 'adac0e9d-de2b-4a0a-baff-b02f812d8e5f',
+    ownerId: 'b5c33998-9e4a-401c-bb2c-7aeecd7cf18b',
     created_at: new Date('2022-10-22T21:34:51.456Z'),
     updated_at: new Date('2022-10-22T21:34:51.456Z'),
   })
@@ -57,11 +57,11 @@ export class CreatePostController extends Controller {
     const { title, description, category } = request;
     const { user } = req;
 
-    const data: ICreatePostInput = {
+    const data: ICreatePost = {
       title,
       description,
-      category,
-      owner: user.id,
+      categoryId: category,
+      ownerId: user.id,
     };
 
     const newPost: CreatePostResponseDTO = await this.createPostUseCase.execute(

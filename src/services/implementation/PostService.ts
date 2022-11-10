@@ -3,7 +3,7 @@ import postRepository from '../../database/repositories/post.repository';
 import { IFindParams, IPostRepository } from '../../interfaces';
 import { ICreatePost, IUpdatePost } from '../../models/post.model';
 
-export class PostRepository implements IPostRepository {
+export class PostService implements IPostRepository {
   public createPost = async (data: ICreatePost): Promise<PostEntity> => {
     const newPost = await postRepository.createPost(data);
     return newPost;

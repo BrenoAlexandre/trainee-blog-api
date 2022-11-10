@@ -1,9 +1,9 @@
 import CategoryEntity from '../../database/entities/Category.Entity';
 import categoryRepository from '../../database/repositories/category.repository';
-import { ICategoryRepository } from '../../interfaces';
+import { ICategoryRepository as ICategoryService } from '../../interfaces';
 import { ICreateCategory } from '../../models/category.model';
 
-export class CategoryRepository implements ICategoryRepository {
+export class CategoryService implements ICategoryService {
   public createCategory = async (
     data: ICreateCategory
   ): Promise<CategoryEntity> => {

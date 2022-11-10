@@ -3,7 +3,7 @@ import { ICreateUser, IUser } from '../../models/user.model';
 import { IUserRepository } from '../../interfaces/IUserRepository';
 import User from '../../database/entities/User.Entity';
 
-export class UserRepository implements IUserRepository {
+export class UserService implements IUserRepository {
   public createUser = async (data: ICreateUser): Promise<IUser> => {
     const newUser = await userRepository.createUser(data);
     return newUser;

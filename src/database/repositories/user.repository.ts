@@ -18,6 +18,7 @@ export const userRepository = AppDataSource.getRepository(User).extend({
   },
   async findUserByEmail(email: string): Promise<User | null> {
     const user = await this.createQueryBuilder('user')
+      .addSelect('user.password')
       .where('user.email = :email', { email })
       .getOne();
     return user;

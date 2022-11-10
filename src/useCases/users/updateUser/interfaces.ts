@@ -1,6 +1,6 @@
-import User from '../../../database/entities/User.Entity';
+import { IUser } from '../../../models/user.model';
 
 export interface IUpdateInput {
   name: string;
-  user: Omit<User, 'password'>;
+  user: IUser;
 }

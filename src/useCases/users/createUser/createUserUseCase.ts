@@ -3,13 +3,13 @@ import { singleton } from 'tsyringe';
 import config from '../../../config/config';
 import { EErrorMessages, IUseCase } from '../../../interfaces';
 import { CustomError } from '../../../utils/customError.util';
-import { UserRepository } from '../../../services/implementation/UserRepository';
+import { UserService } from '../../../services/implementation/UserService';
 import { CreateUserRequestDTO } from './CreateUserRequestDTO';
 import { CreateUserResponseDTO } from './CreateUserResponseDTO';
 
 @singleton()
 export class CreateUserUseCase implements IUseCase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: UserService) {}
 
   public async execute(
     input: CreateUserRequestDTO

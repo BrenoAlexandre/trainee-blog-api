@@ -5,13 +5,13 @@ import { singleton } from 'tsyringe';
 import config from '../../../config/config';
 import User from '../../../database/entities/User.Entity';
 import { EErrorMessages, IUseCase } from '../../../interfaces';
-import { UserRepository } from '../../../services/implementation/UserRepository';
+import { UserService } from '../../../services/implementation/UserService';
 import { CustomError } from '../../../utils/customError.util';
 import { ILoginInput } from './interfaces';
 
 @singleton()
 export class LoginUseCase implements IUseCase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: UserService) {}
 
   private async getUser(email: string): Promise<User> {
     const user = await this.userRepository.findUserByEmail(email);

@@ -10,6 +10,6 @@ import { UUID } from '../../../interfaces';
 export interface ICreateCategoryResponseDTO {
   id: UUID;
   title: string;
-  owner: UUID;
+  owner: string;
   created_at: Date;
 }

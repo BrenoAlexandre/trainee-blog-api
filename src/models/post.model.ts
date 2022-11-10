@@ -1,20 +1,20 @@
 import Category from '../database/entities/Category.Entity';
-import User from '../database/entities/User.Entity';
+import { IUser } from './user.model';
 
 export interface IPost {
   id: string;
   title: string;
   description: string;
   likes: number;
-  owner: Omit<User, 'password'>;
+  owner: IUser;
   category: Category;
 }
 
 export interface ICreatePost {
   title: string;
   description: string;
-  owner: string;
-  category: string;
+  ownerId: string;
+  categoryId: string;
 }
 
 export interface IUpdatePost {

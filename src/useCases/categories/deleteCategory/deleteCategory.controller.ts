@@ -46,6 +46,9 @@ export class DeleteCategoryController extends Controller {
     @Request() request: IAuthRequest
   ) {
     const { user } = request;
-    await this.deleteCategoryUseCase.execute({ categoryId, user });
+    await this.deleteCategoryUseCase.execute({
+      categoryId,
+      userRole: user.role,
+    });
   }
 }

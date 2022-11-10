@@ -1,25 +1,27 @@
 import { singleton } from 'tsyringe';
 import { EErrorMessages, IUseCase } from '../../../interfaces';
-import { IUser } from '../../../models/user.model';
-import { CategoryRepository } from '../../../services/implementation/CategoryRepository';
+import { CategoryService } from '../../../services/implementation/CategoryService';
 import { CustomError } from '../../../utils/customError.util';
 
 @singleton()
 export class DeleteCategoryUseCase implements IUseCase {
-  constructor(private categoryRepository: CategoryRepository) {}
+  constructor(private categoryRepository: CategoryService) {}
 
-  public async execute({
-    categoryId,
-    user,
-  }: {
-    categoryId: string;
-    user: IUser;
-  }): Promise<void> {
-    if (user.role !== 'admin') {
-      CustomError.forbidden(EErrorMessages.FORBIDDEN_OPERATION, {
-        message: `You don't  have permission to delete a category`,
+  private validate(userRole: string) {
+    if (userRole !== 'admin') {
+      throw CustomError.forbidden(EErrorMessages.FORBIDDEN_OPERATION, {
+        message: `You don't  have the permission to create a category`,
       });
     }
+  }
+
+  public async execute(data: {
+    categoryId: string;
+    userRole: string;
+  }): Promise<void> {
+    const { categoryId, userRole } = data;
+
+    this.validate(userRole);
 
     const category = await this.categoryRepository.deleteCategory(categoryId);
 
