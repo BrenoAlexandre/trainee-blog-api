@@ -1,13 +1,10 @@
-FROM node:14.15-alpine
+FROM node
 
-WORKDIR /usr/app
-
+WORKDIR /dist
 COPY package*.json yarn*.json ./
-
-RUN npm install --production --silent
 
 COPY . .
 
-EXPOSE 3000
-
+RUN yarn --production --ignore-platform
 CMD ["npm", "start"]
+EXPOSE 3001

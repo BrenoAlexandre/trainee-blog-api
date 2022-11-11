@@ -1,11 +1,6 @@
 import 'reflect-metadata';
-import { container } from 'tsyringe';
 import { FakeCategoryService } from '../../../src/services/fakes/FakeCategoryService';
 import { CreateCategoryUseCase } from '../../../src/useCases/categories/createCategory/createCategoryUseCase';
-
-beforeAll(() => {
-  container.clearInstances();
-});
 
 describe('CreateCategoryUseCase', () => {
   const fakeService = new FakeCategoryService();

@@ -20,12 +20,28 @@ const options: DataSourceOptions & SeederOptions = {
 };
 
 const AppDataSource = new DataSource(options);
-AppDataSource.initialize()
-  .then(() => {
-    logger.info('Postgres connected :>> AppDataSource initialized.');
-  })
-  .catch((err) => {
+export const createDb = async () => {
+  try {
+    if (config.postgresDb.host) {
+      await AppDataSource.initialize();
+      logger.info('Postgres connected :>> AppDataSource initialized.');
+    }
+  } catch (err) {
     logger.error('Error during AppDataSource initialization:', err);
-  });
+    process.exit(1);
+  }
+};
+
+export const closeDb = async () => {
+  try {
+    if (config.postgresDb.host) {
+      await AppDataSource.destroy();
+      logger.info('Postgres closed :>> AppDataSource connection closed.');
+    }
+  } catch (err) {
+    logger.error('Error during test database closing sequence :>>', err);
+    process.exit(1);
+  }
+};
 
 export default AppDataSource;
